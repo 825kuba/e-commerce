@@ -1,0 +1,23 @@
+body {
+  font-family: Roboto;
+}
+
+h2,
+h3,
+h4 {
+  font-family: 'Playfair Display';
+  letter-spacing: -0.075rem;
+}
+
+a {
+  &:link,
+  &:visited {
+    text-decoration: none;
+    color: $black;
+  }
+
+  &:hover,
+  &:active {
+    color: $orange;
+  }
+}

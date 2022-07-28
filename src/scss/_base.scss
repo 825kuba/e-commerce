@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+
+$black: rgb(0, 0, 0);
+$orange: rgb(255, 123, 78);
+$white: rgb(255, 255, 255);
+$bg-color: rgb(248, 246, 242);
+$gray-light: #b7ada8;
+$gray-blue: rgb(127, 144, 155);
+
+// Z-INDEX
+$z-1: 100; // sale badge on product
+$z-1000: 1000; // sticky nav bar
+
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+
+  @include respond(lg) {
+    font-size: 68.75%;
+  }
+
+  @include respond(xl) {
+    font-size: 75%;
+  }
+
+  @include respond(xxl) {
+    font-size: 81.25%;
+  }
+}
+
+body {
+  background-color: $bg-color;
+
+  &.no-scroll {
+    overflow: hidden;
+  }
+}
+
+header,
+section,
+footer {
+  max-width: 2000px;
+  margin: 0 auto;
+}
+
+.fs {
+  max-width: unset;
+}
+
+.pic {
+  display: flex;
+  overflow: auto;
+}

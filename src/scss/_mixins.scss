@@ -1,0 +1,32 @@
+@mixin respond($bp) {
+  @if $bp == md {
+    // 600px
+    @media only screen and (min-width: 37.5em) {
+      @content;
+    }
+  }
+  // 800px
+  @if $bp == md/lg {
+    @media only screen and (min-width: 50em) {
+      @content;
+    }
+  }
+  // 992px
+  @if $bp == lg {
+    @media only screen and (min-width: 62em) {
+      @content;
+    }
+  }
+  // 1200px
+  @if $bp == xl {
+    @media only screen and (min-width: 75em) {
+      @content;
+    }
+  }
+  // 1400px
+  @if $bp == xxl {
+    @media only screen and (min-width: 87.5em) {
+      @content;
+    }
+  }
+}

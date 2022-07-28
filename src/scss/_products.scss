@@ -1,0 +1,96 @@
+.products {
+  padding: 7rem 2rem;
+
+  @include respond(lg) {
+    padding: 7rem 3rem;
+  }
+
+  &__heading {
+    font-size: 3rem;
+    font-weight: 500;
+    margin-bottom: 7rem;
+  }
+
+  &__container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: stretch;
+    --gap: 4rem;
+    gap: var(--gap);
+
+    @include respond(lg) {
+      --gap: 5rem;
+    }
+  }
+
+  &__product {
+    position: relative;
+    // z-index: -1000;
+    font-size: 1.5rem;
+    flex: 100%;
+
+    @include respond(md/lg) {
+      flex: calc(50% - var(--gap));
+    }
+
+    &:hover {
+      & .products__img {
+        filter: contrast(1);
+        filter: blur(0);
+      }
+    }
+  }
+
+  &__badge {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    z-index: $z-1;
+    background-color: $orange;
+    text-transform: uppercase;
+    display: block;
+    color: $black;
+    font-size: 1.3rem;
+    padding: 1rem 2rem;
+    border-radius: 5rem;
+  }
+
+  &__img {
+    width: 100%;
+    height: 550px;
+    object-fit: cover;
+    margin-bottom: 1.75rem;
+    flex: 1;
+    filter: contrast(0.75);
+
+    @include respond(md) {
+      height: 650px;
+    }
+
+    // @include respond(lg) {
+    //   height: 650px;
+    // }
+
+    @include respond(xxl) {
+      height: 900px;
+    }
+  }
+
+  &__name {
+    font-size: 1.5rem;
+    font-weight: 400;
+    margin-bottom: 0.75rem;
+  }
+
+  &__price {
+    color: $orange;
+
+    &--now {
+      margin-right: 1rem;
+    }
+
+    &--before {
+      text-decoration: line-through;
+    }
+  }
+}

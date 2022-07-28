@@ -1,0 +1,6 @@
+.parcel-cache
+dist
+node_modules
+todo.txt
+src/scss/main.css
+src/scss/main.css.map
