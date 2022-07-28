@@ -10,9 +10,9 @@
       rel="stylesheet"
       href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"
     />
-    <script defer src="./js/script.js"></script>
+    <script defer type="module" src="./js/controller.js"></script>
   </head>
-  <body>
+  <body id="women's clothing">
     <div class="discount">
       <p>Use code FRONTEND99 at checkout for 10% OFF!</p>
     </div>
@@ -46,35 +46,114 @@
           </a>
         </div>
         <div class="nav__btn-wrap">
-          <a href="#" class="nav__cart-btn">Cart(0)</a>
+          <a href="#" class="nav__cart-btn">Cart (0)</a>
         </div>
 
         <div class="nav__cart">
-          <button class="nav__cart__close-cart nav__close-btn">
-            <i class="las la-times"></i>
-          </button>
-          <h2 class="nav__cart__heading">Shopping Cart</h2>
-          <div class="nav__cart__container">
-            <div class="nav__cart__item">item</div>
-          </div>
-          <div class="nav__cart__summary">
-            <form class="nav__cart__form" action="#">
-              <label for="instructions">Special instructions for seller</label>
-              <textarea
-                name="instructions"
-                id="instructions"
-                cols="30"
-                rows="3"
-              ></textarea>
-            </form>
-            <div class="nav__cart__checkout">
-              <div class="nav__cart__subtotal">
-                <h5>Subtotal</h5>
-                <span>$1234</span>
+          <div class="nav__cart__wrapper">
+            <button class="nav__cart__close-cart nav__close-btn">
+              <i class="las la-times"></i>
+            </button>
+            <div class="nav__cart__head">
+              <h2 class="nav__cart__heading">Shopping Cart</h2>
+              <p class="nav__cart__quantity">Quantity</p>
+              <p class="nav__cart__total">Total</p>
+            </div>
+            <div class="nav__cart__container">
+              <!-- <div class="nav__cart__item">
+                <a href="#" class="nav__cart__item__img">
+                  <img
+                    src="https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg"
+                  />
+                </a>
+                <div class="nav__cart__item__text">
+                  <a href="#" class="nav__cart__item__name">
+                    <h4>
+                      Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops
+                    </h4>
+                  </a>
+                  <p class="nav__cart__item__size">XL</p>
+                </div>
+                <p class="nav__cart__item__price">$599.99</p>
+                <div class="nav__cart__item__count">
+                  <button class="nav__cart__item__minus">
+                    <i class="las la-minus"></i>
+                  </button>
+                  <span class="nav__cart__item__num">1</span>
+                  <button class="nav__cart__item__plus">
+                    <i class="las la-plus"></i>
+                  </button>
+                </div>
+                <button class="nav__cart__item__remove">Remove</button>
+              </div>
+              <div class="nav__cart__item">
+                <a href="#" class="nav__cart__item__img">
+                  <img
+                    src="https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg"
+                  />
+                </a>
+                <div class="nav__cart__item__text">
+                  <a href="#" class="nav__cart__item__name"
+                    >Mens Cotton Jacket</a
+                  >
+                  <p class="nav__cart__item__size">XL</p>
+                </div>
+                <p class="nav__cart__item__price">$59.99</p>
+                <div class="nav__cart__item__count">
+                  <button class="nav__cart__item__minus">
+                    <i class="las la-minus"></i>
+                  </button>
+                  <span class="nav__cart__item__num">1</span>
+                  <button class="nav__cart__item__plus">
+                    <i class="las la-plus"></i>
+                  </button>
+                </div>
+                <button class="nav__cart__item__remove">Remove</button>
+              </div>
+              <div class="nav__cart__item">
+                <a href="#" class="nav__cart__item__img">
+                  <img
+                    src="https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg"
+                  />
+                </a>
+                <div class="nav__cart__item__text">
+                  <a href="#" class="nav__cart__item__name">Brown Jacket</a>
+                  <p class="nav__cart__item__size">XL</p>
+                </div>
+                <p class="nav__cart__item__price">$59.99</p>
+                <div class="nav__cart__item__count">
+                  <button class="nav__cart__item__minus">
+                    <i class="las la-minus"></i>
+                  </button>
+                  <span class="nav__cart__item__num">1</span>
+                  <button class="nav__cart__item__plus">
+                    <i class="las la-plus"></i>
+                  </button>
+                </div>
+                <button class="nav__cart__item__remove">Remove</button>
+              </div> -->
+            </div>
+            <div class="nav__cart__summary">
+              <form class="nav__cart__form" action="#">
+                <label for="instructions"
+                  >Special instructions for seller</label
+                >
+                <textarea
+                  name="instructions"
+                  id="instructions"
+                  cols="30"
+                  rows="4"
+                ></textarea>
+              </form>
+              <div class="nav__cart__checkout">
+                <div class="nav__cart__subtotal">
+                  <h5>Subtotal</h5>
+                  <span>$1234</span>
+                </div>
                 <p>Taxes and shipping calculated at checkout</p>
+                <button class="nav__cart__checkout-btn">Check out</button>
               </div>
             </div>
-            <button class="nav__cart__btn">Check out</button>
           </div>
         </div>
       </nav>
@@ -82,10 +161,10 @@
 
     <main>
       <section class="products">
-        <h2 class="products__heading">Women's clothing</h2>
+        <h2 class="products__heading">Women</h2>
 
         <div class="products__container">
-          <a href="#" class="products__product">
+          <!-- <a href="#" class="products__product">
             <span class="products__badge">on sale</span>
             <img
               src="https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg"
@@ -136,7 +215,7 @@
               <span class="products__price--now">$59.99</span>
               <span class="products__price--before">$79.99</span>
             </p>
-          </a>
+          </a> -->
         </div>
       </section>
     </main>

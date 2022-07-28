@@ -1,28 +1,29 @@
 'use strict';
 
-const pictures = document.querySelector('.pic');
-let products;
-fetch('https://fakestoreapi.com/products')
-  .then(res => res.json())
-  .then(prod => {
-    products = prod;
-    console.log(products);
-  });
-//   .then(() => {
-//     products.forEach(prod => {
-//       pictures.insertAdjacentHTML(
-//         'beforeend',
-//         `
-// <img src="${prod.image}" style="max-width: 20vw" />
-// `
-//       );
-//     });
-//   });
+import * as model from './model.js';
+import productsView from './productsView.js';
 
-// fetch(`https://fakestoreapi.com/products/category/women's clothing`)
-//   .then(res => res.json())
-//   .then(json => console.log(json));
+async function controlLoadProductsByCategory() {
+  try {
+    //render spinner
+    productsView.renderSpinner();
+    //get ID of html page
+    const id = document.body.id;
+    // don't do anything on index page
+    if (id === 'index') return;
+    // get products in category based on ID
+    await model.getProducts(id);
+    //render products
+    productsView.renderProductsByCategory(model.state.categories[`${id}`]);
+  } catch (err) {
+    productsView.renderError(err.message);
+  }
+}
 
+controlLoadProductsByCategory();
+
+////////////////////////////////////
+// basic functionality of btns
 const menuBtn = document.querySelector('.nav__nav-btn');
 const navLinks = document.querySelector('.nav__links');
 const closeMenuBtn = document.querySelector('.nav__close-nav');
