@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="./scss/main.css" />
+    <link rel="stylesheet" href="../scss/main.css" />
     <link
       rel="stylesheet"
       href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css"
     />
-    <script defer type="module" src="./js/controller.js"></script>
+    <script defer type="module" src="../js/controller.js"></script>
   </head>
-  <body id="jewelery">
+  <body id="electronics">
     <div class="discount">
       <p>Use code FRONTEND99 at checkout for 10% OFF!</p>
     </div>
@@ -41,8 +41,8 @@
         </ul>
 
         <div class="nav__logo-box">
-          <a href="./index.html" class="nav__logo">
-            <img src="./img/logo.png" alt="logo" />
+          <a href="../index.html" class="nav__logo">
+            <img src="../img/logo.png" alt="logo" />
           </a>
         </div>
         <div class="nav__btn-wrap">
@@ -151,7 +151,9 @@
                   <span>$1234</span>
                 </div>
                 <p>Taxes and shipping calculated at checkout</p>
-                <button class="nav__cart__checkout-btn">Check out</button>
+                <button class="nav__cart__checkout-btn big-btn">
+                  Check out
+                </button>
               </div>
             </div>
           </div>
@@ -159,9 +161,16 @@
       </nav>
     </header>
 
+    <div class="product-modal">
+      <button class="product__close-product nav__close-btn">
+        <i class="las la-times"></i>
+      </button>
+      <div class="product"></div>
+    </div>
+
     <main>
       <section class="products">
-        <h2 class="products__heading">Jewellery</h2>
+        <h2 class="products__heading">Electronics</h2>
 
         <div class="products__container">
           <!-- <a href="#" class="products__product">
@@ -223,7 +232,7 @@
     <footer class="footer">
       <div class="footer__container">
         <a href="#">
-          <img src="./img/logo.png" alt="logo" class="footer__logo" />
+          <img src="../img/logo.png" alt="logo" class="footer__logo" />
         </a>
         <ul class="footer__links">
           <li class="footer__list-item">

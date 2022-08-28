@@ -7,6 +7,7 @@ export const state = {
     electronics: [],
     jewelery: [],
   },
+  productModal: {},
 };
 
 export const getProducts = async category => {
@@ -20,6 +21,7 @@ export const getProducts = async category => {
       throw new Error(`There was and error (${response.status}) :(`);
     // tranform data
     const data = await response.json();
+    console.log(data);
     // put data in state object
     state.categories[`${category}`] = data;
   } catch (err) {

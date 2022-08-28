@@ -7,7 +7,7 @@
     grid-template-rows: 1fr 1fr 1fr;
     grid-template-columns: 1fr 1fr;
     margin-bottom: 10.5rem;
-    column-gap: 5rem;
+    // column-gap: 5rem;
 
     @include respond(md/lg) {
       grid-template-rows: 1fr 1fr;
@@ -76,6 +76,7 @@
 
   &__form {
     display: flex;
+    flex-wrap: wrap;
     gap: 1.5rem;
     margin-top: 2rem;
   }

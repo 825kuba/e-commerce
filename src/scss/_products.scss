@@ -24,6 +24,7 @@
   }
 
   &__product {
+    cursor: pointer;
     position: relative;
     font-size: 1.5rem;
     flex: 100%;
@@ -33,6 +34,10 @@
     }
 
     &:hover {
+      & .products__name {
+        color: $orange;
+      }
+
       & .products__img {
         filter: contrast(1);
         filter: blur(0);
@@ -44,7 +49,7 @@
     position: absolute;
     top: 2rem;
     right: 2rem;
-    z-index: $z-1;
+    z-index: $z-100;
     background-color: $orange;
     text-transform: uppercase;
     display: block;
@@ -56,7 +61,7 @@
 
   &__img {
     width: 100%;
-    height: 550px;
+    // height: 550px;
     object-fit: cover;
     margin-bottom: 1.75rem;
     flex: 1;

@@ -2,15 +2,16 @@
 
 import * as model from './model.js';
 import productsView from './productsView.js';
+import generalView from './generalView.js';
 
 async function controlLoadProductsByCategory() {
+  // only load products if on a products page
+  if (!window.location.href.includes('products/')) return;
   try {
     //render spinner
     productsView.renderSpinner();
     //get ID of html page
     const id = document.body.id;
-    // don't do anything on index page
-    if (id === 'index') return;
     // get products in category based on ID
     await model.getProducts(id);
     //render products
@@ -20,38 +21,25 @@ async function controlLoadProductsByCategory() {
   }
 }
 
-controlLoadProductsByCategory();
+function controlProductModal(clickedProduct) {
+  console.log(clickedProduct);
+  const clickedID = +clickedProduct.id;
+  console.log(clickedID);
+  const pageID = document.body.id;
+  console.log(pageID);
+  const product = model.state.categories[`${pageID}`].find(
+    ele => ele.id === clickedID
+  );
+  const sale = clickedProduct.querySelector('.products__price--before');
+  product.isOnSale = sale ? true : false;
+  console.log(product);
+  productsView.renderProductModal(product);
+}
 
-////////////////////////////////////
-// basic functionality of btns
-const menuBtn = document.querySelector('.nav__nav-btn');
-const navLinks = document.querySelector('.nav__links');
-const closeMenuBtn = document.querySelector('.nav__close-nav');
-
-menuBtn.addEventListener('click', e => {
-  e.preventDefault();
-  navLinks.classList.add('open');
-  document.body.classList.add('no-scroll');
-});
-
-closeMenuBtn.addEventListener('click', e => {
-  e.preventDefault();
-  navLinks.classList.remove('open');
-  document.body.classList.remove('no-scroll');
-});
-
-const cartBtn = document.querySelector('.nav__cart-btn');
-const cart = document.querySelector('.nav__cart');
-const closeCartBtn = document.querySelector('.nav__cart__close-cart');
-
-cartBtn.addEventListener('click', e => {
-  e.preventDefault();
-  cart.classList.add('open');
-  document.body.classList.add('no-scroll');
-});
-
-closeCartBtn.addEventListener('click', e => {
-  e.preventDefault();
-  cart.classList.remove('open');
-  document.body.classList.remove('no-scroll');
-});
+function init() {
+  controlLoadProductsByCategory();
+  generalView.initEvents();
+  productsView.addEventListenerToProduct(controlProductModal);
+  console.log(model.state);
+}
+init();
