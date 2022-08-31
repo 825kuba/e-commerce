@@ -449,12 +449,11 @@
         text-align: end;
       }
 
-      & h5 {
+      & h6 {
         font-size: 1.6rem;
-        font-weight: 400;
       }
 
-      & span {
+      & h5 {
         font-size: 1.7rem;
       }
 
@@ -466,6 +465,11 @@
     &__subtotal {
       display: flex;
       justify-content: space-between;
+
+      &,
+      & * {
+        font-weight: 400;
+      }
     }
 
     &__checkout-btn {

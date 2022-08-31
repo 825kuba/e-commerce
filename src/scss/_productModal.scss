@@ -16,8 +16,11 @@
   overflow-y: scroll;
   z-index: 3000;
   background-color: $bg-color;
-  // padding: 7rem 2rem;
   padding: 7rem 0 7rem 0;
+
+  @include respond(md/lg) {
+    padding: 7rem 2rem;
+  }
 
   & .product {
     overflow-y: auto;
@@ -28,6 +31,7 @@
 
     @include respond(md/lg) {
       flex-direction: row;
+      justify-content: center;
     }
 
     &__slider-btns-wrap {
@@ -49,6 +53,10 @@
         opacity: 0;
         visibility: hidden;
       }
+
+      @include respond(md/lg) {
+        display: none;
+      }
     }
 
     &__images {
@@ -60,6 +68,13 @@
       scrollbar-width: none;
       &::-webkit-scrollbar {
         width: 0px;
+      }
+
+      @include respond(md/lg) {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: 0.1fr 1fr;
+        grid-template-rows: repeat(10, 1fr);
       }
     }
 
@@ -73,14 +88,38 @@
         max-width: 100%;
       }
 
-      &--90deg {
+      &:not(.big) {
+        @include respond(md/lg) {
+          grid-column: 1 / 2;
+          cursor: pointer;
+        }
+      }
+
+      &.big {
+        @include respond(md/lg) {
+          grid-column: 2 / 3;
+          grid-row: 1 / -1;
+        }
+      }
+
+      &--color-2 {
         filter: hue-rotate(90deg);
+
+        @include respond(md/lg) {
+          grid-row: 1 / 2;
+        }
       }
-      &--180deg {
+      &--color-3 {
         filter: hue-rotate(180deg);
+        @include respond(md/lg) {
+          grid-row: 2 / 3;
+        }
       }
-      &--270deg {
+      &--color-4 {
         filter: hue-rotate(270deg);
+        @include respond(md/lg) {
+          grid-row: 3 / 4;
+        }
       }
     }
 

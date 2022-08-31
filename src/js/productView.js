@@ -1,61 +1,10 @@
 'use strict';
 
-const productsContainer = document.querySelector('.products__container');
-const productModal = document.querySelector('.product-modal');
 const productEle = document.querySelector('.product');
+const productWrapEle = document.querySelector('.product-modal');
+const closeProductBtn = document.querySelector('.product__close-product');
 
-class productsView {
-  renderProductsByCategory(products) {
-    // clear parent element
-    productsContainer.innerHTML = '';
-    // loop through products and render them
-    // first 2 products loaded as "on sale"
-    products.forEach((product, i) => {
-      productsContainer.insertAdjacentHTML(
-        'beforeend',
-        `
-          <div class="products__product" id="${product.id}">
-            ${i > 1 ? '' : '<span class="products__badge">on sale</span>'}
-            <img
-              src="${product.image}"
-              alt="${product.title}"
-              class="products__img"
-            />
-            <h5 class="products__name">${product.title}</h5>
-            <p class="products__price">
-              <span class="products__price--now">$${product.price}
-              </span>
-              ${
-                i > 1
-                  ? ''
-                  : `<span class="products__price--before">$${(
-                      product.price * 1.5
-                    ).toFixed(0)}.99</span>`
-              }
-            </p>
-          </div> 
-        `
-      );
-    });
-  }
-
-  // add event listener to every product
-  addEventListenerToProduct(handler) {
-    // guard clause for landing page
-    if (!productsContainer) return;
-    // on click
-    productsContainer.addEventListener('click', e => {
-      // get the product element
-      const target = e.target.closest('.products__product');
-      // if no target return
-      if (!target) return;
-      console.log(target);
-      productModal.classList.add('open');
-      document.body.classList.add('no-scroll');
-      handler(target);
-    });
-  }
-
+class productView {
   renderProductModal(product) {
     // clean modal inner HTML
     productEle.innerHTML = '';
@@ -68,22 +17,22 @@ class productsView {
         <img
         src="${product.image}"
         alt="${product.title}"
-        class="product__img"
+        class="product__img product__img--color-1 big"
         />
         <img
         src="${product.image}"
         alt="${product.title}"
-        class="product__img product__img--90deg"
+        class="product__img product__img--color-2"
         />
         <img
         src="${product.image}"
         alt="${product.title}"
-        class="product__img product__img--180deg"
+        class="product__img product__img--color-3"
         />
         <img
         src="${product.image}"
         alt="${product.title}"
-        class="product__img product__img--270deg"
+        class="product__img product__img--color-4"
         />
       </div>
       <div class="product__slider-btns-wrap">
@@ -174,32 +123,56 @@ class productsView {
         .querySelector('.product__review--stars')
         .insertAdjacentHTML('beforeend', '<i class="las la-star"></i>');
     }
+  }
 
-    // add event listeners to form btns
+  // add event listeners to product quantity btns
+  addEventQtyBtns() {
+    // select elements
     const formQty = document.querySelector('.input-wrap');
     const formQtyInput = document.querySelector('.product__qty');
-
+    // add event listener to parent element
     formQty.addEventListener('click', e => {
+      // find target
       const target = e.target.closest('.product__change-qty ');
       if (!target) return;
+      // decrease quantity
       if (
         target.classList.contains('product__minus') &&
         formQtyInput.value > +formQtyInput.min
       )
         formQtyInput.value--;
+      // increase quantity
       else if (
         target.classList.contains('product__plus') &&
         formQtyInput.value < +formQtyInput.max
       )
         formQtyInput.value++;
     });
+  }
 
-    // select images container, first img, slider
+  // add event listener to add to cart btn
+  addEventAddToCart(handler) {
+    // select btn ele
+    const addToCartBtn = document.querySelector('.product__add');
+    // add listener
+    addToCartBtn.addEventListener('click', e => {
+      e.preventDefault();
+      console.log('added to cart');
+      // run handler
+      handler();
+    });
+  }
+
+  addEventImageGallery() {
+    // select img wrappers, slider, imgs
     const productImages = document.querySelector('.product__images');
-    const productImg = document.querySelector('.product__img');
     const productSlider = document.querySelector('.product__slider');
+    const productImgs = [...document.querySelectorAll('.product__img')];
 
-    // // add listener to slider
+    // 1) MOBILE GALLERY
+    //////////////////////////////
+
+    // 1) a) - add functionality to slider btns
     productSlider.addEventListener('click', e => {
       e.preventDefault();
       // get btn
@@ -209,20 +182,26 @@ class productsView {
       // get btn direction
       const direction = +btn.dataset.dir;
       // get width if first img
-      const imgWidth = productImg.getBoundingClientRect().width;
+      const imgWidth = productImgs[0].getBoundingClientRect().width;
       // scroll by the img width in the correct direction
       productImages.scrollLeft += imgWidth * direction;
     });
 
-    const allProductImgs = [...document.querySelectorAll('.product__img')];
+    // 1) b) - make slider btns hide or appear based on slider position
+
+    //create observer for images
     const imgObserver = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
-          if (entry.target === allProductImgs[0])
+          // if the first img is intersecting
+          if (entry.target === productImgs[0])
+            // hide left arrow
             document
               .querySelector('.product__slider-btn--left')
               .classList.toggle('hidden', entry.isIntersecting);
-          if (entry.target === allProductImgs[allProductImgs.length - 1])
+          // if last img is intersecting
+          if (entry.target === productImgs[productImgs.length - 1])
+            // hide right arrow
             document
               .querySelector('.product__slider-btn--right')
               .classList.toggle('hidden', entry.isIntersecting);
@@ -231,36 +210,71 @@ class productsView {
       { root: productSlider, threshold: 1.0 }
     );
 
-    productImg.addEventListener('load', () => {
-      if (!productImg.complete) return;
+    // set observer on first and last img
+    function observeImgs() {
+      productImgs.forEach((img, i) => {
+        if (i === 0 || i === productImgs.length - 1) imgObserver.observe(img);
+      });
+    }
+
+    // when first img loads
+    productImgs[0].addEventListener('load', () => {
+      if (!productImgs[0].complete) return;
+      // set observer
       observeImgs();
+      // scroll to the first img without scroll animation
       productImages.style.scrollBehavior = 'auto';
       productImages.scrollLeft = 0;
       productImages.style.scrollBehavior = 'smooth';
     });
 
-    function observeImgs() {
-      console.log('observing');
-      allProductImgs.forEach((img, i) => {
-        if (i === 0 || i === allProductImgs.length - 1)
-          imgObserver.observe(img);
+    // 2) DESKTOP GALLERY
+    // !!!!!!!!!!! ❌ NOT FINISHED ❌ !!!!!!!!!!!!!!!!
+    ////////////////////////////////
+
+    productSlider.addEventListener('click', e => {
+      e.preventDefault();
+      // define clicked img
+      const img = e.target.closest('.product__img');
+      // only continue if clicked img is one of the small ones
+      if (!img || window.innerWidth <= 800 || img.classList.contains('big'))
+        return;
+      // remove big class
+      productImgs.forEach(img => {
+        img.classList.remove('big');
       });
-    }
+      // add big class to clicked img
+      img.classList.add('big');
+    });
   }
 
-  // render spinner
-  renderSpinner() {
-    productsContainer.innerHTML = `
-      <p class="products__loading">Loading...</p>
-    `;
+  loadProduct(product, handler) {
+    this.renderProductModal(product);
+    this.addEventQtyBtns();
+    this.addEventAddToCart(handler);
+    this.addEventImageGallery();
   }
 
-  // render error
-  renderError(err) {
-    productsContainer.innerHTML = `
-      <p class="products__error">${err}</p>
-    `;
+  addEventCloseProduct() {
+    // check if page is index
+    if (document.body.id === 'index') return;
+    // close product modal
+    closeProductBtn.addEventListener('click', e => {
+      e.preventDefault();
+      productWrapEle.classList.remove('open');
+      document.body.classList.remove('no-scroll');
+    });
+
+    // close product modal with Escape
+    document.body.addEventListener('keydown', e => {
+      // only continue if Escape is pressed
+      if (e.key !== 'Escape') return;
+      // close product modal
+      productWrapEle.classList.remove('open');
+      // return scrolling to body
+      document.body.classList.remove('no-scroll');
+    });
   }
 }
 
-export default new productsView();
+export default new productView();

@@ -7,7 +7,10 @@ export const state = {
     electronics: [],
     jewelery: [],
   },
-  productModal: {},
+  session: {
+    productModal: {},
+    cart: [],
+  },
 };
 
 export const getProducts = async category => {
@@ -28,4 +31,14 @@ export const getProducts = async category => {
     console.error(err);
     throw err;
   }
+};
+
+export const saveToStorage = () => {
+  window.localStorage.setItem('session', JSON.stringify(state.session));
+};
+
+export const loadFromStorage = () => {
+  const storage = JSON.parse(window.localStorage.getItem('session'));
+  state.session = storage ? storage : state.session;
+  console.log(state.session);
 };
