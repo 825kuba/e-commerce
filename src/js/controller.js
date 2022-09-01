@@ -25,13 +25,10 @@ async function controlLoadProductsByCategory() {
 
 // control creating product modal window after clicking product in category section
 function controlProductModal(clickedProduct) {
-  console.log(clickedProduct);
   // get clicked product ID
   const clickedID = +clickedProduct.id;
-  console.log(clickedID);
   // get page ID
   const pageID = document.body.id;
-  console.log(pageID);
   // find the correct product in state
   const product = model.state.categories[`${pageID}`].find(
     ele => ele.id === clickedID
@@ -39,11 +36,6 @@ function controlProductModal(clickedProduct) {
   // check if product is on sale
   const sale = clickedProduct.querySelector('.products__price--before');
   product.isOnSale = sale ? true : false;
-  // add properties to product object
-  product.size = '';
-  product.color = '';
-  product.qty = 1;
-  console.log(product);
   // pass new object to state
   model.state.session.productModal = product;
   model.saveToStorage();
@@ -51,13 +43,49 @@ function controlProductModal(clickedProduct) {
   productView.loadProduct(product, controlAddToCart);
 }
 
-function controlAddToCart() {
+function controlAddToCart(specs) {
+  // create new object and give it specs from argument
+  const product = model.state.session.productModal;
+  product.specs = specs;
+  console.log(product.id);
+
+  // create condition - check if item has the same ID, size, and color ❌BUGGED❌ - unexpected behaviour
+  const alreadyExists = item =>
+    item.id === product.id &&
+    item.specs.size === product.specs.size &&
+    item.specs.color === product.specs.color;
+
   // check if product already exists in cart
-  //if the new product has the same ID, size, and color as some product alreadt in cart, we just increase quantity om the original product
-  model.state.session.cart.push(model.state.session.productModal);
-  console.log(model.state.session);
+  if (model.state.session.cart.some(item => alreadyExists(item))) {
+    // if it does
+    // find index of the original item in cart
+    const index = model.state.session.cart.findIndex(item =>
+      alreadyExists(item)
+    );
+    // increase quantity on the original product
+    model.state.session.cart[index].specs.qty += product.specs.qty;
+    console.log('added to original item');
+  } else {
+    // else add new item to cart
+    model.state.session.cart.push(product);
+    console.log('added to cart');
+    document.querySelector('.product-modal').classList.remove('open');
+    document.querySelector('.nav__cart').classList.add('open');
+  }
+  //save to local storage
   model.saveToStorage();
-  cartView.updateCart(model.state.session.cart);
+  // render cart
+  cartView.updateCart(model.state.session.cart, controlRemoveFromCart);
+}
+
+// remove items from cart
+function controlRemoveFromCart(index) {
+  // delete the item on given index from cart
+  model.state.session.cart.splice(index, 1);
+  //save to local storage
+  model.saveToStorage();
+  // update cart
+  cartView.updateCart(model.state.session.cart, controlRemoveFromCart);
 }
 
 function init() {
@@ -67,6 +95,6 @@ function init() {
   productView.addEventCloseProduct();
   controlLoadProductsByCategory();
   categoryView.addEventListenerToCategoryProducts(controlProductModal);
-  cartView.updateCart(model.state.session.cart);
+  cartView.updateCart(model.state.session.cart, controlRemoveFromCart);
 }
 init();

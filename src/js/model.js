@@ -24,7 +24,7 @@ export const getProducts = async category => {
       throw new Error(`There was and error (${response.status}) :(`);
     // tranform data
     const data = await response.json();
-    console.log(data);
+    // console.log(data);
     // put data in state object
     state.categories[`${category}`] = data;
   } catch (err) {
@@ -40,5 +40,4 @@ export const saveToStorage = () => {
 export const loadFromStorage = () => {
   const storage = JSON.parse(window.localStorage.getItem('session'));
   state.session = storage ? storage : state.session;
-  console.log(state.session);
 };

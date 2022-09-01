@@ -42,14 +42,12 @@ class CategoryView {
   addEventListenerToCategoryProducts(handler) {
     // guard clause for landing page
     if (!productsContainer) return;
-    console.log('--------------------');
     // on click
     productsContainer.addEventListener('click', e => {
       // get the product element
       const target = e.target.closest('.products__product');
       // if no target return
       if (!target) return;
-      console.log(target);
       productModal.classList.add('open');
       document.body.classList.add('no-scroll');
       handler(target);

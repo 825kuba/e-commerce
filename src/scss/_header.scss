@@ -108,21 +108,21 @@
     }
   }
 
-  // CLOSE BTN FOR MOBILE MENU AND CART
-  &__close-btn {
-    font-size: 4rem;
-    // width: min-content;
-    border: none;
-    background-color: transparent;
-    cursor: pointer;
-    position: absolute;
-    top: 1.6rem;
-    right: 1.6rem;
+  // // CLOSE BTN FOR MOBILE MENU, CART, PRODUCT MODAL
+  // &__close-btn {
+  //   font-size: 4rem;
+  //   // width: min-content;
+  //   border: none;
+  //   background-color: transparent;
+  //   cursor: pointer;
+  //   position: absolute;
+  //   top: 1.6rem;
+  //   right: 1.6rem;
 
-    &:hover {
-      color: $orange;
-    }
-  }
+  //   &:hover {
+  //     color: $orange;
+  //   }
+  // }
 
   // CLOSE MOBILE MENU BTN
   &__close-nav {
@@ -342,7 +342,7 @@
         }
       }
 
-      &__count {
+      &__qty {
         // grid-area: count;
         // width: 50%;
         grid-row: 3 / 4;
@@ -366,15 +366,34 @@
         }
       }
 
+      &__input-wrap {
+        display: flex;
+
+        & input {
+          text-align: center;
+          background-color: transparent;
+          border: none;
+
+          &:focus {
+            outline: none;
+          }
+
+          &::-webkit-outer-spin-button,
+          &::-webkit-inner-spin-button {
+            appearance: none;
+            margin: 0;
+          }
+        }
+
+        & button {
+          font-size: 2rem;
+        }
+      }
+
       & button {
         border: none;
         background-color: transparent;
         cursor: pointer;
-      }
-
-      &__minus,
-      &__plus {
-        font-size: 1.8rem;
       }
 
       &__remove {
@@ -493,5 +512,21 @@
         margin-left: auto;
       }
     }
+  }
+}
+
+// CLOSE BTN FOR MOBILE MENU, CART, PRODUCT MODAL
+.close-btn {
+  font-size: 4rem;
+  // width: min-content;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  position: absolute;
+  top: 1.6rem;
+  right: 1.6rem;
+
+  &:hover {
+    color: $orange;
   }
 }

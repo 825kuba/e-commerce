@@ -33,12 +33,7 @@ class CartView {
     });
   }
 
-  updateCart(cart) {
-    // update cart btn number
-    cartBtn.querySelector('span').innerText = `${cart.length}`;
-    //create set from cart array - avoid duplicates
-    const cartSet = new Set(cart);
-    console.log(cartSet);
+  renderCart(cart) {
     // update cart container - render cart items
     cartContainer.innerHTML = '';
     cart.forEach(item => {
@@ -55,18 +50,24 @@ class CartView {
             <a href="#" class="nav__cart__item__name"
               >${item.title}</a
             >
-            <p class="nav__cart__item__size">XL</p>
+            <p class="nav__cart__item__size">${item.specs.size} / Color ${item.specs.color}</p>
           </div>
           <p class="nav__cart__item__price">$<span>${item.price}</span></p>
-          <div class="nav__cart__item__count">
-            <button class="nav__cart__item__minus">
-              <i class="las la-minus"></i>
-            </button>
-            <span class="nav__cart__item__num">1</span>
-            <button class="nav__cart__item__plus">
-              <i class="las la-plus"></i>
-            </button>
-          </div>
+
+          <form class="nav__cart__item__qty">
+            <div class="nav__cart__item__input-wrap">
+              <button type="button"         class="nav__cart__item__minus">-</button>
+              <input class="product__qty"
+                type="number"
+                min="1"
+                value="${item.specs.qty}"
+                class="nav__cart__item__num"
+                id="number"
+              />
+              <button type="button"     class="nav__cart__item__plus">+</button>
+            </div>
+          </form>
+
           <button   class="nav__cart__item__remove">Remove</button>
         </div>
         `
@@ -80,8 +81,39 @@ class CartView {
         totalPrice += price;
       }
     );
-    console.log(totalPrice.toFixed(2));
     cartSubtotal.innerText = totalPrice.toFixed(2);
+  }
+
+  updateCartBtn(cart) {
+    // update cart btn number
+    cartBtn.querySelector('span').innerText = `${cart.length}`;
+  }
+
+  // remove btn event
+  addEventListenerRemoveBtn(handler) {
+    // for each remove btn
+    [...cartContainer.querySelectorAll('.nav__cart__item__remove')].forEach(
+      btn => {
+        // add event listener
+        btn.addEventListener('click', e => {
+          e.preventDefault();
+          // get the item
+          const item = btn.closest('.nav__cart__item');
+          // get index of item in cart
+          const index = [
+            ...cartContainer.querySelectorAll('.nav__cart__item'),
+          ].indexOf(item);
+          // run handler with index
+          handler(index);
+        });
+      }
+    );
+  }
+
+  updateCart(cart, handler) {
+    this.renderCart(cart);
+    this.updateCartBtn(cart);
+    this.addEventListenerRemoveBtn(handler);
   }
 }
 

@@ -77,10 +77,10 @@ class productView {
         <form action="#" class="product__form">
           <div class="select-wrap">
             <select name="size" id="size"     class="product__size">
-              <option value="s">Small</option>
-              <option value="m">Medium</option>
-              <option value="l">Large</option>
-              <option value="xl">X-Large</option>
+              <option value="Small">Small</option>
+              <option value="Medium">Medium</option>
+              <option value="Large">Large</option>
+              <option value="X-large">X-Large</option>
             </select>
           </div>
           <div class="select-wrap">
@@ -119,7 +119,7 @@ class productView {
     // render correct amount of stars based on product rating
     const rating = Math.round(product.rating.rate);
     for (let i = 0; i < rating; i++) {
-      document
+      productEle
         .querySelector('.product__review--stars')
         .insertAdjacentHTML('beforeend', '<i class="las la-star"></i>');
     }
@@ -128,8 +128,8 @@ class productView {
   // add event listeners to product quantity btns
   addEventQtyBtns() {
     // select elements
-    const formQty = document.querySelector('.input-wrap');
-    const formQtyInput = document.querySelector('.product__qty');
+    const formQty = productEle.querySelector('.input-wrap');
+    const formQtyInput = productEle.querySelector('.product__qty');
     // add event listener to parent element
     formQty.addEventListener('click', e => {
       // find target
@@ -153,21 +153,26 @@ class productView {
   // add event listener to add to cart btn
   addEventAddToCart(handler) {
     // select btn ele
-    const addToCartBtn = document.querySelector('.product__add');
+    const addToCartBtn = productEle.querySelector('.product__add');
     // add listener
     addToCartBtn.addEventListener('click', e => {
       e.preventDefault();
-      console.log('added to cart');
+      // create product properties object
+      const specs = {
+        size: `${productEle.querySelector('.product__size').value}`,
+        color: `${productEle.querySelector('.product__color').value}`,
+        qty: +productEle.querySelector('.product__qty').value,
+      };
       // run handler
-      handler();
+      handler(specs);
     });
   }
 
   addEventImageGallery() {
     // select img wrappers, slider, imgs
-    const productImages = document.querySelector('.product__images');
-    const productSlider = document.querySelector('.product__slider');
-    const productImgs = [...document.querySelectorAll('.product__img')];
+    const productImages = productEle.querySelector('.product__images');
+    const productSlider = productEle.querySelector('.product__slider');
+    const productImgs = [...productEle.querySelectorAll('.product__img')];
 
     // 1) MOBILE GALLERY
     //////////////////////////////
@@ -196,13 +201,13 @@ class productView {
           // if the first img is intersecting
           if (entry.target === productImgs[0])
             // hide left arrow
-            document
+            productEle
               .querySelector('.product__slider-btn--left')
               .classList.toggle('hidden', entry.isIntersecting);
           // if last img is intersecting
           if (entry.target === productImgs[productImgs.length - 1])
             // hide right arrow
-            document
+            productEle
               .querySelector('.product__slider-btn--right')
               .classList.toggle('hidden', entry.isIntersecting);
         });
@@ -250,9 +255,9 @@ class productView {
 
   loadProduct(product, handler) {
     this.renderProductModal(product);
+    this.addEventImageGallery();
     this.addEventQtyBtns();
     this.addEventAddToCart(handler);
-    this.addEventImageGallery();
   }
 
   addEventCloseProduct() {
