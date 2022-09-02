@@ -1,10 +1,11 @@
 'use strict';
 
 const cartBtn = document.querySelector('.nav__cart-btn');
-const cart = document.querySelector('.nav__cart');
+const cartEle = document.querySelector('.nav__cart');
 const closeCartBtn = document.querySelector('.nav__cart__close-cart');
 const cartContent = document.querySelector('.nav__cart__content');
 const cartSubtotal = document.querySelector('.nav__cart__subtotal span');
+const productModal = document.querySelector('.product-modal');
 
 class CartView {
   cartContainer;
@@ -13,14 +14,14 @@ class CartView {
     // open cart
     cartBtn.addEventListener('click', e => {
       e.preventDefault();
-      cart.classList.add('open');
+      cartEle.classList.add('open');
       document.body.classList.add('no-scroll');
     });
 
     // close cart
     closeCartBtn.addEventListener('click', e => {
       e.preventDefault();
-      cart.classList.remove('open');
+      cartEle.classList.remove('open');
       document.body.classList.remove('no-scroll');
     });
 
@@ -29,7 +30,7 @@ class CartView {
       // only continue if Escape is pressed
       if (e.key !== 'Escape') return;
       // close product modal
-      cart.classList.remove('open');
+      cartEle.classList.remove('open');
       // return scrolling to body
       document.body.classList.remove('no-scroll');
     });
@@ -113,7 +114,7 @@ class CartView {
   // }
 
   // handler event lsiteners on cart items
-  addListenerCartItems(cart, removeHandler, qtyHandler) {
+  addListenerCartItems(cart, removeHandler, qtyHandler, productHandler) {
     // add one listener to cart container - a new one is created each time the cart is re-rendered, so there is always just one event listener
     this.cartContainer.addEventListener('click', e => {
       e.preventDefault();
@@ -149,15 +150,20 @@ class CartView {
       if (e.target === name || e.target === img) {
         // close cart and open cart item's product
         console.log('name');
+        console.log(item);
+        productModal.classList.add('open');
+        cartEle.classList.remove('open');
+        document.body.classList.add('no-scroll');
+        productHandler(item);
       }
     });
   }
 
-  updateCart(cart, removeHandler, qtyHandler) {
+  updateCart(cart, removeHandler, qtyHandler, productHandler) {
     this.renderCart(cart);
     this.updateCartBtn(cart);
     // this.addEventListenerRemoveBtn(handler);
-    this.addListenerCartItems(cart, removeHandler, qtyHandler);
+    this.addListenerCartItems(cart, removeHandler, qtyHandler, productHandler);
   }
 }
 

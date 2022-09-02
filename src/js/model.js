@@ -13,7 +13,7 @@ export const state = {
   },
 };
 
-export const getProducts = async category => {
+export const fetchProductsByCategory = async category => {
   try {
     // fetch data
     const response = await fetch(
@@ -35,6 +35,21 @@ export const getProducts = async category => {
     console.error(err);
     throw err;
   }
+};
+
+export const fetchSingleProduct = async id => {
+  try {
+    // fetch data
+    const response = await fetch(`https://fakestoreapi.com/products/${id}`);
+    // throw error if needed
+    if (!response.ok)
+      throw new Error(`There was and error (${response.status}) :(`);
+    // tranform data
+    const data = await response.json();
+    // put data in state object
+    state.session.productModal = data;
+    return data;
+  } catch (err) {}
 };
 
 export const saveToStorage = () => {

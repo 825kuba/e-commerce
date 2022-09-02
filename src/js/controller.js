@@ -15,7 +15,7 @@ async function controlLoadProductsByCategory() {
     //get ID of html page
     const id = document.body.id;
     // get products in category based on ID
-    await model.getProducts(id);
+    await model.fetchProductsByCategory(id);
     //render products
     categoryView.renderCategoryProducts(model.state.categories[`${id}`]);
   } catch (err) {
@@ -24,20 +24,29 @@ async function controlLoadProductsByCategory() {
 }
 
 // control creating product modal window after clicking product in category section
-function controlProductModal(clickedProduct) {
-  // get clicked product ID
-  const clickedID = +clickedProduct.id;
-  // get page ID
-  const pageID = document.body.id;
-  // find the correct product in state
-  const product = model.state.categories[`${pageID}`].find(
-    ele => ele.id === clickedID
-  );
-  // pass new object to state
-  model.state.session.productModal = product;
-  model.saveToStorage();
-  // init and render modal window
-  productView.loadProduct(product, controlAddToCart);
+async function controlOpenProduct(clickedProduct) {
+  try {
+    //render spinner
+    productView.renderSpinner();
+    // get clicked product ID
+    const clickedID = +clickedProduct.id;
+    // get page ID
+    const pageID = document.body.id;
+    // find the correct product in state
+    const productInCategory = model.state.categories[`${pageID}`]?.find(
+      ele => ele.id === clickedID
+    );
+    // if category doesn't exists in state object fetch product from API, then pass product to state
+    model.state.session.productModal = productInCategory
+      ? productInCategory
+      : await model.fetchSingleProduct(clickedID);
+    // save to storage
+    model.saveToStorage();
+    // init and render modal window
+    productView.loadProduct(model.state.session.productModal, controlAddToCart);
+  } catch (err) {
+    console.error(err);
+  }
 }
 
 function controlAddToCart(specs) {
@@ -73,7 +82,8 @@ function controlAddToCart(specs) {
   cartView.updateCart(
     model.state.session.cart,
     controlRemoveFromCart,
-    controlCartItemQty
+    controlCartItemQty,
+    controlOpenProduct
   );
   // hide product
   document.querySelector('.product-modal').classList.remove('open');
@@ -91,7 +101,8 @@ function controlRemoveFromCart(index) {
   cartView.updateCart(
     model.state.session.cart,
     controlRemoveFromCart,
-    controlCartItemQty
+    controlCartItemQty,
+    controlOpenProduct
   );
 }
 
@@ -103,7 +114,8 @@ function controlCartItemQty(updatedCart) {
   cartView.updateCart(
     model.state.session.cart,
     controlRemoveFromCart,
-    controlCartItemQty
+    controlCartItemQty,
+    controlOpenProduct
   );
 }
 
@@ -113,11 +125,12 @@ function init() {
   cartView.addEventOpenCloseCart();
   productView.addEventCloseProduct();
   controlLoadProductsByCategory();
-  categoryView.addEventListenerToCategoryProducts(controlProductModal);
+  categoryView.addEventListenerToCategoryProducts(controlOpenProduct);
   cartView.updateCart(
     model.state.session.cart,
     controlRemoveFromCart,
-    controlCartItemQty
+    controlCartItemQty,
+    controlOpenProduct
   );
 }
 init();

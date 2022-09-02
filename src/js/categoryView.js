@@ -1,9 +1,13 @@
 'use strict';
 
+import AsyncView from './asyncView.js';
+
 const productsContainer = document.querySelector('.products__container');
 const productModal = document.querySelector('.product-modal');
 
-class CategoryView {
+class CategoryView extends AsyncView {
+  parentEle = document.querySelector('.products__container');
+
   renderCategoryProducts(products) {
     // clear parent element
     productsContainer.innerHTML = '';
@@ -56,14 +60,14 @@ class CategoryView {
 
   // render spinner
   renderSpinner() {
-    productsContainer.innerHTML = `
+    this.parentEle.innerHTML = `
         <p class="products__loading">Loading...</p>
       `;
   }
 
   // render error
   renderError(err) {
-    productsContainer.innerHTML = `
+    this.parentEle.innerHTML = `
         <p class="products__error">${err}</p>
       `;
   }
