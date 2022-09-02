@@ -275,6 +275,7 @@
 
       &__img {
         // grid-area: img;
+        cursor: pointer;
         grid-row: 1 / 5;
         grid-column: 1 / 5;
         display: block;

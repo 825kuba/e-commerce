@@ -24,7 +24,11 @@ export const getProducts = async category => {
       throw new Error(`There was and error (${response.status}) :(`);
     // tranform data
     const data = await response.json();
-    // console.log(data);
+    // set isOnSale property - true to first 2 objects
+    data.forEach((item, i) => {
+      if (i < 2) item.isOnSale = true;
+      else item.isOnSale = false;
+    });
     // put data in state object
     state.categories[`${category}`] = data;
   } catch (err) {

@@ -33,9 +33,6 @@ function controlProductModal(clickedProduct) {
   const product = model.state.categories[`${pageID}`].find(
     ele => ele.id === clickedID
   );
-  // check if product is on sale
-  const sale = clickedProduct.querySelector('.products__price--before');
-  product.isOnSale = sale ? true : false;
   // pass new object to state
   model.state.session.productModal = product;
   model.saveToStorage();
@@ -69,13 +66,19 @@ function controlAddToCart(specs) {
     // else add new item to cart
     model.state.session.cart.push(product);
     console.log('added to cart');
-    document.querySelector('.product-modal').classList.remove('open');
-    document.querySelector('.nav__cart').classList.add('open');
   }
   //save to local storage
   model.saveToStorage();
   // render cart
-  cartView.updateCart(model.state.session.cart, controlRemoveFromCart);
+  cartView.updateCart(
+    model.state.session.cart,
+    controlRemoveFromCart,
+    controlCartItemQty
+  );
+  // hide product
+  document.querySelector('.product-modal').classList.remove('open');
+  // open cart
+  document.querySelector('.nav__cart').classList.add('open');
 }
 
 // remove items from cart
@@ -85,7 +88,23 @@ function controlRemoveFromCart(index) {
   //save to local storage
   model.saveToStorage();
   // update cart
-  cartView.updateCart(model.state.session.cart, controlRemoveFromCart);
+  cartView.updateCart(
+    model.state.session.cart,
+    controlRemoveFromCart,
+    controlCartItemQty
+  );
+}
+
+function controlCartItemQty(updatedCart) {
+  console.log('running');
+  model.state.session.cart = updatedCart;
+  model.saveToStorage();
+  // update cart
+  cartView.updateCart(
+    model.state.session.cart,
+    controlRemoveFromCart,
+    controlCartItemQty
+  );
 }
 
 function init() {
@@ -95,6 +114,10 @@ function init() {
   productView.addEventCloseProduct();
   controlLoadProductsByCategory();
   categoryView.addEventListenerToCategoryProducts(controlProductModal);
-  cartView.updateCart(model.state.session.cart, controlRemoveFromCart);
+  cartView.updateCart(
+    model.state.session.cart,
+    controlRemoveFromCart,
+    controlCartItemQty
+  );
 }
 init();

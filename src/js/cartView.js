@@ -3,10 +3,12 @@
 const cartBtn = document.querySelector('.nav__cart-btn');
 const cart = document.querySelector('.nav__cart');
 const closeCartBtn = document.querySelector('.nav__cart__close-cart');
-const cartContainer = document.querySelector('.nav__cart__container');
+const cartContent = document.querySelector('.nav__cart__content');
 const cartSubtotal = document.querySelector('.nav__cart__subtotal span');
 
 class CartView {
+  cartContainer;
+
   addEventOpenCloseCart() {
     // open cart
     cartBtn.addEventListener('click', e => {
@@ -35,17 +37,19 @@ class CartView {
 
   renderCart(cart) {
     // update cart container - render cart items
-    cartContainer.innerHTML = '';
+    cartContent.innerHTML = `
+      <div class="nav__cart__container"></div>
+    `;
+    this.cartContainer = document.querySelector('.nav__cart__container');
     cart.forEach(item => {
-      cartContainer.insertAdjacentHTML(
+      this.cartContainer.insertAdjacentHTML(
         'beforeend',
         `
-        <div class="nav__cart__item">
-          <a href="#" class="nav__cart__item__img">
+        <div class="nav__cart__item" id="${item.id}">
             <img
               src="${item.image}"
+              class="nav__cart__item__img"
             />
-          </a>
           <div class="nav__cart__item__text">
             <a href="#" class="nav__cart__item__name"
               >${item.title}</a
@@ -54,7 +58,7 @@ class CartView {
           </div>
           <p class="nav__cart__item__price">$<span>${item.price}</span></p>
 
-          <form class="nav__cart__item__qty">
+          <form class="nav__cart__item__qty" action="">
             <div class="nav__cart__item__input-wrap">
               <button type="button"         class="nav__cart__item__minus">-</button>
               <input class="product__qty"
@@ -75,12 +79,10 @@ class CartView {
     });
     // update cart subtotal
     let totalPrice = 0;
-    [...document.querySelectorAll('.nav__cart__item__price span')].forEach(
-      item => {
-        const price = +item.innerText;
-        totalPrice += price;
-      }
-    );
+    cart.forEach(item => {
+      const price = item.specs.qty * item.price;
+      totalPrice += price;
+    });
     cartSubtotal.innerText = totalPrice.toFixed(2);
   }
 
@@ -89,31 +91,73 @@ class CartView {
     cartBtn.querySelector('span').innerText = `${cart.length}`;
   }
 
-  // remove btn event
-  addEventListenerRemoveBtn(handler) {
-    // for each remove btn
-    [...cartContainer.querySelectorAll('.nav__cart__item__remove')].forEach(
-      btn => {
-        // add event listener
-        btn.addEventListener('click', e => {
-          e.preventDefault();
-          // get the item
-          const item = btn.closest('.nav__cart__item');
-          // get index of item in cart
-          const index = [
-            ...cartContainer.querySelectorAll('.nav__cart__item'),
-          ].indexOf(item);
-          // run handler with index
-          handler(index);
-        });
+  // // remove btn event
+  // addEventListenerRemoveBtn(handler) {
+  //   // for each remove btn
+  //   [...cartContent.querySelectorAll('.nav__cart__item__remove')].forEach(
+  //     btn => {
+  //       // add event listener
+  //       btn.addEventListener('click', e => {
+  //         e.preventDefault();
+  //         // get the item
+  //         const item = btn.closest('.nav__cart__item');
+  //         // get index of item in cart
+  //         const index = [
+  //           ...cartContent.querySelectorAll('.nav__cart__item'),
+  //         ].indexOf(item);
+  //         // run handler with index
+  //         handler(index);
+  //       });
+  //     }
+  //   );
+  // }
+
+  // handler event lsiteners on cart items
+  addListenerCartItems(cart, removeHandler, qtyHandler) {
+    // add one listener to cart container - a new one is created each time the cart is re-rendered, so there is always just one event listener
+    this.cartContainer.addEventListener('click', e => {
+      e.preventDefault();
+      // declare or the possible event targets
+      const remove = e.target.closest('.nav__cart__item__remove');
+      const plus = e.target.closest('.nav__cart__item__plus');
+      const minus = e.target.closest('.nav__cart__item__minus');
+      const name = e.target.closest('.nav__cart__item__name');
+      const img = e.target.closest('.nav__cart__item__img');
+      // get the target's closest cart item
+      const item = e.target.closest('.nav__cart__item');
+      // get index of item in cart
+      const index = [
+        ...cartContent.querySelectorAll('.nav__cart__item'),
+      ].indexOf(item);
+      // depending on target, perform specific actions
+      if (e.target === remove) {
+        // remove cart item
+        removeHandler(index);
       }
-    );
+      if (e.target === plus) {
+        // increase qty of cart item
+        const updatedCart = cart;
+        updatedCart[index].specs.qty++;
+        qtyHandler(updatedCart);
+      }
+      if (e.target === minus) {
+        const updatedCart = cart;
+        if (updatedCart[index].specs.qty <= 1) return;
+        updatedCart[index].specs.qty--;
+        qtyHandler(updatedCart);
+      }
+      if (e.target === name || e.target === img) {
+        // close cart and open cart item's product
+        console.log('name');
+      }
+    });
   }
 
-  updateCart(cart, handler) {
+  updateCart(cart, removeHandler, qtyHandler) {
     this.renderCart(cart);
     this.updateCartBtn(cart);
-    this.addEventListenerRemoveBtn(handler);
+    // this.addEventListenerRemoveBtn(handler);
+    this.addListenerCartItems(cart, removeHandler, qtyHandler);
   }
 }
 

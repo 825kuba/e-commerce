@@ -74,7 +74,7 @@ class productView {
           <img src="../img/shoppay.svg" alt="" /> <a  href="#">Learn more</a>
         </p>
 
-        <form action="#" class="product__form">
+        <form action="" class="product__form">
           <div class="select-wrap">
             <select name="size" id="size"     class="product__size">
               <option value="Small">Small</option>
