@@ -50,32 +50,80 @@ async function controlOpenProduct(clickedProduct) {
 }
 
 function controlAddToCart(specs) {
+  // debugger;
   // create new object and give it specs from argument
-  const product = model.state.session.productModal;
-  product.specs = specs;
-  console.log(product.id);
+  const newProduct = model.state.session.productModal;
+  newProduct.specs = specs;
+  newProduct.specs.code = `${newProduct.id}-${newProduct.specs.size}-${newProduct.specs.color}`;
+  // console.log(newProduct);
+  // console.log(product);
 
   // create condition - check if item has the same ID, size, and color ❌BUGGED❌ - unexpected behaviour
-  const alreadyExists = item =>
-    item.id === product.id &&
-    item.specs.size === product.specs.size &&
-    item.specs.color === product.specs.color;
+  // const alreadyExists = item => {
+  //   console.log(model.state.session.cart);
+  //   console.log('original:', product.id, 'current:', item.id);
+  //   console.log('original:', product.specs.size, 'current:', item.specs.size);
+  //   console.log('original:', product.specs.color, 'current:', item.specs.color);
+  //   console.log('-----------------');
+  //   return (
+  //     item.id === product.id &&
+  //     item.specs.size === product.specs.size &&
+  //     item.specs.color === product.specs.color
+  //   );
+  // };
+
+  const originalItem = model.state.session.cart.find(
+    item => item.specs.code === newProduct.specs.code
+  );
+
+  console.log(
+    model.state.session.cart.find(
+      item => item.specs.code === newProduct.specs.code
+    )
+  );
+
+  // console.log(originalItem);
+
+  if (!originalItem) {
+    console.log('no match');
+    model.state.session.cart.push(newProduct);
+  } else {
+    console.log('match');
+    const index = model.state.session.cart.findIndex(
+      item => item === originalItem
+    );
+    model.state.session.cart[index].specs.qty += newProduct.specs.qty;
+  }
+
+  console.log(model.state.session.cart);
 
   // check if product already exists in cart
-  if (model.state.session.cart.some(item => alreadyExists(item))) {
-    // if it does
-    // find index of the original item in cart
-    const index = model.state.session.cart.findIndex(item =>
-      alreadyExists(item)
-    );
-    // increase quantity on the original product
-    model.state.session.cart[index].specs.qty += product.specs.qty;
-    console.log('added to original item');
-  } else {
-    // else add new item to cart
-    model.state.session.cart.push(product);
-    console.log('added to cart');
-  }
+  // console.log(
+  //   model.state.session.cart.some(
+  //     item =>
+  //       item.id === product.id &&
+  //       item.specs.size === product.specs.size &&
+  //       item.specs.color === product.specs.color
+  //   )
+  // );
+
+  // console.log(model.state.session.cart.some(item => alreadyExists(item)));
+
+  // if (model.state.session.cart.some(item => alreadyExists(item))) {
+  //   // if it does
+  //   // find index of the original item in cart
+  //   const index = model.state.session.cart.findIndex(item =>
+  //     alreadyExists(item)
+  //   );
+  //   // increase quantity on the original product
+  //   model.state.session.cart[index].specs.qty += product.specs.qty;
+  //   // console.log(model.session.cart[index]);
+  // } else {
+  //   // else add new item to cart
+  //   model.state.session.cart.push(product);
+  //   // console.log(model.state.session.cart.some(item => alreadyExists(item)));
+  //   // console.log(product);
+  // }
   //save to local storage
   model.saveToStorage();
   // render cart

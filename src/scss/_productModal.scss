@@ -19,7 +19,11 @@
   padding: 7rem 0 7rem 0;
 
   @include respond(md/lg) {
-    padding: 7rem 2rem;
+    padding: 8rem 2rem;
+  }
+
+  @include respond(lg) {
+    padding: 8rem 8rem;
   }
 
   & .product {
@@ -59,6 +63,15 @@
       }
     }
 
+    &__slider {
+      @include respond(md/lg) {
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: 50px 1fr;
+        grid-template-rows: repeat(10, 1fr);
+      }
+    }
+
     &__images {
       display: flex;
       gap: 4rem;
@@ -71,10 +84,10 @@
       }
 
       @include respond(md/lg) {
-        display: grid;
-        gap: 1rem;
-        grid-template-columns: 0.1fr 1fr;
-        grid-template-rows: repeat(10, 1fr);
+        grid-column: 1 / 2;
+        grid-row: 1 / -1;
+        flex-direction: column;
+        gap: 2rem;
       }
     }
 
@@ -88,38 +101,37 @@
         max-width: 100%;
       }
 
-      &:not(.big) {
+      &:not(.product__img--big) {
         @include respond(md/lg) {
-          grid-column: 1 / 2;
           cursor: pointer;
         }
       }
 
-      &.big {
+      &--big {
+        display: none;
         @include respond(md/lg) {
+          display: block;
           grid-column: 2 / 3;
           grid-row: 1 / -1;
         }
       }
 
-      &--color-2 {
-        filter: hue-rotate(90deg);
+      &.selected {
+        @include respond(md/lg) {
+          border: 1px solid $black;
+        }
+      }
 
-        @include respond(md/lg) {
-          grid-row: 1 / 2;
-        }
+      &[data-color='color-2'] {
+        filter: hue-rotate(90deg);
       }
-      &--color-3 {
+
+      &[data-color='color-3'] {
         filter: hue-rotate(180deg);
-        @include respond(md/lg) {
-          grid-row: 2 / 3;
-        }
       }
-      &--color-4 {
+
+      &[data-color='color-4'] {
         filter: hue-rotate(270deg);
-        @include respond(md/lg) {
-          grid-row: 3 / 4;
-        }
       }
     }
 

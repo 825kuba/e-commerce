@@ -27,12 +27,8 @@ html {
     font-size: 68.75%;
   }
 
-  @include respond(xl) {
-    font-size: 75%;
-  }
-
   @include respond(xxl) {
-    font-size: 81.25%;
+    font-size: 75%;
   }
 }
 

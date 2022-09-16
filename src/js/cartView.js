@@ -47,10 +47,10 @@ class CartView {
         'beforeend',
         `
         <div class="nav__cart__item" id="${item.id}">
-            <img
-              src="${item.image}"
-              class="nav__cart__item__img"
-            />
+          <img
+            src="${item.image}"
+            class="nav__cart__item__img"
+          />
           <div class="nav__cart__item__text">
             <a href="#" class="nav__cart__item__name"
               >${item.title}</a
@@ -160,6 +160,7 @@ class CartView {
   }
 
   updateCart(cart, removeHandler, qtyHandler, productHandler) {
+    console.log('update cart');
     this.renderCart(cart);
     this.updateCartBtn(cart);
     // this.addEventListenerRemoveBtn(handler);

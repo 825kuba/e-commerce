@@ -20,24 +20,34 @@ class productView extends AsyncView {
         <img
         src="${product.image}"
         alt="${product.title}"
-        class="product__img product__img--color-1 big"
+        class="product__img selected"
+        data-color="color-1"
         />
         <img
         src="${product.image}"
         alt="${product.title}"
-        class="product__img product__img--color-2"
+        class="product__img"
+        data-color="color-2"
         />
         <img
         src="${product.image}"
         alt="${product.title}"
-        class="product__img product__img--color-3"
+        class="product__img"
+        data-color="color-3"
         />
         <img
         src="${product.image}"
         alt="${product.title}"
-        class="product__img product__img--color-4"
+        class="product__img"
+        data-color="color-4"
         />
       </div>
+      <img
+      src="${product.image}"
+      alt="${product.title}"
+      class="product__img product__img--big"
+      data-color="color-1"
+      />
       <div class="product__slider-btns-wrap">
         <button class="product__slider-btn  product__slider-btn--left" data-dir="-1">
           <i class="las la-arrow-left"></i>
@@ -177,7 +187,8 @@ class productView extends AsyncView {
     // select img wrappers, slider, imgs
     const productImages = this.parentEle.querySelector('.product__images');
     const productSlider = this.parentEle.querySelector('.product__slider');
-    const productImgs = [...this.parentEle.querySelectorAll('.product__img')];
+    const productImgs = [...productImages.querySelectorAll('.product__img')];
+    const productImgBig = this.parentEle.querySelector('.product__img--big');
 
     // 1) MOBILE GALLERY
     //////////////////////////////
@@ -207,7 +218,6 @@ class productView extends AsyncView {
           if (!this.parentEle.querySelector('.product__slider')) return;
           // if the first img is intersecting
           if (entry.target === productImgs[0]) {
-            console.log(entry.target);
             // hide left arrow
             this.parentEle
               .querySelector('.product__slider-btn--left')
@@ -244,16 +254,25 @@ class productView extends AsyncView {
     productSlider.addEventListener('click', e => {
       e.preventDefault();
       // define clicked img
-      const img = e.target.closest('.product__img');
+      const clickedImg = e.target.closest('.product__img');
+      // guard clause
+      if (!clickedImg) return;
+      // define color of clicked img
+      const clickedImgColor = clickedImg.dataset.color;
       // only continue if clicked img is one of the small ones
-      if (!img || window.innerWidth <= 800 || img.classList.contains('big'))
+      if (
+        !clickedImg ||
+        window.innerWidth <= 800 ||
+        clickedImg.classList.contains('product__img--big')
+      )
         return;
-      // remove big class
-      productImgs.forEach(img => {
-        img.classList.remove('big');
-      });
-      // add big class to clicked img
-      img.classList.add('big');
+      // remove selected class from all imgs
+      productImgs.forEach(img => img.classList.remove('selected'));
+      // set selected class to clicked img
+      clickedImg.classList.add('selected');
+
+      // change color attribute of big img to the color attribute of the clicked img - in real world we would probably change src
+      productImgBig.dataset.color = clickedImgColor;
     });
   }
 
