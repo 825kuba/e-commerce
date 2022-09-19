@@ -277,7 +277,6 @@ class productView extends AsyncView {
   }
 
   loadProduct(product, handler) {
-    console.log('updating product');
     this.renderProductModal(product);
     this.addEventImageGallery();
     this.addEventQtyBtns();

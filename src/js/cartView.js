@@ -149,8 +149,6 @@ class CartView {
       }
       if (e.target === name || e.target === img) {
         // close cart and open cart item's product
-        console.log('name');
-        console.log(item);
         productModal.classList.add('open');
         cartEle.classList.remove('open');
         document.body.classList.add('no-scroll');
@@ -160,7 +158,6 @@ class CartView {
   }
 
   updateCart(cart, removeHandler, qtyHandler, productHandler) {
-    console.log('update cart');
     this.renderCart(cart);
     this.updateCartBtn(cart);
     // this.addEventListenerRemoveBtn(handler);
