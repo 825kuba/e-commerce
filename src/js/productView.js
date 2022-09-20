@@ -9,14 +9,46 @@ class productView extends AsyncView {
   parentEle = document.querySelector('.product');
 
   renderProductModal(product) {
-    // clean modal inner HTML
-    this.parentEle.innerHTML = '';
+    // if product only has 1 size option, create special markup for size options
+    let sizeOptionsMarkup = ``;
+    if (product.id === 1 || product.category === 'electronics') {
+      sizeOptionsMarkup = `
+        <option value="OS">OS</option>
+      `;
+      // for regular products create this markup
+    } else {
+      sizeOptionsMarkup = `
+        <option value="Small">Small</option>
+        <option value="Medium">Medium</option>
+        <option value="Large">Large</option>
+        <option value="X-large">X-Large</option>
+      `;
+    }
 
-    this.parentEle.insertAdjacentHTML(
-      'beforeend',
-      `
-    <div class="product__slider">
-      <div class="product__images">  
+    // if product category is jewelery, create special markup for color options and for images
+    let colorOptionsMarkup = ``;
+    let imagesMarkup = ``;
+    if (product.category === 'jewelery') {
+      colorOptionsMarkup = `
+        <option value="Natural">Natural</option>
+      `;
+      imagesMarkup = `
+        <img
+        src="${product.image}"
+        alt="${product.title}"
+        class="product__img selected solo"
+        data-color="natural"
+        />
+      `;
+      // for regular products create this markup
+    } else {
+      colorOptionsMarkup = `
+        <option value="1">Color 1</option>
+        <option value="2">Color 2</option>
+        <option value="3">Color 3</option>
+        <option value="4">Color 4</option>
+      `;
+      imagesMarkup = `
         <img
         src="${product.image}"
         alt="${product.title}"
@@ -41,6 +73,18 @@ class productView extends AsyncView {
         class="product__img"
         data-color="color-4"
         />
+      `;
+    }
+
+    // clean modal inner HTML
+    this.parentEle.innerHTML = '';
+
+    this.parentEle.insertAdjacentHTML(
+      'beforeend',
+      `
+    <div class="product__slider">
+      <div class="product__images"> 
+        ${imagesMarkup}
       </div>
       <img
       src="${product.image}"
@@ -92,18 +136,12 @@ class productView extends AsyncView {
         <form action="" class="product__form">
           <div class="select-wrap">
             <select name="size" id="size"     class="product__size">
-              <option value="Small">Small</option>
-              <option value="Medium">Medium</option>
-              <option value="Large">Large</option>
-              <option value="X-large">X-Large</option>
+              ${sizeOptionsMarkup}
             </select>
           </div>
           <div class="select-wrap">
             <select name="color" id="color"       class="product__color">
-              <option value="1">Color 1</option>
-              <option value="2">Color 2</option>
-              <option value="3">Color 3</option>
-              <option value="4">Color 4</option>
+              ${colorOptionsMarkup}
             </select>
           </div>
           <div class="qty-wrap">

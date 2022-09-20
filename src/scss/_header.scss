@@ -61,6 +61,7 @@
     max-width: 100vw;
     height: 100vh;
     background-color: $bg-color;
+    overflow-y: auto;
 
     top: -200%;
     opacity: 0;
@@ -446,6 +447,8 @@
         background-color: transparent;
         padding: 1.5rem;
         font-size: 1.5rem;
+        resize: vertical;
+        max-width: 100%;
       }
     }
 

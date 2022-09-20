@@ -101,6 +101,15 @@
         max-width: 100%;
       }
 
+      &.solo {
+        max-width: 100%;
+        margin: 0 auto;
+
+        @include respond(md/lg) {
+          margin: 0;
+        }
+      }
+
       &:not(.product__img--big) {
         @include respond(md/lg) {
           cursor: pointer;

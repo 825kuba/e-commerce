@@ -55,7 +55,9 @@ class CartView {
             <a href="#" class="nav__cart__item__name"
               >${item.title}</a
             >
-            <p class="nav__cart__item__size">${item.specs.size} / Color ${item.specs.color}</p>
+            <p class="nav__cart__item__size">${item.specs.size} / ${
+          item.specs.color === 'Natural' ? '' : 'Color'
+        } ${item.specs.color}</p>
           </div>
           <p class="nav__cart__item__price">$<span>${item.price}</span></p>
 
