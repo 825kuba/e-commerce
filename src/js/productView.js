@@ -153,6 +153,7 @@ class productView extends AsyncView {
                 min="1"
                 max="10"
                 value="1"
+                step="1"
                 class="product__number"
                 id="number"
               />
@@ -203,12 +204,13 @@ class productView extends AsyncView {
     });
   }
 
-  // add event listener to add to cart btn
   addEventAddToCart(handler) {
-    // select btn ele
+    // select elements that will trigger add to cart action
     const addToCartBtn = this.parentEle.querySelector('.product__add');
-    // add listener
-    addToCartBtn.addEventListener('click', e => {
+    const form = this.parentEle.querySelector('.product__form');
+    const formQtyInput = this.parentEle.querySelector('.product__qty');
+    // create function
+    const addToCart = e => {
       e.preventDefault();
       // create product properties object
       const specs = {
@@ -218,6 +220,17 @@ class productView extends AsyncView {
       };
       // run handler
       handler(specs);
+    };
+    // add listener to "add to cart" btn
+    addToCartBtn.addEventListener('click', e => {
+      addToCart(e);
+    });
+    // add listener to form
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      // guard clause (empty string)
+      if (!formQtyInput.value) return;
+      addToCart(e);
     });
   }
 

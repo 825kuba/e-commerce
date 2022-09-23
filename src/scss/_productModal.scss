@@ -38,6 +38,16 @@
       justify-content: center;
     }
 
+    // &,
+    // & * {
+    //   &:focus {
+    //     outline: none;
+    //   }
+    //   &:focus-visible {
+    //     outline: 3px solid $orange;
+    //   }
+    // }
+
     &__slider-btns-wrap {
       margin-top: 0.5rem;
       padding: 0 1rem;
@@ -222,12 +232,19 @@
       &,
       & * {
         font-size: 1.6rem;
+        // &:focus {
+        //   outline: none;
+        // }
+        // &:focus-visible {
+        //   outline: 2px solid $orange;
+        // }
       }
 
       & .select-wrap {
         position: relative;
 
         &::after {
+          z-index: -1;
           content: '>';
           position: absolute;
           top: 50%;
@@ -247,6 +264,9 @@
         &:focus {
           outline: none;
         }
+        // &:focus-visible {
+        //   outline: 1px solid $orange;
+        // }
       }
 
       & .qty-wrap {
@@ -271,6 +291,9 @@
           &:focus {
             outline: none;
           }
+          // &:focus-visible {
+          //   outline: 1px solid $orange;
+          // }
 
           &::-webkit-outer-spin-button,
           &::-webkit-inner-spin-button {

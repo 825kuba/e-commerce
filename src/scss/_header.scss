@@ -337,10 +337,8 @@
 
       &__qty {
         grid-row: 3 / 4;
-        grid-column: 5 / 11;
+        grid-column: 5 / 10;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
 
         @include respond(md) {
           grid-column: 4 / 9;
@@ -359,6 +357,7 @@
 
       &__input-wrap {
         display: flex;
+        flex: 1;
 
         & input {
           text-align: center;

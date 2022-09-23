@@ -67,8 +67,9 @@ class CartView {
               <input class="product__qty"
                 type="number"
                 min="1"
+                max="10"
+                step="1"
                 value="${item.specs.qty}"
-                class="nav__cart__item__num"
                 id="number"
               />
               <button type="button"     class="nav__cart__item__plus">+</button>
@@ -140,10 +141,12 @@ class CartView {
       if (e.target === plus) {
         // increase qty of cart item
         const updatedCart = cart;
+        if (updatedCart[index].specs.qty >= 10) return;
         updatedCart[index].specs.qty++;
         qtyHandler(updatedCart);
       }
       if (e.target === minus) {
+        // decrease qty of cart item
         const updatedCart = cart;
         if (updatedCart[index].specs.qty <= 1) return;
         updatedCart[index].specs.qty--;
@@ -156,6 +159,32 @@ class CartView {
         document.body.classList.add('no-scroll');
         productHandler(item);
       }
+    });
+    // handle quantity input field submision
+    // select all forms in cart
+    const qtyFields = [
+      ...this.cartContainer.querySelectorAll('.nav__cart__item__qty'),
+    ];
+    // for each add listener for submit
+    qtyFields.forEach(ele => {
+      ele.addEventListener('submit', e => {
+        e.preventDefault();
+        // get the target's closest cart item
+        const item = e.target.closest('.nav__cart__item');
+        // get index of item in cart
+        const index = [
+          ...cartContent.querySelectorAll('.nav__cart__item'),
+        ].indexOf(item);
+        // get new value
+        const updatedCart = cart;
+        const newValue = ele.querySelector('.product__qty').value;
+        // guard clause (empty string)
+        if (!newValue) return;
+        // change the value in cart
+        updatedCart[index].specs.qty = +newValue;
+        // run handler
+        qtyHandler(updatedCart);
+      });
     });
   }
 
