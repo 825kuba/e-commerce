@@ -50,6 +50,7 @@ class CartView {
           <img
             src="${item.image}"
             class="nav__cart__item__img"
+            data-color="color-${item.specs.color}"
           />
           <div class="nav__cart__item__text">
             <a href="#" class="nav__cart__item__name"

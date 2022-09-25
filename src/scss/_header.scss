@@ -279,6 +279,8 @@
         width: 100%;
         max-width: 100px;
 
+        @include changeImgColor;
+
         @include respond(md) {
           grid-column: 1 / 4;
         }
