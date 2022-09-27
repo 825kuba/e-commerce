@@ -279,6 +279,10 @@
         width: 100%;
         max-width: 100px;
 
+        &.lazy {
+          animation: pulsate 2s infinite;
+        }
+
         @include changeImgColor;
 
         @include respond(md) {

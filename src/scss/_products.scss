@@ -62,10 +62,12 @@
   &__img {
     width: 100%;
     // height: 550px;
+    max-height: 100vh;
+
     object-fit: cover;
     margin-bottom: 1.75rem;
     flex: 1;
-    filter: contrast(0.75);
+    filter: contrast(0.8);
 
     @include respond(md) {
       height: 650px;
@@ -77,6 +79,10 @@
 
     @include respond(xxl) {
       height: 900px;
+    }
+
+    &.lazy {
+      animation: pulsate 2s infinite;
     }
   }
 
@@ -102,29 +108,12 @@
     font-size: 2.5rem;
     font-family: 'Playfair Display';
     margin: 0 auto;
-    animation: change 2s infinite;
+    animation: change 3s infinite;
   }
 
   &__error {
     font-size: 2.5rem;
     margin: 0 auto;
     color: $orange;
-  }
-}
-
-@keyframes change {
-  0% {
-    color: $black;
-    transform: scale(1);
-  }
-
-  50% {
-    color: $orange;
-    transform: scale(1.01);
-  }
-
-  100% {
-    color: $black;
-    transform: scale(1);
   }
 }

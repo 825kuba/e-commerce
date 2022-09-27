@@ -1,0 +1,28 @@
+@keyframes change {
+  0% {
+    color: $black;
+    transform: scale(1);
+  }
+
+  50% {
+    color: $orange;
+    transform: scale(1.01);
+  }
+
+  100% {
+    color: $black;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulsate {
+  0% {
+    filter: contrast(1);
+  }
+  50% {
+    filter: contrast(0.7);
+  }
+  100% {
+    filter: contrast(1);
+  }
+}

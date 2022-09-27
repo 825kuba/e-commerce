@@ -1,11 +1,11 @@
 'use strict';
 
-import AsyncView from './asyncView.js';
+import GeneralView from './generalView.js';
 
 const productsContainer = document.querySelector('.products__container');
 const productModal = document.querySelector('.product-modal');
 
-class CategoryView extends AsyncView {
+class CategoryView extends GeneralView {
   parentEle = document.querySelector('.products__container');
 
   renderCategoryProducts(products) {
@@ -20,7 +20,8 @@ class CategoryView extends AsyncView {
           <div class="products__product" id="${product.id}">
             ${i > 1 ? '' : '<span class="products__badge">on sale</span>'}
             <img
-              src="${product.image}"
+              src="../img/placeholder.jpg"
+              data-src="${product.image}"
               alt="${product.title}"
               class="products__img"
             />
@@ -58,19 +59,19 @@ class CategoryView extends AsyncView {
     });
   }
 
-  // render spinner
-  renderSpinner() {
-    this.parentEle.innerHTML = `
-        <p class="products__loading">Loading...</p>
-      `;
-  }
+  // // render spinner
+  // renderSpinner() {
+  //   this.parentEle.innerHTML = `
+  //       <p class="products__loading">Loading...</p>
+  //     `;
+  // }
 
-  // render error
-  renderError(err) {
-    this.parentEle.innerHTML = `
-        <p class="products__error">${err}</p>
-      `;
-  }
+  // // render error
+  // renderError(err) {
+  //   this.parentEle.innerHTML = `
+  //       <p class="products__error">${err}</p>
+  //     `;
+  // }
 }
 
 export default new CategoryView();

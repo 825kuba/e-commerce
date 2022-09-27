@@ -1,11 +1,11 @@
 'use strict';
 
-import AsyncView from './asyncView.js';
+import GeneralView from './generalView.js';
 
 const productWrapEle = document.querySelector('.product-modal');
 const closeProductBtn = document.querySelector('.product__close-product');
 
-class productView extends AsyncView {
+class productView extends GeneralView {
   parentEle = document.querySelector('.product');
 
   renderProductModal(product) {
@@ -34,7 +34,8 @@ class productView extends AsyncView {
       `;
       imagesMarkup = `
         <img
-        src="${product.image}"
+        src="${document.body.id === 'index' ? '' : '.'}./img/placeholder.jpg"
+        data-src="${product.image}"
         alt="${product.title}"
         class="product__img selected solo"
         data-color="natural"
@@ -50,25 +51,29 @@ class productView extends AsyncView {
       `;
       imagesMarkup = `
         <img
-        src="${product.image}"
+        src="${document.body.id === 'index' ? '' : '.'}./img/placeholder.jpg"
+        data-src="${product.image}"
         alt="${product.title}"
         class="product__img selected"
         data-color="color-1"
         />
         <img
-        src="${product.image}"
+        src="${document.body.id === 'index' ? '' : '.'}./img/placeholder.jpg"
+        data-src="${product.image}"
         alt="${product.title}"
         class="product__img"
         data-color="color-2"
         />
         <img
-        src="${product.image}"
+        src="${document.body.id === 'index' ? '' : '.'}./img/placeholder.jpg"
+        data-src="${product.image}"
         alt="${product.title}"
         class="product__img"
         data-color="color-3"
         />
         <img
-        src="${product.image}"
+        src="${document.body.id === 'index' ? '' : '.'}./img/placeholder.jpg"
+        data-src="${product.image}"
         alt="${product.title}"
         class="product__img"
         data-color="color-4"
@@ -87,7 +92,8 @@ class productView extends AsyncView {
         ${imagesMarkup}
       </div>
       <img
-      src="${product.image}"
+      src="${document.body.id === 'index' ? '' : '.'}./img/placeholder.jpg"
+        data-src="${product.image}"
       alt="${product.title}"
       class="product__img product__img--big"
       data-color="color-1"
@@ -332,6 +338,7 @@ class productView extends AsyncView {
     this.addEventImageGallery();
     this.addEventQtyBtns();
     this.addEventAddToCart(handler);
+    this.observeImgs('.product__img');
   }
 
   addEventCloseProduct() {

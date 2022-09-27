@@ -7,7 +7,9 @@ const cartContent = document.querySelector('.nav__cart__content');
 const cartSubtotal = document.querySelector('.nav__cart__subtotal span');
 const productModal = document.querySelector('.product-modal');
 
-class CartView {
+import GeneralView from './generalView.js';
+
+class CartView extends GeneralView {
   cartContainer;
 
   addEventOpenCloseCart() {
@@ -48,7 +50,10 @@ class CartView {
         `
         <div class="nav__cart__item" id="${item.id}">
           <img
-            src="${item.image}"
+            src="${
+              document.body.id === 'index' ? '' : '.'
+            }./img/placeholder.jpg"
+            data-src="${item.image}"
             class="nav__cart__item__img"
             data-color="color-${item.specs.color}"
           />
@@ -73,11 +78,11 @@ class CartView {
                 value="${item.specs.qty}"
                 id="number"
               />
-              <button type="button"     class="nav__cart__item__plus">+</button>
+              <button type="button" class="nav__cart__item__plus">+</button>
             </div>
           </form>
 
-          <button   class="nav__cart__item__remove">Remove</button>
+          <button class="nav__cart__item__remove">Remove</button>
         </div>
         `
       );
@@ -194,6 +199,7 @@ class CartView {
     this.updateCartBtn(cart);
     // this.addEventListenerRemoveBtn(handler);
     this.addListenerCartItems(cart, removeHandler, qtyHandler, productHandler);
+    this.observeImgs('.nav__cart__item__img');
   }
 }
 

@@ -18,6 +18,7 @@ async function controlLoadProductsByCategory() {
     await model.fetchProductsByCategory(id);
     //render products
     categoryView.renderCategoryProducts(model.state.categories[`${id}`]);
+    categoryView.observeImgs('.products__img');
   } catch (err) {
     categoryView.renderError(err.message);
   }
