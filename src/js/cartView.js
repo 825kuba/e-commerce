@@ -1,18 +1,18 @@
 'use strict';
 
 const cartBtn = document.querySelector('.nav__cart-btn');
-const cartEle = document.querySelector('.nav__cart');
-const closeCartBtn = document.querySelector('.nav__cart__close-cart');
-const cartContent = document.querySelector('.nav__cart__content');
-const cartSubtotal = document.querySelector('.nav__cart__subtotal span');
+const cartEle = document.querySelector('.cart');
+const closeCartBtn = document.querySelector('.cart__close-cart');
+const cartContent = document.querySelector('.cart__content');
+const cartSubtotal = document.querySelector('.cart__subtotal span');
 const productModal = document.querySelector('.product-modal');
-const cartMsg = document.querySelector('.nav__cart__message');
-const cartMsgBtn = document.querySelector('.nav__cart__message button');
+const cartMsg = document.querySelector('.cart__message');
+const cartMsgBtn = document.querySelector('.cart__message button');
 
 import GeneralView from './generalView.js';
 
 class CartView extends GeneralView {
-  parentEle = document.querySelector('.nav__cart__container');
+  parentEle = document.querySelector('.cart__container');
   cartMsgTimer;
 
   addEventOpenCloseCart() {
@@ -44,35 +44,35 @@ class CartView extends GeneralView {
   renderCart(cart) {
     // update cart container - render cart items
     cartContent.innerHTML = `
-      <div class="nav__cart__container"></div>
+      <div class="cart__container"></div>
     `;
-    this.parentEle = document.querySelector('.nav__cart__container');
+    this.parentEle = document.querySelector('.cart__container');
     cart.forEach(item => {
       this.parentEle.insertAdjacentHTML(
         'beforeend',
         `
-        <div class="nav__cart__item" id="${item.id}">
+        <div class="cart__item" id="${item.id}">
           <img
             src="${
               document.body.id === 'index' ? '' : '.'
             }./img/placeholder.jpg"
             data-src="${item.image}"
-            class="nav__cart__item__img"
+            class="cart__item__img"
             data-color="color-${item.specs.color}"
           />
-          <div class="nav__cart__item__text">
-            <a href="#" class="nav__cart__item__name"
+          <div class="cart__item__text">
+            <a href="#" class="cart__item__name"
               >${item.title}</a
             >
-            <p class="nav__cart__item__size">${item.specs.size} / ${
+            <p class="cart__item__size">${item.specs.size} / ${
           item.specs.color === 'Natural' ? '' : 'Color'
         } ${item.specs.color}</p>
           </div>
-          <p class="nav__cart__item__price">$<span>${item.price}</span></p>
+          <p class="cart__item__price">$<span>${item.price}</span></p>
 
-          <form class="nav__cart__item__qty" action="">
-            <div class="nav__cart__item__input-wrap">
-              <button type="button"         class="nav__cart__item__minus">-</button>
+          <form class="cart__item__qty" action="">
+            <div class="cart__item__input-wrap">
+              <button type="button"         class="cart__item__minus">-</button>
               <input class="product__qty"
                 type="number"
                 min="1"
@@ -81,11 +81,11 @@ class CartView extends GeneralView {
                 value="${item.specs.qty}"
                 id="number"
               />
-              <button type="button" class="nav__cart__item__plus">+</button>
+              <button type="button" class="cart__item__plus">+</button>
             </div>
           </form>
 
-          <button class="nav__cart__item__remove">Remove</button>
+          <button class="cart__item__remove">Remove</button>
         </div>
         `
       );
@@ -110,17 +110,17 @@ class CartView extends GeneralView {
     this.parentEle.addEventListener('click', e => {
       e.preventDefault();
       // declare or the possible event targets
-      const remove = e.target.closest('.nav__cart__item__remove');
-      const plus = e.target.closest('.nav__cart__item__plus');
-      const minus = e.target.closest('.nav__cart__item__minus');
-      const name = e.target.closest('.nav__cart__item__name');
-      const img = e.target.closest('.nav__cart__item__img');
+      const remove = e.target.closest('.cart__item__remove');
+      const plus = e.target.closest('.cart__item__plus');
+      const minus = e.target.closest('.cart__item__minus');
+      const name = e.target.closest('.cart__item__name');
+      const img = e.target.closest('.cart__item__img');
       // get the target's closest cart item
-      const item = e.target.closest('.nav__cart__item');
+      const item = e.target.closest('.cart__item');
       // get index of item in cart
-      const index = [
-        ...cartContent.querySelectorAll('.nav__cart__item'),
-      ].indexOf(item);
+      const index = [...cartContent.querySelectorAll('.cart__item')].indexOf(
+        item
+      );
       // depending on target, perform specific actions
       if (e.target === remove) {
         // remove cart item
@@ -150,19 +150,17 @@ class CartView extends GeneralView {
     });
     // handle quantity input field submision
     // select all forms in cart
-    const qtyFields = [
-      ...this.parentEle.querySelectorAll('.nav__cart__item__qty'),
-    ];
+    const qtyFields = [...this.parentEle.querySelectorAll('.cart__item__qty')];
     // for each add listener for submit
     qtyFields.forEach(ele => {
       ele.addEventListener('submit', e => {
         e.preventDefault();
         // get the target's closest cart item
-        const item = e.target.closest('.nav__cart__item');
+        const item = e.target.closest('.cart__item');
         // get index of item in cart
-        const index = [
-          ...cartContent.querySelectorAll('.nav__cart__item'),
-        ].indexOf(item);
+        const index = [...cartContent.querySelectorAll('.cart__item')].indexOf(
+          item
+        );
         // get new value
         const updatedCart = cart;
         const newValue = ele.querySelector('.product__qty').value;
@@ -203,7 +201,7 @@ class CartView extends GeneralView {
     this.renderCart(cart);
     this.updateCartBtn(cart);
     this.addListenerCartItems(cart, removeHandler, qtyHandler, productHandler);
-    this.observeImgs('.nav__cart__item__img');
+    this.observeImgs('.cart__item__img');
     this.cartMsgShow();
   }
 }

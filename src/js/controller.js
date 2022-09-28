@@ -89,7 +89,7 @@ function controlAddToCart(specs) {
   // hide product
   document.querySelector('.product-modal').classList.remove('open');
   // open cart
-  document.querySelector('.nav__cart').classList.add('open');
+  document.querySelector('.cart').classList.add('open');
 }
 
 // remove items from cart

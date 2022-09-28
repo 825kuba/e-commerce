@@ -48,133 +48,56 @@
         <div class="nav__btn-wrap">
           <a href="#" class="nav__cart-btn">Cart (<span>0</span>)</a>
         </div>
-
-        <div class="nav__cart">
-          <div class="nav__cart__wrapper">
-            <button class="nav__cart__close-cart close-btn">
-              <i class="las la-times"></i>
-            </button>
-            <div class="nav__cart__head">
-              <h2 class="nav__cart__heading">Shopping Cart</h2>
-              <p class="nav__cart__quantity">Quantity</p>
-              <p class="nav__cart__total">Total</p>
-            </div>
-            <div class="nav__cart__content">
-              <div class="nav__cart__container">
-                <!-- <div class="nav__cart__item">
-                <a href="#" class="nav__cart__item__img">
-                  <img
-                    src="https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg"
-                  />
-                </a>
-                <div class="nav__cart__item__text">
-                  <a href="#" class="nav__cart__item__name">
-                    <h4>
-                      Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops
-                    </h4>
-                  </a>
-                  <p class="nav__cart__item__size">XL</p>
-                </div>
-                <p class="nav__cart__item__price">$599.99</p>
-                <div class="nav__cart__item__count">
-                  <button class="nav__cart__item__minus">
-                    <i class="las la-minus"></i>
-                  </button>
-                  <span class="nav__cart__item__num">1</span>
-                  <button class="nav__cart__item__plus">
-                    <i class="las la-plus"></i>
-                  </button>
-                </div>
-                <button class="nav__cart__item__remove">Remove</button>
-              </div>
-              <div class="nav__cart__item">
-                <a href="#" class="nav__cart__item__img">
-                  <img
-                    src="https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg"
-                  />
-                </a>
-                <div class="nav__cart__item__text">
-                  <a href="#" class="nav__cart__item__name"
-                    >Mens Cotton Jacket</a
-                  >
-                  <p class="nav__cart__item__size">XL</p>
-                </div>
-                <p class="nav__cart__item__price">$59.99</p>
-                <div class="nav__cart__item__count">
-                  <button class="nav__cart__item__minus">
-                    <i class="las la-minus"></i>
-                  </button>
-                  <span class="nav__cart__item__num">1</span>
-                  <button class="nav__cart__item__plus">
-                    <i class="las la-plus"></i>
-                  </button>
-                </div>
-                <button class="nav__cart__item__remove">Remove</button>
-              </div>
-              <div class="nav__cart__item">
-                <a href="#" class="nav__cart__item__img">
-                  <img
-                    src="https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg"
-                  />
-                </a>
-                <div class="nav__cart__item__text">
-                  <a href="#" class="nav__cart__item__name">Brown Jacket</a>
-                  <p class="nav__cart__item__size">XL</p>
-                </div>
-                <p class="nav__cart__item__price">$59.99</p>
-                <div class="nav__cart__item__count">
-                  <button class="nav__cart__item__minus">
-                    <i class="las la-minus"></i>
-                  </button>
-                  <span class="nav__cart__item__num">1</span>
-                  <button class="nav__cart__item__plus">
-                    <i class="las la-plus"></i>
-                  </button>
-                </div>
-                <button class="nav__cart__item__remove">Remove</button>
-              </div> -->
-              </div>
-            </div>
-            <div class="nav__cart__summary">
-              <form class="nav__cart__form" action="#">
-                <label for="instructions"
-                  >Special instructions for seller</label
-                >
-                <textarea
-                  name="instructions"
-                  id="instructions"
-                  cols="30"
-                  rows="4"
-                ></textarea>
-              </form>
-              <div class="nav__cart__checkout">
-                <div class="nav__cart__subtotal">
-                  <h6>Subtotal</h6>
-                  <h5>$<span>0</span></h5>
-                </div>
-                <p>Taxes and shipping calculated at checkout</p>
-                <button class="nav__cart__checkout-btn big-btn">
-                  Check out
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="nav__cart__message hidden">
-            <button>
-              <i class="las la-times"></i>
-            </button>
-            <p>Cart updated!</p>
-          </div>
-        </div>
       </nav>
     </header>
 
-    <div class="product-modal">
+    <aside class="cart">
+      <div class="cart__wrapper">
+        <button class="cart__close-cart close-btn">
+          <i class="las la-times"></i>
+        </button>
+        <div class="cart__head">
+          <h2 class="cart__heading">Shopping Cart</h2>
+          <p class="cart__quantity">Quantity</p>
+          <p class="cart__total">Total</p>
+        </div>
+        <div class="cart__content">
+          <div class="cart__container"></div>
+        </div>
+        <div class="cart__summary">
+          <form class="cart__form" action="#">
+            <label for="instructions">Special instructions for seller</label>
+            <textarea
+              name="instructions"
+              id="instructions"
+              cols="30"
+              rows="4"
+            ></textarea>
+          </form>
+          <div class="cart__checkout">
+            <div class="cart__subtotal">
+              <h6>Subtotal</h6>
+              <h5>$<span>0</span></h5>
+            </div>
+            <p>Taxes and shipping calculated at checkout</p>
+            <button class="cart__checkout-btn big-btn">Check out</button>
+          </div>
+        </div>
+      </div>
+      <div class="cart__message hidden">
+        <button>
+          <i class="las la-times"></i>
+        </button>
+        <p>Cart updated!</p>
+      </div>
+    </aside>
+
+    <aside class="product-modal">
       <button class="product__close-product close-btn">
         <i class="las la-times"></i>
       </button>
       <div class="product"></div>
-    </div>
+    </aside>
 
     <main>
       <section class="products">
