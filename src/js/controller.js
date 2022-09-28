@@ -132,5 +132,6 @@ function init() {
     controlCartItemQty,
     controlOpenProduct
   );
+  cartView.cartMsgAddListener();
 }
 init();

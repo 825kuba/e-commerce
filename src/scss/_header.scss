@@ -511,6 +511,42 @@
         margin-left: auto;
       }
     }
+
+    // message for when cart is updated
+    &__message {
+      position: fixed;
+      bottom: 0vh;
+      right: 0vw;
+      background-color: $orange;
+      color: $black;
+      padding: 3rem 3rem 1rem 1rem;
+      margin: 1rem;
+      border: 1px solid $black;
+      border-radius: 3px;
+      font-size: 1.8rem;
+      font-weight: 400;
+
+      visibility: visible;
+      opacity: 1;
+      transition: 0.2s ease-in;
+
+      &.hidden {
+        visibility: hidden;
+        opacity: 0;
+      }
+
+      & button {
+        position: absolute;
+        top: 0.25rem;
+        right: 0.25rem;
+        cursor: pointer;
+        border: none;
+        background-color: transparent;
+        font-size: 2rem;
+        font-weight: 400;
+        color: $black;
+      }
+    }
   }
 }
 

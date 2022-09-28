@@ -6,11 +6,14 @@ const closeCartBtn = document.querySelector('.nav__cart__close-cart');
 const cartContent = document.querySelector('.nav__cart__content');
 const cartSubtotal = document.querySelector('.nav__cart__subtotal span');
 const productModal = document.querySelector('.product-modal');
+const cartMsg = document.querySelector('.nav__cart__message');
+const cartMsgBtn = document.querySelector('.nav__cart__message button');
 
 import GeneralView from './generalView.js';
 
 class CartView extends GeneralView {
-  cartContainer;
+  parentEle = document.querySelector('.nav__cart__container');
+  cartMsgTimer;
 
   addEventOpenCloseCart() {
     // open cart
@@ -43,9 +46,9 @@ class CartView extends GeneralView {
     cartContent.innerHTML = `
       <div class="nav__cart__container"></div>
     `;
-    this.cartContainer = document.querySelector('.nav__cart__container');
+    this.parentEle = document.querySelector('.nav__cart__container');
     cart.forEach(item => {
-      this.cartContainer.insertAdjacentHTML(
+      this.parentEle.insertAdjacentHTML(
         'beforeend',
         `
         <div class="nav__cart__item" id="${item.id}">
@@ -101,31 +104,10 @@ class CartView extends GeneralView {
     cartBtn.querySelector('span').innerText = `${cart.length}`;
   }
 
-  // // remove btn event
-  // addEventListenerRemoveBtn(handler) {
-  //   // for each remove btn
-  //   [...cartContent.querySelectorAll('.nav__cart__item__remove')].forEach(
-  //     btn => {
-  //       // add event listener
-  //       btn.addEventListener('click', e => {
-  //         e.preventDefault();
-  //         // get the item
-  //         const item = btn.closest('.nav__cart__item');
-  //         // get index of item in cart
-  //         const index = [
-  //           ...cartContent.querySelectorAll('.nav__cart__item'),
-  //         ].indexOf(item);
-  //         // run handler with index
-  //         handler(index);
-  //       });
-  //     }
-  //   );
-  // }
-
   // handler event lsiteners on cart items
   addListenerCartItems(cart, removeHandler, qtyHandler, productHandler) {
     // add one listener to cart container - a new one is created each time the cart is re-rendered, so there is always just one event listener
-    this.cartContainer.addEventListener('click', e => {
+    this.parentEle.addEventListener('click', e => {
       e.preventDefault();
       // declare or the possible event targets
       const remove = e.target.closest('.nav__cart__item__remove');
@@ -169,7 +151,7 @@ class CartView extends GeneralView {
     // handle quantity input field submision
     // select all forms in cart
     const qtyFields = [
-      ...this.cartContainer.querySelectorAll('.nav__cart__item__qty'),
+      ...this.parentEle.querySelectorAll('.nav__cart__item__qty'),
     ];
     // for each add listener for submit
     qtyFields.forEach(ele => {
@@ -194,12 +176,35 @@ class CartView extends GeneralView {
     });
   }
 
+  // add event listener to message close btn
+  cartMsgAddListener() {
+    cartMsgBtn.addEventListener('click', e => {
+      e.preventDefault();
+      cartMsg.classList.add('hidden');
+    });
+  }
+
+  // show cart message
+  cartMsgShow() {
+    // only show if cart is already opened (i.e. when user changes item qty)
+    if (!cartEle.classList.contains('open')) return;
+    // hide msg
+    cartMsg.classList.remove('hidden');
+    // clear any previous timeouts
+    clearTimeout(this.cartMsgTimer);
+    // set new timeout
+    this.cartMsgTimer = setTimeout(() => {
+      cartMsg.classList.add('hidden');
+    }, 2000);
+  }
+
   updateCart(cart, removeHandler, qtyHandler, productHandler) {
+    this.renderSpinner();
     this.renderCart(cart);
     this.updateCartBtn(cart);
-    // this.addEventListenerRemoveBtn(handler);
     this.addListenerCartItems(cart, removeHandler, qtyHandler, productHandler);
     this.observeImgs('.nav__cart__item__img');
+    this.cartMsgShow();
   }
 }
 
