@@ -86,10 +86,8 @@ function controlAddToCart(specs) {
     controlCartItemQty,
     controlOpenProduct
   );
-  // hide product
-  document.querySelector('.product-modal').classList.remove('open');
-  // open cart
-  document.querySelector('.cart').classList.add('open');
+  // close product and open cart
+  productView.closeProductOpenCart();
 }
 
 // remove items from cart

@@ -2,8 +2,10 @@
 
 import GeneralView from './generalView.js';
 
-const productWrapEle = document.querySelector('.product-modal');
+const productModal = document.querySelector('.product-modal');
 const closeProductBtn = document.querySelector('.product__close-product');
+const cart = document.querySelector('.cart');
+const cartCloseBtn = document.querySelector('.cart__close-cart');
 
 class productView extends GeneralView {
   parentEle = document.querySelector('.product');
@@ -345,7 +347,7 @@ class productView extends GeneralView {
     // close product modal
     closeProductBtn.addEventListener('click', e => {
       e.preventDefault();
-      productWrapEle.classList.remove('open');
+      productModal.classList.remove('open');
       document.body.classList.remove('no-scroll');
     });
 
@@ -354,10 +356,19 @@ class productView extends GeneralView {
       // only continue if Escape is pressed
       if (e.key !== 'Escape') return;
       // close product modal
-      productWrapEle.classList.remove('open');
+      productModal.classList.remove('open');
       // return scrolling to body
       document.body.classList.remove('no-scroll');
     });
+  }
+
+  closeProductOpenCart() {
+    // hide product
+    productModal.classList.remove('open');
+    // open cart
+    cart.classList.add('open');
+    //focus cart
+    cartCloseBtn.focus();
   }
 }
 

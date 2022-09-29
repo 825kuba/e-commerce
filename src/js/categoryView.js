@@ -4,6 +4,7 @@ import GeneralView from './generalView.js';
 
 const productsContainer = document.querySelector('.products__container');
 const productModal = document.querySelector('.product-modal');
+const productModalCloseBtn = document.querySelector('.product__close-product');
 
 class CategoryView extends GeneralView {
   parentEle = document.querySelector('.products__container');
@@ -54,6 +55,7 @@ class CategoryView extends GeneralView {
       // if no target return
       if (!target) return;
       productModal.classList.add('open');
+      productModalCloseBtn.focus();
       document.body.classList.add('no-scroll');
       handler(target);
     });

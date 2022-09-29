@@ -6,6 +6,7 @@ const closeCartBtn = document.querySelector('.cart__close-cart');
 const cartContent = document.querySelector('.cart__content');
 const cartSubtotal = document.querySelector('.cart__subtotal span');
 const productModal = document.querySelector('.product-modal');
+const productModalCloseBtn = document.querySelector('.product__close-product');
 const cartMsg = document.querySelector('.cart__message');
 const cartMsgBtn = document.querySelector('.cart__message button');
 
@@ -20,6 +21,7 @@ class CartView extends GeneralView {
     cartBtn.addEventListener('click', e => {
       e.preventDefault();
       cartEle.classList.add('open');
+      closeCartBtn.focus();
       document.body.classList.add('no-scroll');
     });
 
@@ -143,6 +145,7 @@ class CartView extends GeneralView {
       if (e.target === name || e.target === img) {
         // close cart and open cart item's product
         productModal.classList.add('open');
+        productModalCloseBtn.focus();
         cartEle.classList.remove('open');
         document.body.classList.add('no-scroll');
         productHandler(item);
