@@ -8,7 +8,7 @@ const cartSubtotal = document.querySelector('.cart__subtotal span');
 const productModal = document.querySelector('.product-modal');
 const productModalCloseBtn = document.querySelector('.product__close-product');
 const cartMsg = document.querySelector('.cart__message');
-const cartMsgBtn = document.querySelector('.cart__message button');
+// const cartMsgBtn = document.querySelector('.cart__message button');
 
 import GeneralView from './generalView.js';
 
@@ -177,11 +177,24 @@ class CartView extends GeneralView {
     });
   }
 
-  // add event listener to message close btn
+  // add event listener to message box
   cartMsgAddListener() {
-    cartMsgBtn.addEventListener('click', e => {
+    cartMsg.addEventListener('mouseover', e => {
       e.preventDefault();
-      cartMsg.classList.add('hidden');
+      // if box is already fading out
+      if (cartMsg.classList.contains('hidden'))
+        // stop the fading
+        cartMsg.classList.remove('hidden');
+      // cleaer timeout
+      clearTimeout(this.cartMsgTimer);
+    });
+    // when mouse leaves box
+    cartMsg.addEventListener('mouseleave', e => {
+      e.preventDefault();
+      // start timeout again
+      this.cartMsgTimer = setTimeout(() => {
+        cartMsg.classList.add('hidden');
+      }, 2000);
     });
   }
 

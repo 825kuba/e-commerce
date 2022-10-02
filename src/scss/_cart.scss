@@ -213,6 +213,7 @@
 
       & button {
         font-size: 2rem;
+        padding: 1rem;
       }
     }
 
@@ -344,36 +345,27 @@
   // message for when cart is updated
   &__message {
     position: fixed;
-    bottom: 0vh;
-    right: 0vw;
+    bottom: 0;
+    right: 0;
     background-color: $orange;
     color: $black;
-    padding: 3rem 3rem 1rem 1rem;
+    padding: 1rem 2rem;
     margin: 1rem;
-    border: 1px solid $black;
+    border: none;
     border-radius: 3px;
-    font-size: 1.8rem;
-    font-weight: 400;
+    font-size: 2rem;
+    font-weight: 300;
+    width: max-content;
+    box-shadow: rgba($black, 0.3) 0 0 30px;
 
     visibility: visible;
     opacity: 1;
-    transition: 0.2s ease-in;
+    transition: opacity 0.3s ease;
 
     &.hidden {
       visibility: hidden;
       opacity: 0;
-    }
-
-    & button {
-      position: absolute;
-      top: 0.25rem;
-      right: 0.25rem;
-      cursor: pointer;
-      border: none;
-      background-color: transparent;
-      font-size: 2rem;
-      font-weight: 400;
-      color: $black;
+      transition: visibility 0s 0.3s, opacity 0.3s ease;
     }
   }
 }
