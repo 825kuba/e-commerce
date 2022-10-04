@@ -1,6 +1,37 @@
-.brands {
-  height: 200px;
+.reviews {
   background-color: $orange;
+  padding: 6rem 8rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 6rem;
+
+  & .review {
+    // flex: 1;
+    // max-width: 400px;
+    flex-basis: 400px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    gap: 1.5rem;
+
+    &__stars {
+      font-size: 2.4rem;
+      width: max-content;
+    }
+
+    &__text {
+      font-size: 1.5rem;
+      line-height: 170%;
+    }
+
+    &__name {
+      font-size: 2.5rem;
+      font-weight: 500;
+    }
+  }
 }
 
 .quote {
@@ -11,7 +42,8 @@
   padding: 10rem 8rem;
 
   &__heading {
-    font-size: 5rem;
+    flex-basis: 50rem;
+    font-size: 4rem;
     font-weight: 500;
     text-align: center;
     line-height: 110%;
@@ -36,16 +68,32 @@
   }
 
   &__items {
-    display: grid;
-    grid-template-columns: repeat(4, 100%);
-    gap: 2rem;
-    align-items: start;
-    overflow: auto;
+    display: flex;
+    gap: 4rem;
+    border: 2px solid green;
+    overflow-x: auto;
   }
 
   &__item {
+    // flex-basis: 500px;
+    display: block;
+    flex: 0 0 72.5%;
+    // height: 500px;
+    // padding: 1rem;
+    border: 2px solid red;
+    // position: relative;
+
     &__img {
-      max-width: 100%;
+      max-width: 72.5%;
+      object-fit: fill;
+      border: 2px solid yellow;
     }
+
+    // &__name {
+    //   position: absolute;
+    //   border: 2px solid blue;
+    //   left: 0;
+    //   bottom: 0;
+    // }
   }
 }

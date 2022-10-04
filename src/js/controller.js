@@ -117,6 +117,35 @@ function controlCartItemQty(updatedCart) {
   );
 }
 
+// async function test() {
+//   const response = await fetch('https://fakestoreapi.com/products');
+//   const data = await response.json();
+//   console.log(data);
+//   const ele = document.querySelector('.test');
+//   data.forEach(item => {
+//     ele.insertAdjacentHTML(
+//       'beforeend',
+//       `
+//       <img
+//       src="${item.image}"
+//       alt="product image"
+//       class="test__img"
+//     />
+//     `
+//     );
+//   });
+//   const imgs = [...document.querySelectorAll('.test__img')];
+//   let arr = [];
+//   window.addEventListener('load', () => {
+//     imgs.forEach(img => {
+//       const size = `${img.clientWidth}x${img.clientHeight}`;
+//       arr.push(size);
+//     });
+//     console.log(arr);
+//     console.log(new Set(arr));
+//   });
+// }
+
 function init() {
   model.loadFromStorage();
   navView.addEventMobileNav();

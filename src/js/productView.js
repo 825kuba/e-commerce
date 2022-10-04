@@ -290,7 +290,7 @@ class productView extends GeneralView {
               .classList.toggle('hidden', entry.isIntersecting);
         });
       },
-      { root: productSlider, threshold: 1.0 }
+      { root: productSlider, threshold: 0.8 }
     );
 
     // when first img loads
