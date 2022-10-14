@@ -100,11 +100,11 @@ class productView extends GeneralView {
       class="product__img product__img--big"
       data-color="color-1"
       />
-      <div class="product__slider-btns-wrap">
-        <button class="product__slider-btn  product__slider-btn--left" data-dir="-1">
+      <div class="product__slider__btns-wrap">
+        <button class="product__slider__btn  product__slider__btn--left" data-dir="-1">
           <i class="las la-arrow-left"></i>
         </ button>
-        <button class="product__slider-btn  product__slider-btn--right" data-dir="1">
+        <button class="product__slider__btn  product__slider__btn--right" data-dir="1">
           <i class="las la-arrow-right"></i>
         </ button>
       </div>
@@ -245,72 +245,26 @@ class productView extends GeneralView {
   addEventImageGallery() {
     // select img wrappers, slider, imgs
     const productImages = this.parentEle.querySelector('.product__images');
-    const productSlider = this.parentEle.querySelector('.product__slider');
     const productImgs = [...productImages.querySelectorAll('.product__img')];
+    const productBtns = this.parentEle.querySelector(
+      '.product__slider__btns-wrap'
+    );
     const productImgBig = this.parentEle.querySelector('.product__img--big');
 
     // 1) MOBILE GALLERY
     //////////////////////////////
 
-    // 1) a) - add functionality to slider btns
-    productSlider.addEventListener('click', e => {
-      e.preventDefault();
-      // get btn
-      const btn = e.target.closest('.product__slider-btn');
-      // if no btn return
-      if (!btn) return;
-      // get btn direction
-      const direction = +btn.dataset.dir;
-      // get width if first img
-      const imgWidth = productImgs[0].getBoundingClientRect().width;
-      // scroll by the img width in the correct direction
-      productImages.scrollLeft += imgWidth * direction;
-    });
-
-    // 1) b) - make slider btns hide or appear based on slider position
-
-    //create observer for images
-    const imgObserver = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          // guard clause for when there is only 'loading' message and no other elements
-          if (!this.parentEle.querySelector('.product__slider')) return;
-          // if the first img is intersecting
-          if (entry.target === productImgs[0]) {
-            // hide left arrow
-            this.parentEle
-              .querySelector('.product__slider-btn--left')
-              .classList.toggle('hidden', entry.isIntersecting);
-          }
-          // if last img is intersecting
-          if (entry.target === productImgs[productImgs.length - 1])
-            // hide right arrow
-            this.parentEle
-              .querySelector('.product__slider-btn--right')
-              .classList.toggle('hidden', entry.isIntersecting);
-        });
-      },
-      { root: productSlider, threshold: 0.8 }
+    this.addEventsMobileGallery(
+      'product__slider',
+      productImages,
+      productImgs,
+      productBtns
     );
 
-    // when first img loads
-    productImgs[0].addEventListener('load', () => {
-      if (!productImgs[0].complete) return;
-      // set observer on first and last img
-      productImgs.forEach((img, i) => {
-        if (i === 0 || i === productImgs.length - 1) imgObserver.observe(img);
-      });
-      // scroll to the first img without scroll animation
-      productImages.style.scrollBehavior = 'auto';
-      productImages.scrollLeft = 0;
-      productImages.style.scrollBehavior = 'smooth';
-    });
-
     // 2) DESKTOP GALLERY
-    // !!!!!!!!!!! ❌ NOT FINISHED ❌ !!!!!!!!!!!!!!!!
     ////////////////////////////////
 
-    productSlider.addEventListener('click', e => {
+    productImages.addEventListener('click', e => {
       e.preventDefault();
       // define clicked img
       const clickedImg = e.target.closest('.product__img');

@@ -70,30 +70,46 @@
   &__items {
     display: flex;
     gap: 4rem;
-    border: 2px solid green;
-    overflow-x: auto;
+    @include imageContainer;
+    // border: 1px solid red;
   }
 
   &__item {
-    // flex-basis: 500px;
-    display: block;
     flex: 0 0 72.5%;
-    // height: 500px;
-    // padding: 1rem;
-    border: 2px solid red;
-    // position: relative;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    scroll-snap-align: start;
+    // border: 1px solid red;
 
-    &__img {
-      max-width: 72.5%;
-      object-fit: fill;
-      border: 2px solid yellow;
+    @include respond(md) {
+      flex: 0 0 calc(50% - (4rem / 2));
     }
 
-    // &__name {
-    //   position: absolute;
-    //   border: 2px solid blue;
-    //   left: 0;
-    //   bottom: 0;
-    // }
+    &__filling {
+      background-color: $white;
+      flex-grow: 1;
+    }
+
+    &__img {
+      max-width: 100%;
+      // height: 400px;
+      object-fit: contain;
+    }
+
+    &__name {
+      font-size: 2rem;
+      margin: 2rem 0;
+    }
+  }
+
+  &__btns-wrap {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &__btn {
+    @include galleryBtn;
   }
 }
