@@ -132,6 +132,8 @@ function init() {
     controlOpenProduct
   );
   cartView.cartMsgAddListener();
+  mainPageView.observeImgs('.shop__item__img');
   mainPageView.addEventImageGallery();
+  mainPageView.observeItems();
 }
 init();

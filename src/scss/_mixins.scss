@@ -74,3 +74,14 @@
     display: none;
   }
 }
+
+@mixin slide-in {
+  transition: all 0.35s ease-out 0.1s;
+  transform: translateY(0);
+  opacity: 1;
+
+  &.unrevealed {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+}

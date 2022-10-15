@@ -92,4 +92,8 @@
       grid-area: pic4;
     }
   }
+
+  & .slide-in {
+    @include slide-in;
+  }
 }
