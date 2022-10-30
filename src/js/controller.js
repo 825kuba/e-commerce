@@ -6,6 +6,7 @@ import productView from './productView.js';
 import mainPageView from './mainPageView.js';
 import navView from './navView.js';
 import cartView from './cartView.js';
+import checkoutView from './checkoutVIew.js';
 
 async function controlLoadProductsByCategory() {
   // only load products if on a products page
@@ -118,10 +119,26 @@ function controlCartItemQty(updatedCart) {
   );
 }
 
+function controlCloseCartOpenCheckout() {
+  cartView.closeCart();
+  checkoutView.renderInformationSection();
+  checkoutView.openCheckout();
+}
+
+function controlCloseCheckoutOpenCart() {
+  checkoutView.closeCheckout();
+  cartView.openCart();
+}
+
 function init() {
   model.loadFromStorage();
   navView.addEventMobileNav();
   cartView.addEventOpenCloseCart();
+  cartView.addHandlerCheckoutBtn(controlCloseCartOpenCheckout);
+  checkoutView.addListenerCloseCheckout();
+  checkoutView.addHandlerCartBtns(controlCloseCheckoutOpenCart);
+  checkoutView.addListenerCheckoutNav();
+  checkoutView.addListenerCartSummary();
   productView.addEventCloseProduct();
   controlLoadProductsByCategory();
   categoryView.addEventListenerToCategoryProducts(controlOpenProduct);

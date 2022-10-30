@@ -2,15 +2,19 @@
 
 const cartBtn = document.querySelector('.nav__cart-btn');
 const cartEle = document.querySelector('.cart');
+
 const closeCartBtn = document.querySelector('.cart__close-cart');
 const cartContent = document.querySelector('.cart__content');
 const cartSubtotal = document.querySelector('.cart__subtotal span');
 const productModal = document.querySelector('.product-modal');
 const productModalCloseBtn = document.querySelector('.product__close-product');
 const cartMsg = document.querySelector('.cart__message');
+const checkoutBtn = document.querySelector('.cart__checkout-btn');
+
 // const cartMsgBtn = document.querySelector('.cart__message button');
 
 import GeneralView from './generalView.js';
+import checkoutVIew from './checkoutVIew.js';
 
 class CartView extends GeneralView {
   parentEle = document.querySelector('.cart__container');
@@ -20,27 +24,34 @@ class CartView extends GeneralView {
     // open cart
     cartBtn.addEventListener('click', e => {
       e.preventDefault();
-      cartEle.classList.add('open');
-      closeCartBtn.focus();
-      document.body.classList.add('no-scroll');
+      this.openCart();
     });
 
     // close cart
     closeCartBtn.addEventListener('click', e => {
       e.preventDefault();
-      cartEle.classList.remove('open');
-      document.body.classList.remove('no-scroll');
+      this.closeCart();
     });
 
     // close cart with Escape
     document.body.addEventListener('keydown', e => {
       // only continue if Escape is pressed
       if (e.key !== 'Escape') return;
-      // close product modal
-      cartEle.classList.remove('open');
-      // return scrolling to body
-      document.body.classList.remove('no-scroll');
+      this.closeCart();
     });
+  }
+
+  openCart() {
+    cartEle.classList.add('open');
+    closeCartBtn.focus();
+    document.body.classList.add('no-scroll');
+  }
+
+  closeCart() {
+    // close cart
+    cartEle.classList.remove('open');
+    // return scrolling to body
+    document.body.classList.remove('no-scroll');
   }
 
   renderCart(cart) {
@@ -120,7 +131,7 @@ class CartView extends GeneralView {
       // get the target's closest cart item
       const item = e.target.closest('.cart__item');
       // get index of item in cart
-      const index = [...cartContent.querySelectorAll('.cart__item')].indexOf(
+      const index = [...this.parentEle.querySelectorAll('.cart__item')].indexOf(
         item
       );
       // depending on target, perform specific actions
@@ -161,9 +172,9 @@ class CartView extends GeneralView {
         // get the target's closest cart item
         const item = e.target.closest('.cart__item');
         // get index of item in cart
-        const index = [...cartContent.querySelectorAll('.cart__item')].indexOf(
-          item
-        );
+        const index = [
+          ...this.parentEle.querySelectorAll('.cart__item'),
+        ].indexOf(item);
         // get new value
         const updatedCart = cart;
         const newValue = ele.querySelector('.product__qty').value;
@@ -219,6 +230,15 @@ class CartView extends GeneralView {
     this.addListenerCartItems(cart, removeHandler, qtyHandler, productHandler);
     this.observeImgs('.cart__item__img');
     this.cartMsgShow();
+    checkoutVIew.renderSummary(cart);
+    this.observeImgs('.checkout__cart-item--img');
+  }
+
+  addHandlerCheckoutBtn(handler) {
+    checkoutBtn.addEventListener('click', e => {
+      e.preventDefault();
+      handler();
+    });
   }
 }
 

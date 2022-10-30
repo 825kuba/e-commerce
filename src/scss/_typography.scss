@@ -9,7 +9,7 @@ h4 {
   letter-spacing: -0.075rem;
 }
 
-form {
+form:not(.checkout__content) {
   font-family: 'Playfair Display';
 }
 

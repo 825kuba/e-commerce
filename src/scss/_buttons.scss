@@ -1,7 +1,9 @@
 // big btn like ADD TO CART or CHECK OUT
-.big-btn {
+.big-btn,
+a.big-btn {
+  display: block;
+  text-align: center;
   background-color: $black;
-  color: white;
   border: none;
   border-radius: 2rem;
   text-transform: uppercase;
@@ -9,6 +11,7 @@
   padding: 1.5rem 0;
   cursor: pointer;
   margin-top: 1rem;
+  color: white;
 
   &:hover {
     background-color: $orange;
@@ -26,6 +29,7 @@
   position: absolute;
   top: 1.6rem;
   right: 1.6rem;
+  z-index: $z-1000;
 
   &:hover {
     color: $orange;

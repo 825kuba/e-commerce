@@ -1,0 +1,299 @@
+.checkout {
+  // position: relative;
+  position: fixed;
+  z-index: $z-1000;
+  left: 0;
+  width: 100%;
+  max-width: 100vw;
+  height: 100vh;
+  background-color: $bg-color;
+  top: -200%;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  overflow: auto;
+  font-size: 1.6rem;
+
+  // @include respond(lg) {
+  //   padding: 10rem 9rem;
+  // }
+
+  // OPENED CART
+  &.open {
+    top: 0;
+    opacity: 1;
+  }
+
+  &__nav {
+    padding: 5rem 1rem 2rem 1rem;
+
+    @include respond(lg) {
+      padding: 5rem 1rem 2rem 7rem;
+    }
+
+    font-size: 1.4rem;
+  }
+
+  &__logo-box {
+    margin-bottom: 1rem;
+  }
+
+  &__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+
+    & li {
+      list-style: none;
+    }
+  }
+
+  &__link {
+    color: $orange;
+    opacity: 1;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+
+    &:not(:disabled):hover {
+      opacity: 0.7;
+    }
+
+    &:disabled {
+      cursor: initial;
+      color: $black;
+    }
+  }
+
+  &__summary-btn {
+    cursor: pointer;
+    width: 100%;
+    border: 1px solid $gray-light-3;
+    background-color: $gray-light-2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+    height: 5rem;
+
+    &--text {
+      font-size: 1.4rem;
+      color: $orange;
+    }
+
+    &--price {
+      font-size: 1.9rem;
+      color: $black;
+    }
+
+    @include respond(lg) {
+      display: none;
+    }
+  }
+
+  &__cart-content {
+    padding: 1rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    --cart-height: 0;
+    height: var(--cart-height);
+    transition: all 0.3s ease-in-out;
+
+    &.closed {
+      padding: 0 1rem;
+      height: 0;
+      transition: all 0.3s ease-in-out;
+
+      @include respond(lg) {
+        height: max-content;
+        padding: 7rem 1rem 1rem 1rem;
+      }
+    }
+
+    @include respond(lg) {
+      position: absolute;
+      overflow: visible;
+      height: max-content;
+      width: 42.5vw;
+      right: 0;
+      top: 0;
+      padding: 7rem 1rem 1rem 1rem;
+      border-left: 1px solid $gray-light-3;
+      background-color: $gray-light-2;
+    }
+  }
+
+  &__cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    font-size: 1.5rem;
+
+    &--img-wrap {
+      width: max-content;
+    }
+
+    &--img {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+    }
+
+    &--name {
+      font-weight: 500;
+    }
+
+    &--size {
+      font-size: 1.4rem;
+      margin-top: 0.2rem;
+    }
+
+    &--price {
+      margin-left: auto;
+      text-align: right;
+      flex-basis: 30%;
+      font-weight: 500;
+    }
+  }
+}
+
+.form {
+  padding: 2.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+  font-size: 1.5rem;
+  border-top: 1px solid $gray-light-3;
+  border-bottom: 1px solid $gray-light-3;
+
+  @include respond(lg) {
+    max-width: 52.5vw;
+    padding: 2.5rem 2rem 5rem 7rem;
+    // margin-left: 7rem;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  &__heading {
+    font-size: 2rem;
+    font-family: Roboto;
+    font-weight: 300;
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+
+    &--btns {
+      @include respond(md/lg) {
+        flex-direction: row-reverse;
+        justify-content: space-between;
+      }
+    }
+  }
+
+  &__item {
+    display: flex;
+    gap: 1rem;
+    position: relative;
+    flex: 1;
+  }
+
+  &__line {
+    display: flex;
+    gap: 2rem;
+    flex-direction: column;
+
+    @include respond(md/lg) {
+      flex-direction: row;
+    }
+  }
+
+  input {
+    padding: 1.75rem 1rem 0.75rem 1rem;
+    display: block;
+    transition: padding 0.3s ease;
+    border-radius: 0.5rem;
+    border: none;
+    outline: 1px solid $gray-light;
+
+    &:not([type='checkbox']) {
+      width: 100%;
+    }
+
+    &:placeholder-shown {
+      padding: 1.25rem 1rem 1.25rem 1rem;
+    }
+
+    &[type='checkbox'],
+    &[type='checkbox'] + label {
+      cursor: pointer;
+      outline: none;
+    }
+
+    &:focus-visible {
+      outline: 2px solid $orange;
+    }
+
+    &.required:invalid {
+      outline: 2px solid $red;
+    }
+  }
+
+  label {
+    &:not(.static) {
+      position: absolute;
+      top: 0.25rem;
+      left: 1.1rem;
+      font-size: 1.1rem;
+      transition: 0.3s ease;
+    }
+  }
+
+  input:placeholder-shown + label {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(1rem);
+  }
+
+  & button {
+    height: 6rem;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1.45rem;
+    cursor: pointer;
+
+    @include respond(md/lg) {
+      height: 5rem;
+    }
+  }
+
+  &__submit {
+    background-color: $orange;
+    color: $white;
+
+    @include respond(md/lg) {
+      flex-basis: 35%;
+    }
+  }
+
+  &__return {
+    color: $orange;
+    background-color: transparent;
+
+    @include respond(md/lg) {
+      flex-basis: max-content;
+    }
+
+    & span {
+      margin-right: 0.5rem;
+    }
+  }
+}
