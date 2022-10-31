@@ -104,7 +104,12 @@
         </div>
         <ul class="checkout__links">
           <li class="checkout__link-wrap">
-            <button class="checkout__link checkout__link--cart">Cart</button>
+            <button
+              class="checkout__link checkout__link--cart"
+              data-content="cart"
+            >
+              Cart
+            </button>
           </li>
           <li class="checkout__link-spacer">></li>
           <li class="checkout__link-wrap">
@@ -146,76 +151,8 @@
         <section class="checkout__cart-content closed">summary</section>
       </div>
 
-      <!-- <div class="checkout__content"> -->
       <form action="#" class="checkout__content form">
-        <div class="form__content">
-          <!-- <div class="form__group">
-            <h2 class="form__heading">Contact information</h2>
-            <div class="form__item">
-              <input type="email" id="email" placeholder="Email" required />
-              <label for="email" class="form__label">Email</label>
-            </div>
-            <div class="form__item">
-              <input type="checkbox" id="spam" />
-              <label for="spam" class="static"
-                >Email me with news and offers</label
-              >
-            </div>
-          </div> -->
-          <div class="form__group">
-            <h2 class="form__heading">Shipping address</h2>
-            <div class="form__line">
-              <div class="form__item">
-                <input
-                  type="text"
-                  id="fname"
-                  placeholder="First name"
-                  required
-                />
-                <label for="fname" class="form__label">First name</label>
-              </div>
-              <div class="form__item">
-                <input
-                  type="text"
-                  id="l-name"
-                  placeholder="Last name"
-                  required
-                />
-                <label for="l-name" class="form__label">Last name</label>
-              </div>
-            </div>
-            <div class="form__item">
-              <input type="text" id="address" placeholder="Address" required />
-              <label for="address">Address</label>
-            </div>
-            <div class="form__item">
-              <input
-                type="text"
-                id="suite"
-                placeholder="Apartment, suite, etc. (optional)"
-              />
-              <label for="suite">Apartment, suite, etc. (optional)</label>
-            </div>
-            <div class="form__line">
-              <div class="form__item">
-                <input type="text" id="city" placeholder="City" required />
-                <label for="city">City</label>
-              </div>
-              <div class="form__item">
-                <input type="text" id="state" placeholder="State" />
-                <label for="state">State</label>
-              </div>
-              <div class="form__item">
-                <input type="text" id="zip" placeholder="ZIP code" required />
-                <label for="zip">ZIP code</label>
-              </div>
-            </div>
-            <div class="form__item">
-              <input type="tel" id="phone" placeholder="Phone (optional)" />
-              <label for="phone">Phone (optional)</label>
-            </div>
-          </div>
-        </div>
+        <div class="form__content"></div>
 
         <div class="form__group form__group--btns">
           <button class="form__submit" type="submit">
@@ -224,9 +161,7 @@
           <button class="form__return"><span><</span> Return to cart</button>
         </div>
       </form>
-      <!-- </div> -->
     </aside>
-
     <aside class="product-modal">
       <button class="product__close-product close-btn">
         <i class="las la-times"></i>

@@ -136,9 +136,9 @@ function init() {
   cartView.addEventOpenCloseCart();
   cartView.addHandlerCheckoutBtn(controlCloseCartOpenCheckout);
   checkoutView.addListenerCloseCheckout();
-  checkoutView.addHandlerCartBtns(controlCloseCheckoutOpenCart);
-  checkoutView.addListenerCheckoutNav();
+  checkoutView.addHandlerCheckoutNav(controlCloseCheckoutOpenCart);
   checkoutView.addListenerCartSummary();
+  checkoutView.addHandlerReturnBtn(controlCloseCheckoutOpenCart);
   productView.addEventCloseProduct();
   controlLoadProductsByCategory();
   categoryView.addEventListenerToCategoryProducts(controlOpenProduct);

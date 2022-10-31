@@ -6,8 +6,9 @@ const checkoutEle = document.querySelector('.checkout');
 const closeCheckoutBtn = document.querySelector('.checkout__close-checkout');
 const checkoutNav = document.querySelector('.checkout__nav');
 const checkoutNavLinks = [...checkoutNav.querySelectorAll('.checkout__link')];
-const cartBtn = document.querySelector('.checkout__link--cart');
+// const cartBtn = document.querySelector('.checkout__link--cart');
 const returnBtn = document.querySelector('.form__return');
+const submitbtn = document.querySelector('.form__submit');
 const openSumBtn = document.querySelector('.checkout__summary-btn');
 const openSumBtnText = document.querySelector('.checkout__summary-btn--text');
 const openSumBtnPrice = document.querySelector('.checkout__summary-btn--price');
@@ -40,16 +41,16 @@ class CheckoutView extends GeneralView {
     });
   }
 
-  addHandlerCartBtns(handler) {
-    cartBtn.addEventListener('click', e => {
-      e.preventDefault();
-      handler();
-    });
-    returnBtn.addEventListener('click', e => {
-      e.preventDefault();
-      handler();
-    });
-  }
+  // addHandlerCartBtns(handler) {
+  //   cartBtn.addEventListener('click', e => {
+  //     e.preventDefault();
+  //     handler();
+  //   });
+  //   returnBtn.addEventListener('click', e => {
+  //     e.preventDefault();
+  //     handler();
+  //   });
+  // }
 
   renderSummary(cart) {
     cartContent.innerHTML = '';
@@ -64,7 +65,7 @@ class CheckoutView extends GeneralView {
               document.body.id === 'index' ? '' : '.'
             }./img/placeholder.jpg"
             data-src="${item.image}"
-            class="checkout__cart-item--img
+            class="checkout__cart-item--img"
             data-color="color-${item.specs.color}"
           />
         </figure>
@@ -87,10 +88,15 @@ class CheckoutView extends GeneralView {
     checkoutNavLinks.forEach(link => (link.disabled = false));
     checkoutNav.querySelector('.checkout__link--information').disabled = true;
 
+    returnBtn.innerHTML = `
+      <span><</span>Return to cart
+    `;
+
+    this.parentEle.dataset.content = 'information';
     this.parentEle.innerHTML = '';
     this.parentEle.innerHTML = `
     <div class="form__group">
-      <h2 class="form__heading">Contactinformation</ h2>
+      <h2 class="form__heading">Contact information</h2>
       <div class="form__item">
         <input type="email" id="email" placeholder="Email" required />
         <label for="email"class="form__label">Email</  label>
@@ -162,6 +168,11 @@ class CheckoutView extends GeneralView {
     checkoutNavLinks.forEach(link => (link.disabled = false));
     checkoutNav.querySelector('.checkout__link--shipping').disabled = true;
 
+    returnBtn.innerHTML = `
+      <span><</span>Return to information
+    `;
+
+    this.parentEle.dataset.content = 'shipping';
     this.parentEle.innerHTML = '';
     this.parentEle.innerHTML = `
       <h1> shipping </h1>
@@ -172,6 +183,11 @@ class CheckoutView extends GeneralView {
     checkoutNavLinks.forEach(link => (link.disabled = false));
     checkoutNav.querySelector('.checkout__link--payment').disabled = true;
 
+    returnBtn.innerHTML = `
+      <span><</span>Return to shipping
+    `;
+
+    this.parentEle.dataset.content = 'payment';
     this.parentEle.innerHTML = '';
     this.parentEle.innerHTML = `
       <h1> payment </h1>
@@ -188,15 +204,27 @@ class CheckoutView extends GeneralView {
   //   });
   // });
 
-  addListenerCheckoutNav() {
+  addHandlerCheckoutNav(handler) {
     checkoutNav.addEventListener('click', e => {
       e.preventDefault();
       const btn = e.target.closest('.checkout__link');
       if (!btn) return;
+      if (btn.dataset.content === 'cart') handler();
       if (btn.dataset.content === 'information')
         this.renderInformationSection();
       if (btn.dataset.content === 'shipping') this.renderShippingSection();
       if (btn.dataset.content === 'payment') this.renderPaymentSection();
+    });
+  }
+
+  addHandlerReturnBtn(handler) {
+    returnBtn.addEventListener('click', e => {
+      e.preventDefault();
+      if (this.parentEle.dataset.content === 'information') handler();
+      if (this.parentEle.dataset.content === 'shipping')
+        this.renderInformationSection();
+      if (this.parentEle.dataset.content === 'payment')
+        this.renderShippingSection();
     });
   }
 
@@ -214,6 +242,10 @@ class CheckoutView extends GeneralView {
         const height = cartItems[0].offsetHeight * cartItems.length;
         // set css variable to that height
         cartContent.style.setProperty('--cart-height', `${height}px`);
+        // get number of cart items minus 1 - that gives us number of gaps between cart items;
+        const cartGaps = cartItems.length - 1;
+        // set css variable to that number
+        cartContent.style.setProperty('--cart-gaps', `${cartGaps}`);
         // remove class name
         cartContent.classList.remove('closed');
         // change btn text content
