@@ -10,6 +10,11 @@ export const state = {
   session: {
     productModal: {},
     cart: [],
+    checkout: {
+      information: {},
+      shipping: {},
+      payment: {},
+    },
   },
 };
 

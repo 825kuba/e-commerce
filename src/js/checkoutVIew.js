@@ -7,8 +7,9 @@ const closeCheckoutBtn = document.querySelector('.checkout__close-checkout');
 const checkoutNav = document.querySelector('.checkout__nav');
 const checkoutNavLinks = [...checkoutNav.querySelectorAll('.checkout__link')];
 // const cartBtn = document.querySelector('.checkout__link--cart');
+const checkoutForm = document.querySelector('.checkout__content');
 const returnBtn = document.querySelector('.form__return');
-const submitbtn = document.querySelector('.form__submit');
+const submitBtn = document.querySelector('.form__submit');
 const openSumBtn = document.querySelector('.checkout__summary-btn');
 const openSumBtnText = document.querySelector('.checkout__summary-btn--text');
 const openSumBtnPrice = document.querySelector('.checkout__summary-btn--price');
@@ -84,10 +85,11 @@ class CheckoutView extends GeneralView {
     });
   }
 
-  renderInformationSection() {
+  renderInformationSection(checkout) {
     checkoutNavLinks.forEach(link => (link.disabled = false));
     checkoutNav.querySelector('.checkout__link--information').disabled = true;
 
+    submitBtn.innerText = 'Continue to shipping';
     returnBtn.innerHTML = `
       <span><</span>Return to cart
     `;
@@ -98,11 +100,12 @@ class CheckoutView extends GeneralView {
     <div class="form__group">
       <h2 class="form__heading">Contact information</h2>
       <div class="form__item">
-        <input type="email" id="email" placeholder="Email" required />
+        <input type="email" id="email" placeholder="Email" required
+        value="${checkout.information?.email || ''}"/>
         <label for="email"class="form__label">Email</  label>
       </div>
       <div class="form__item">
-        <input type="checkbox" id="spam" />
+        <input type="checkbox" id="spam"/>
         <label for="spam" class="static"
           >Email me with news and offers</label
         >
@@ -114,24 +117,27 @@ class CheckoutView extends GeneralView {
         <div class="form__item">
           <input
             type="text"
-            id="fname"
+            id="firstName"
             placeholder="First name"
             required
+            value="${checkout.information?.firstName || ''}"
           />
-          <label for="fname" class="form__label">First name</label>
+          <label for="firstName" class="form__label">First name</label>
         </div>
         <div class="form__item">
           <input
             type="text"
-            id="l-name"
+            id="lastName"
             placeholder="Last name"
             required
+            value="${checkout.information?.lastName || ''}"
           />
-          <label for="l-name" class="form__label">Last name</label>
+          <label for="lastName" class="form__label">Last name</label>
         </div>
       </div>
       <div class="form__item">
-        <input type="text" id="address" placeholder="Address" required />
+        <input type="text" id="address" placeholder="Address" required 
+        value="${checkout.information?.address || ''}"/>
         <label for="address">Address</label>
       </div>
       <div class="form__item">
@@ -139,35 +145,43 @@ class CheckoutView extends GeneralView {
           type="text"
           id="suite"
           placeholder="Apartment, suite, etc. (optional)"
+          value="${checkout.information?.suite || ''}"
         />
         <label for="suite">Apartment, suite, etc. (optional)</label>
       </div>
       <div class="form__line">
         <div class="form__item">
-          <input type="text" id="city" placeholder="City" required />
+          <input type="text" id="city" placeholder="City" required 
+          value="${checkout.information?.city || ''}"/>
           <label for="city">City</label>
         </div>
         <div class="form__item">
-          <input type="text" id="state" placeholder="State" />
+          <input type="text" id="state" placeholder="State" 
+          value="${checkout.information?.state || ''}"/>
           <label for="state">State</label>
         </div>
         <div class="form__item">
-          <input type="text" id="zip" placeholder="ZIP code" required />
+          <input type="text" id="zip" placeholder="ZIP code" required 
+          value="${checkout.information?.zip || ''}"/>
           <label for="zip">ZIP code</label>
         </div>
       </div>
       <div class="form__item">
-        <input type="tel" id="phone" placeholder="Phone (optional)" />
+        <input type="tel" id="phone" placeholder="Phone (optional)" 
+        value="${checkout.information?.phone || ''}"/>
         <label for="phone">Phone (optional)</label>
       </div>
     </div>
       `;
+
+    this.parentEle.querySelector('#spam').checked = checkout.information?.spam;
   }
 
   renderShippingSection() {
     checkoutNavLinks.forEach(link => (link.disabled = false));
     checkoutNav.querySelector('.checkout__link--shipping').disabled = true;
 
+    submitBtn.innerText = 'Continue to payment';
     returnBtn.innerHTML = `
       <span><</span>Return to information
     `;
@@ -183,6 +197,7 @@ class CheckoutView extends GeneralView {
     checkoutNavLinks.forEach(link => (link.disabled = false));
     checkoutNav.querySelector('.checkout__link--payment').disabled = true;
 
+    submitBtn.innerText = 'Pay now';
     returnBtn.innerHTML = `
       <span><</span>Return to shipping
     `;
@@ -204,27 +219,65 @@ class CheckoutView extends GeneralView {
   //   });
   // });
 
-  addHandlerCheckoutNav(handler) {
+  addHandlerCheckoutNav(handler, checkout) {
     checkoutNav.addEventListener('click', e => {
       e.preventDefault();
       const btn = e.target.closest('.checkout__link');
       if (!btn) return;
       if (btn.dataset.content === 'cart') handler();
       if (btn.dataset.content === 'information')
-        this.renderInformationSection();
+        this.renderInformationSection(checkout);
       if (btn.dataset.content === 'shipping') this.renderShippingSection();
       if (btn.dataset.content === 'payment') this.renderPaymentSection();
     });
   }
 
-  addHandlerReturnBtn(handler) {
+  addHandlerReturnBtn(handler, checkout) {
     returnBtn.addEventListener('click', e => {
       e.preventDefault();
       if (this.parentEle.dataset.content === 'information') handler();
-      if (this.parentEle.dataset.content === 'shipping')
-        this.renderInformationSection();
-      if (this.parentEle.dataset.content === 'payment')
+      else if (this.parentEle.dataset.content === 'shipping')
+        this.renderInformationSection(checkout);
+      else if (this.parentEle.dataset.content === 'payment')
         this.renderShippingSection();
+    });
+  }
+
+  addHandlerSubmitForm(handler) {
+    checkoutForm.addEventListener('submit', e => {
+      e.preventDefault();
+      if (this.parentEle.dataset.content === 'information') {
+        const information = {
+          email: `${this.parentEle.querySelector('#email').value}`,
+          spam: this.parentEle.querySelector('#spam').checked,
+          firstName: `${this.parentEle.querySelector('#firstName').value}`,
+          lastName: `${this.parentEle.querySelector('#lastName').value}`,
+          address: `${this.parentEle.querySelector('#address').value}`,
+          suite: `${this.parentEle.querySelector('#suite').value}`,
+          city: `${this.parentEle.querySelector('#city').value}`,
+          state: `${this.parentEle.querySelector('#state').value}`,
+          zip: `${this.parentEle.querySelector('#zip').value}`,
+          phone: `${this.parentEle.querySelector('#phone').value}`,
+        };
+        handler('information', information);
+        this.renderShippingSection();
+      } else if (this.parentEle.dataset.content === 'shipping') {
+        const shipping = {
+          type: 'Economy',
+          price: '120',
+        };
+        handler('shipping', shipping);
+        this.renderPaymentSection();
+      } else if (this.parentEle.dataset.content === 'payment') {
+        const payment = {
+          cardNumber: '12345678',
+          cardExpiry: '12/22',
+          cvv: '123',
+          name: 'Frantisek Balambamba',
+        };
+        handler('payment', payment);
+        console.log('end session');
+      }
     });
   }
 

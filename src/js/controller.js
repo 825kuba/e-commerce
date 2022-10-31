@@ -121,7 +121,7 @@ function controlCartItemQty(updatedCart) {
 
 function controlCloseCartOpenCheckout() {
   cartView.closeCart();
-  checkoutView.renderInformationSection();
+  checkoutView.renderInformationSection(model.state.session.checkout);
   checkoutView.openCheckout();
 }
 
@@ -130,15 +130,32 @@ function controlCloseCheckoutOpenCart() {
   cartView.openCart();
 }
 
+function controlSubmitForm(objName, obj) {
+  console.log(objName);
+  console.log(obj);
+  console.log(model.state.session);
+  if (objName === 'information') model.state.session.checkout.information = obj;
+  else if (objName === 'shipping') model.state.session.checkout.shipping = obj;
+  else if (objName === 'payment') model.state.session.checkout.payment = obj;
+  model.saveToStorage();
+}
+
 function init() {
   model.loadFromStorage();
   navView.addEventMobileNav();
   cartView.addEventOpenCloseCart();
   cartView.addHandlerCheckoutBtn(controlCloseCartOpenCheckout);
   checkoutView.addListenerCloseCheckout();
-  checkoutView.addHandlerCheckoutNav(controlCloseCheckoutOpenCart);
+  checkoutView.addHandlerCheckoutNav(
+    controlCloseCheckoutOpenCart,
+    model.state.session.checkout
+  );
   checkoutView.addListenerCartSummary();
-  checkoutView.addHandlerReturnBtn(controlCloseCheckoutOpenCart);
+  checkoutView.addHandlerReturnBtn(
+    controlCloseCheckoutOpenCart,
+    model.state.session.checkout
+  );
+  checkoutView.addHandlerSubmitForm(controlSubmitForm);
   productView.addEventCloseProduct();
   controlLoadProductsByCategory();
   categoryView.addEventListenerToCategoryProducts(controlOpenProduct);
