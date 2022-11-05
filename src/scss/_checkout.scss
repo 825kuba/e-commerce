@@ -83,6 +83,7 @@
     &--price {
       font-size: 1.9rem;
       color: $black;
+      font-weight: 500;
     }
 
     @include respond(lg) {
@@ -91,7 +92,7 @@
   }
 
   &__cart-content {
-    padding: 1rem;
+    padding: 2rem 1rem;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -99,7 +100,7 @@
     --cart-gaps: 0;
     --cart-height: 0;
     // total height = height of all cart items + height of all gaps + padding
-    height: calc(var(--cart-height) + (var(--cart-gaps) * 1rem) + 2rem);
+    height: calc(var(--cart-height) + (var(--cart-gaps) * 1rem) + 4rem);
     transition: all 0.3s ease-in-out;
 
     &.closed {
@@ -137,13 +138,32 @@
 
     &--img-wrap {
       width: max-content;
+      position: relative;
+    }
+
+    &--qty {
+      position: absolute;
+      top: 0;
+      right: 0;
+      transform: translate(50%, -50%);
+      z-index: $z-100;
+      background-color: $gray-blue;
+      color: $white;
+      font-size: 1.3rem;
+      width: 2.3rem;
+      height: 2.3rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     &--img {
       width: 64px;
       height: 64px;
       object-fit: contain;
-
+      border: 1px solid $gray-light-3;
+      border-radius: 2px;
       @include changeImgColor;
     }
 

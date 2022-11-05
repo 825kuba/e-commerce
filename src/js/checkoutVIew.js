@@ -12,7 +12,9 @@ const returnBtn = document.querySelector('.form__return');
 const submitBtn = document.querySelector('.form__submit');
 const openSumBtn = document.querySelector('.checkout__summary-btn');
 const openSumBtnText = document.querySelector('.checkout__summary-btn--text');
-const openSumBtnPrice = document.querySelector('.checkout__summary-btn--price');
+const openSumBtnPrice = document.querySelector(
+  '.checkout__summary-btn--price span'
+);
 const cartContent = document.querySelector('.checkout__cart-content');
 
 class CheckoutView extends GeneralView {
@@ -61,6 +63,7 @@ class CheckoutView extends GeneralView {
         `
       <div class="checkout__cart-item" id="${item.id}">
         <figure class="checkout__cart-item--img-wrap">
+          <span class="checkout__cart-item--qty">${item.specs.qty}</span>
           <img
             src="${
               document.body.id === 'index' ? '' : '.'
@@ -78,11 +81,21 @@ class CheckoutView extends GeneralView {
           item.specs.color === 'Natural' ? '' : 'Color'
         } ${item.specs.color}</p>
         </div>
-        <p class="checkout__cart-item--price">$<span>${item.price}</span></p>
+        <p class="checkout__cart-item--price">$<span>${item.price.toFixed(
+          2
+        )}</span></p>
       </div>
       `
       );
     });
+
+    // update cart subtotal
+    let totalPrice = 0;
+    cart.forEach(item => {
+      const price = item.specs.qty * item.price;
+      totalPrice += price;
+    });
+    openSumBtnPrice.innerText = totalPrice.toFixed(2);
   }
 
   renderInformationSection(checkout) {

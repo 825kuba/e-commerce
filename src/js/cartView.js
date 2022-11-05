@@ -81,7 +81,9 @@ class CartView extends GeneralView {
           item.specs.color === 'Natural' ? '' : 'Color'
         } ${item.specs.color}</p>
           </div>
-          <p class="cart__item__price">$<span>${item.price}</span></p>
+          <p class="cart__item__price">$<span>${item.price.toFixed(
+            2
+          )}</span></p>
 
           <form class="cart__item__qty" action="">
             <div class="cart__item__input-wrap">
