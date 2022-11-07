@@ -155,7 +155,10 @@ function init() {
     controlCloseCheckoutOpenCart,
     model.state.session.checkout
   );
-  checkoutView.addHandlerSubmitForm(controlSubmitForm);
+  checkoutView.addHandlerSubmitForm(
+    controlSubmitForm,
+    model.state.session.checkout
+  );
   productView.addEventCloseProduct();
   controlLoadProductsByCategory();
   categoryView.addEventListenerToCategoryProducts(controlOpenProduct);

@@ -190,7 +190,7 @@ class CheckoutView extends GeneralView {
     this.parentEle.querySelector('#spam').checked = checkout.information?.spam;
   }
 
-  renderShippingSection() {
+  renderShippingSection(checkout) {
     checkoutNavLinks.forEach(link => (link.disabled = false));
     checkoutNav.querySelector('.checkout__link--shipping').disabled = true;
 
@@ -202,8 +202,30 @@ class CheckoutView extends GeneralView {
     this.parentEle.dataset.content = 'shipping';
     this.parentEle.innerHTML = '';
     this.parentEle.innerHTML = `
-      <h1> shipping </h1>
+    <div class="form__group">
+      <h2 class="form__heading">Shipping method</h2>
+      <div class="form__item form__item--radio">
+        <input type="radio" id="economy" name="shipping"  value="Economy" data-price="50"/>
+        <label class="static" for="economy">
+          <h5>Economy</h5>
+          <span>5 to 8 business days</span>
+        </label>
+        <strong>$50</strong>
+      </div>
+      <div class="form__item form__item--radio">
+        <input type="radio" id="premium" name="shipping"  value="Premium" data-price="100"/>
+        <label class="static" for="premium">
+          <h5>Premium</h5>
+          <span>1 to 3 business days</span>
+        </label>
+        <strong>$100</strong>
+      </div>
+    </div>
     `;
+
+    this.parentEle.querySelector(
+      `input[value="${checkout.shipping.type}"]`
+    ).checked = true;
   }
 
   renderPaymentSection() {
@@ -240,7 +262,8 @@ class CheckoutView extends GeneralView {
       if (btn.dataset.content === 'cart') handler();
       if (btn.dataset.content === 'information')
         this.renderInformationSection(checkout);
-      if (btn.dataset.content === 'shipping') this.renderShippingSection();
+      if (btn.dataset.content === 'shipping')
+        this.renderShippingSection(checkout);
       if (btn.dataset.content === 'payment') this.renderPaymentSection();
     });
   }
@@ -252,11 +275,11 @@ class CheckoutView extends GeneralView {
       else if (this.parentEle.dataset.content === 'shipping')
         this.renderInformationSection(checkout);
       else if (this.parentEle.dataset.content === 'payment')
-        this.renderShippingSection();
+        this.renderShippingSection(checkout);
     });
   }
 
-  addHandlerSubmitForm(handler) {
+  addHandlerSubmitForm(handler, checkout) {
     checkoutForm.addEventListener('submit', e => {
       e.preventDefault();
       if (this.parentEle.dataset.content === 'information') {
@@ -273,11 +296,16 @@ class CheckoutView extends GeneralView {
           phone: `${this.parentEle.querySelector('#phone').value}`,
         };
         handler('information', information);
-        this.renderShippingSection();
+        this.renderShippingSection(checkout);
       } else if (this.parentEle.dataset.content === 'shipping') {
         const shipping = {
-          type: 'Economy',
-          price: '120',
+          type: `${
+            this.parentEle.querySelector('[name="shipping"]:checked').value
+          }`,
+          price: `${
+            this.parentEle.querySelector('[name="shipping"]:checked').dataset
+              .price
+          }`,
         };
         handler('shipping', shipping);
         this.renderPaymentSection();

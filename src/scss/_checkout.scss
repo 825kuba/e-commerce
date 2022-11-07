@@ -230,6 +230,41 @@
     gap: 1rem;
     position: relative;
     flex: 1;
+    // border: 1px solid red;
+
+    &--radio {
+      align-items: flex-start;
+      border: none;
+      outline: 1px solid $gray-light;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+
+      & input {
+        cursor: pointer;
+        margin-top: 0.2rem;
+      }
+      label {
+        flex: 1;
+        cursor: pointer;
+
+        & h5 {
+          font-size: 1.5rem;
+          font-weight: 500;
+          margin-bottom: 0.3rem;
+        }
+
+        & span {
+          font-weight: 400;
+          font-size: 1.4rem;
+        }
+      }
+
+      & strong {
+        margin-left: auto;
+        // font-size: 1.4rem;
+        font-weight: 500;
+      }
+    }
   }
 
   &__line {
@@ -242,7 +277,7 @@
     }
   }
 
-  input {
+  input:not([type='radio']) {
     padding: 1.75rem 1rem 0.75rem 1rem;
     display: block;
     transition: padding 0.3s ease;
