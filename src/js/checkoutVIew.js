@@ -101,6 +101,10 @@ class CheckoutView extends GeneralView {
   renderInformationSection(checkout) {
     checkoutNavLinks.forEach(link => (link.disabled = false));
     checkoutNav.querySelector('.checkout__link--information').disabled = true;
+    if (!Object.keys(checkout.information).length)
+      document.querySelector('[data-content="shipping"]').disabled = true;
+    if (!Object.keys(checkout.shipping).length)
+      document.querySelector('[data-content="payment"]').disabled = true;
 
     submitBtn.innerText = 'Continue to shipping';
     returnBtn.innerHTML = `
@@ -193,6 +197,8 @@ class CheckoutView extends GeneralView {
   renderShippingSection(checkout) {
     checkoutNavLinks.forEach(link => (link.disabled = false));
     checkoutNav.querySelector('.checkout__link--shipping').disabled = true;
+    if (!Object.keys(checkout.shipping).length)
+      document.querySelector('[data-content="payment"]').disabled = true;
 
     submitBtn.innerText = 'Continue to payment';
     returnBtn.innerHTML = `
@@ -223,6 +229,7 @@ class CheckoutView extends GeneralView {
     </div>
     `;
 
+    if (!checkout.shipping.type) return;
     this.parentEle.querySelector(
       `input[value="${checkout.shipping.type}"]`
     ).checked = true;
@@ -240,8 +247,56 @@ class CheckoutView extends GeneralView {
     this.parentEle.dataset.content = 'payment';
     this.parentEle.innerHTML = '';
     this.parentEle.innerHTML = `
-      <h1> payment </h1>
+    <div class="form__group">
+      <h2 class="form__heading">Discount code</h2>
+        <div class="form__item">
+          <input type="text" id="discount"    placeholder="Discount code"/>
+          <label  for="discount"class="form__label">Discount   code</label>
+          <button type="button">→</button>
+        </div>
+    </div>
+    <div class="form__group">
+      <h2 class="form__heading">Payment</h2>
+      <p>No transactions will take place, this is just a fake eshop :)</p>
+      <div class="form__item">
+        <input type="number" id="card-number"  placeholder="Card number" required />
+        <label for="card-number"class="form__label">Card number</label>
+      </div>
+      <div class="form__item">
+        <input type="text" id="card-holder"  placeholder="Card holder" required />
+        <label for="card-holder"class="form__label">Card holder</label>
+      </div>
+      <div class="form__item">
+        <input type="text" id="card-exp" name="card-exp-month" placeholder="Expiration date (MM / YY)" required pattern="^[0-9][0-9]/[0-9][0-9]$" />
+        <label for="card-exp"class="form__label">Expiration date (MM / YY)
+        </label>
+      </div>
+      <div class="form__item">
+        <input type="number" id="card-code"  placeholder="Security code" required />
+        <label for="card-code"class="form__label">Security code
+        </label>
+      </div>
+    </div>
     `;
+
+    const cardNumber = this.parentEle.querySelector('#card-number');
+    cardNumber.addEventListener('keypress', e => {
+      if (e.key === '.' || e.key === '-' || cardNumber.value.length >= 16)
+        e.preventDefault();
+    });
+
+    const cardCode = this.parentEle.querySelector('#card-code');
+    cardCode.addEventListener('keypress', e => {
+      if (e.key === '.' || e.key === '-' || cardCode.value.length >= 3)
+        e.preventDefault();
+    });
+
+    const cardExp = this.parentEle.querySelector('#card-exp');
+    const reg = /^[0-9/]$/;
+
+    cardExp.addEventListener('keypress', e => {
+      if (!reg.test(e.key)) e.preventDefault();
+    });
   }
 
   // const required = [...document.querySelectorAll('[required]')];

@@ -26,7 +26,8 @@ a {
   }
 }
 
-input[type='number'] {
+.product input[type='number'],
+.cart input[type='number'] {
   background-color: transparent;
   border: none;
   appearance: none;

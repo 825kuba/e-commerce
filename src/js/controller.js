@@ -120,6 +120,7 @@ function controlCartItemQty(updatedCart) {
 }
 
 function controlCloseCartOpenCheckout() {
+  if (!model.state.session.cart.length) return;
   cartView.closeCart();
   checkoutView.renderInformationSection(model.state.session.checkout);
   checkoutView.openCheckout();
