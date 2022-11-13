@@ -26,10 +26,8 @@ a {
   }
 }
 
-.product input[type='number'],
-.cart input[type='number'] {
-  background-color: transparent;
-  border: none;
+// hide arrows in number input fields
+input[type='number'] {
   appearance: none;
   -moz-appearance: textfield;
 
@@ -37,6 +35,13 @@ a {
   &::-webkit-inner-spin-button {
     appearance: none;
     margin: 0;
+  }
+
+  // transparent number input fields in cart na product modal
+  .cart &,
+  .product & {
+    background-color: transparent;
+    border: none;
   }
 }
 

@@ -275,6 +275,35 @@
     }
   }
 
+  // wrapper of form item and error message
+  &__item-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    flex: 1;
+
+    &.success .form__item input {
+      outline: 2px solid $green;
+    }
+
+    &.error {
+      & .form__item input {
+        outline: 2px solid $red;
+      }
+
+      & .form__error {
+        display: block;
+      }
+    }
+  }
+
+  // error message
+  &__error {
+    color: $red;
+    font-size: 1.4rem;
+    display: none;
+  }
+
   &__line {
     display: flex;
     gap: 2rem;
@@ -282,6 +311,7 @@
 
     @include respond(md/lg) {
       flex-direction: row;
+      align-items: flex-start;
     }
   }
 
@@ -311,9 +341,9 @@
       outline: 2px solid $orange;
     }
 
-    &.required:invalid {
-      outline: 2px solid $red;
-    }
+    // &.required:invalid {
+    //   outline: 2px solid $red;
+    // }
   }
 
   label {
