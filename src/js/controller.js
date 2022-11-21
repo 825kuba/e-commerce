@@ -86,7 +86,10 @@ function controlAddToCart(specs) {
     model.state.session.cart,
     controlRemoveFromCart,
     controlCartItemQty,
-    controlOpenProduct
+    controlOpenProduct,
+    model.state.session.checkout,
+    controlAddingDiscount,
+    controlUpdateSubtotal
   );
   // close product and open cart
   productView.closeProductOpenCart();
@@ -103,7 +106,10 @@ function controlRemoveFromCart(index) {
     model.state.session.cart,
     controlRemoveFromCart,
     controlCartItemQty,
-    controlOpenProduct
+    controlOpenProduct,
+    model.state.session.checkout,
+    controlAddingDiscount,
+    controlUpdateSubtotal
   );
 }
 
@@ -115,8 +121,18 @@ function controlCartItemQty(updatedCart) {
     model.state.session.cart,
     controlRemoveFromCart,
     controlCartItemQty,
-    controlOpenProduct
+    controlOpenProduct,
+    model.state.session.checkout,
+    controlAddingDiscount,
+    controlUpdateSubtotal
   );
+}
+
+function controlUpdateSubtotal(price) {
+  // update state object
+  model.state.session.checkout.details.subtotal = price;
+  //save to storage
+  model.saveToStorage();
 }
 
 function controlCloseCartOpenCheckout() {
@@ -132,13 +148,40 @@ function controlCloseCheckoutOpenCart() {
 }
 
 function controlSubmitForm(objName, obj) {
-  console.log(objName);
-  console.log(obj);
-  console.log(model.state.session);
   if (objName === 'information') model.state.session.checkout.information = obj;
   else if (objName === 'shipping') model.state.session.checkout.shipping = obj;
   else if (objName === 'payment') model.state.session.checkout.payment = obj;
   model.saveToStorage();
+}
+
+function controlAddingDiscount(newCode, inputEle) {
+  // find inputed code in array of codes
+  const code = model.state.discountCodes.find(obj => obj.code === newCode);
+  const ele = inputEle;
+  // save code - if code doesnt exist save empty obj
+  model.state.session.checkout.discount = code ? code : {};
+  model.saveToStorage();
+
+  // render discount line
+  checkoutView.updatePrices(model.state.session.checkout);
+
+  // if code exists
+  if (code) {
+    // show discount line in summary
+    checkoutView.showDiscount();
+    // show success
+    checkoutView.setInputSuccess(ele);
+  }
+  // if it doesnt
+  else {
+    // hide discount line in summary
+    checkoutView.hideDiscount();
+    // show success
+    checkoutView.setInputError(ele, 'Please enter valid code');
+  }
+
+  // set correct height of summary container
+  checkoutView.calcSummaryHeight();
 }
 
 function init() {
@@ -158,7 +201,9 @@ function init() {
   );
   checkoutView.addHandlerSubmitForm(
     controlSubmitForm,
-    model.state.session.checkout
+    model.state.session.checkout,
+    model.state.session.cart,
+    controlAddingDiscount
   );
   productView.addEventCloseProduct();
   controlLoadProductsByCategory();
@@ -167,7 +212,10 @@ function init() {
     model.state.session.cart,
     controlRemoveFromCart,
     controlCartItemQty,
-    controlOpenProduct
+    controlOpenProduct,
+    model.state.session.checkout,
+    controlAddingDiscount,
+    controlUpdateSubtotal
   );
   cartView.cartMsgAddListener();
   mainPageView.addEventImageGallery();

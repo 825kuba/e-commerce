@@ -14,8 +14,17 @@ export const state = {
       information: {},
       shipping: {},
       payment: {},
+      discount: {},
+      details: {
+        subtotal: 0,
+      },
     },
   },
+  discountCodes: [
+    { code: 'FRONTEND10', amount: 0.1, perc: '10%' },
+    { code: 'FRONTEND25', amount: 0.25, perc: '25%' },
+    { code: 'FRONTEND50', amount: 0.5, perc: '50%' },
+  ],
 };
 
 export const fetchProductsByCategory = async category => {

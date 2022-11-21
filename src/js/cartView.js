@@ -225,15 +225,33 @@ class CartView extends GeneralView {
     }, 2000);
   }
 
-  updateCart(cart, removeHandler, qtyHandler, productHandler) {
+  updateSubtotal(cart, handler) {
+    let subtotalPrice = 0;
+    cart.forEach(item => {
+      const price = item.specs.qty * item.price;
+      subtotalPrice += price;
+    });
+    handler(subtotalPrice);
+  }
+
+  updateCart(
+    cart,
+    removeHandler,
+    qtyHandler,
+    productHandler,
+    checkout,
+    discountHandler,
+    subtotalHandler
+  ) {
     this.renderSpinner();
     this.renderCart(cart);
     this.updateCartBtn(cart);
+    this.updateSubtotal(cart, subtotalHandler);
     this.addListenerCartItems(cart, removeHandler, qtyHandler, productHandler);
     this.observeImgs('.cart__item__img');
     this.cartMsgShow();
-    checkoutVIew.renderSummary(cart);
-    this.observeImgs('.checkout__cart-item--img');
+    checkoutVIew.renderSummary(cart, checkout, discountHandler);
+    // this.observeImgs('.checkout__cart-item--img');
   }
 
   addHandlerCheckoutBtn(handler) {

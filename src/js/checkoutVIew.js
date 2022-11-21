@@ -6,7 +6,6 @@ const checkoutEle = document.querySelector('.checkout');
 const closeCheckoutBtn = document.querySelector('.checkout__close-checkout');
 const checkoutNav = document.querySelector('.checkout__nav');
 const checkoutNavLinks = [...checkoutNav.querySelectorAll('.checkout__link')];
-// const cartBtn = document.querySelector('.checkout__link--cart');
 const checkoutForm = document.querySelector('.checkout__content');
 const returnBtn = document.querySelector('.form__return');
 const submitBtn = document.querySelector('.form__submit');
@@ -44,18 +43,7 @@ class CheckoutView extends GeneralView {
     });
   }
 
-  // addHandlerCartBtns(handler) {
-  //   cartBtn.addEventListener('click', e => {
-  //     e.preventDefault();
-  //     handler();
-  //   });
-  //   returnBtn.addEventListener('click', e => {
-  //     e.preventDefault();
-  //     handler();
-  //   });
-  // }
-
-  renderSummary(cart) {
+  renderSummary(cart, checkout, discountHandler) {
     cartContent.innerHTML = '';
     cart.forEach(item => {
       cartContent.insertAdjacentHTML(
@@ -89,13 +77,187 @@ class CheckoutView extends GeneralView {
       );
     });
 
-    // update cart subtotal
-    let totalPrice = 0;
-    cart.forEach(item => {
-      const price = item.specs.qty * item.price;
-      totalPrice += price;
+    // calculate prices
+    const pricing = this.updateSummaryPrice(checkout);
+
+    // update btn price text
+    openSumBtnPrice.innerText = pricing.total.toFixed(2);
+
+    // render subtotal section
+    cartContent.insertAdjacentHTML(
+      'beforeend',
+      `
+      <div class="checkout__details">
+        <form action="" class="checkout__detail checkout__detail--form">
+            <div class="form__item-wrap">
+              <div class="form__item">
+                <input type="text" id="discount"  placeholder="Discount code" value="${
+                  checkout.discount.code || ''
+                }" />
+                <label for="discount"   class="form__label">Discount code</label>
+                <button type="submit">→</button>
+              </div>
+              <p class="form__error"></p>
+            </div>
+        </form>
+        <div class="checkout__detail checkout__detail--subtotal">
+          <div class="checkout__detail--line" id="subtotal-line">
+            <h6>Subtotal</h6>
+            <strong>$<span>${pricing.subtotal.toFixed(2)}</span></strong>
+          </div>
+          <div class="checkout__detail--line" id="shipping-line">
+            <h6>Shipping</h6>
+            <strong>$<span>${pricing.shipping.toFixed(2)}</span></strong>
+          </div>
+          <div class="checkout__detail--line ${
+            checkout.discount.code ? '' : 'hidden'
+          }" id="discount-line">
+            <h6>Discount</h6>
+            <strong>- $<span>${
+              checkout.discount.code ? pricing.discount.toFixed(2) : 0
+            } (${checkout.discount.perc || 0} OFF)</span></strong>
+          </div>
+        </div>
+        <div class="checkout__detail checkout__detail--total">
+          <div class="checkout__detail--line" id="total-line">
+            <h5>Total</h5>
+            <strong class="total">$<span>${pricing.total.toFixed(
+              2
+            )}</span></strong>
+          </div>
+        </div>
+      </div>
+      `
+    );
+
+    // select discount code form
+    const discountForm = cartContent.querySelector('.checkout__detail--form');
+    const discountInput = cartContent.querySelector('#discount');
+
+    // add event on submit
+    discountForm.addEventListener('submit', e => {
+      e.preventDefault();
+      // run handler
+      discountHandler(discountInput.value, discountInput);
     });
-    openSumBtnPrice.innerText = totalPrice.toFixed(2);
+
+    // adjust summary height
+    this.calcSummaryHeight();
+    // observe Imgs
+    this.observeImgs('.checkout__cart-item--img');
+  }
+
+  updateSummaryPrice(checkout) {
+    // update shipping price
+    const shippingPrice = Number(checkout.shipping.price) || 0;
+
+    // update subtotal price
+    const subtotalPrice = checkout.details.subtotal;
+
+    // calculate total price
+    let totalPrice = subtotalPrice + shippingPrice;
+
+    // calculate discount amount
+    const discountAmount = checkout.discount.amount
+      ? totalPrice * checkout.discount.amount
+      : 0;
+
+    // update total price
+    totalPrice = totalPrice - discountAmount;
+
+    // return object with prices
+    return {
+      subtotal: subtotalPrice,
+      shipping: shippingPrice,
+      discount: discountAmount,
+      total: totalPrice,
+    };
+  }
+
+  // udpate (render again) prices lines and btn price text
+  updatePrices(checkout) {
+    // calculate prices
+    const pricing = this.updateSummaryPrice(checkout);
+
+    // subtotal line
+    cartContent
+      .querySelector('#subtotal-line')
+      .querySelector('span').innerHTML = `${pricing.subtotal.toFixed(2)}`;
+
+    // shipping line
+    cartContent
+      .querySelector('#shipping-line')
+      .querySelector('span').innerHTML = `${pricing.shipping.toFixed(2)}`;
+
+    // discount line
+    cartContent
+      .querySelector('#discount-line')
+      .querySelector('span').innerHTML = `${
+      checkout.discount.code ? pricing.discount.toFixed(2) : 0
+    } (${checkout.discount.perc ? checkout.discount.perc : 0} OFF)`;
+
+    // total price
+    cartContent.querySelector('#total-line').querySelector('span').innerHTML = `
+    ${pricing.total.toFixed(2)}
+    `;
+
+    // btn price text
+    openSumBtnPrice.innerText = pricing.total.toFixed(2);
+  }
+
+  calcSummaryHeight() {
+    // get all cart items elements
+    const cartItems = [...cartContent.querySelectorAll('.checkout__cart-item')];
+    if (!cartItems.length) return;
+    // get their total height + checkout__details container height
+    const height =
+      cartItems[0].offsetHeight * cartItems.length +
+      document.querySelector('.checkout__details').offsetHeight;
+    // set css variable to that height
+    cartContent.style.setProperty('--cart-height', `${height}px`);
+    // get number of gaps between flex items - cartItems.length is perfect because the 1 extra gap is for the details element
+    const cartGaps = cartItems.length;
+    // set css variable to that number
+    cartContent.style.setProperty('--cart-gaps', `${cartGaps}`);
+  }
+
+  openSummary() {
+    // calc summary height
+    this.calcSummaryHeight();
+    // remove class name
+    cartContent.classList.remove('closed');
+    // change btn text content
+    openSumBtnText.textContent = '🛒 Hide order summary ↑';
+  }
+
+  closeSummary() {
+    // add class content
+    cartContent.classList.add('closed');
+    // set css variable
+    cartContent.style.setProperty('--cart-height', '0px');
+    // change btn text content
+    openSumBtnText.textContent = '🛒 Show order summary ↓';
+  }
+
+  // expand / collapse cart summary
+  addListenerCartSummary() {
+    openSumBtn.addEventListener('click', e => {
+      e.preventDefault();
+      // if summary is closed
+      if (cartContent.classList.contains('closed')) this.openSummary();
+      // if it is opened
+      else this.closeSummary();
+    });
+  }
+
+  // show discount line
+  showDiscount() {
+    cartContent.querySelector('#discount-line').classList.remove('hidden');
+  }
+
+  // hide discount line
+  hideDiscount() {
+    cartContent.querySelector('#discount-line').classList.add('hidden');
   }
 
   renderInformationSection(checkout) {
@@ -114,6 +276,15 @@ class CheckoutView extends GeneralView {
     returnBtn.innerHTML = `
       <span><</span>Return to cart
     `;
+
+    // close summary
+    this.closeSummary();
+    // scroll to top
+    checkoutEle.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
 
     // change data-content of form
     this.parentEle.dataset.content = 'information';
@@ -244,6 +415,15 @@ class CheckoutView extends GeneralView {
       <span><</span>Return to information
     `;
 
+    // close summary
+    this.closeSummary();
+    // scroll to top
+    checkoutEle.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+
     // change data-content of form
     this.parentEle.dataset.content = 'shipping';
     // empty form
@@ -290,6 +470,15 @@ class CheckoutView extends GeneralView {
       <span><</span>Return to shipping
     `;
 
+    // close summary
+    this.closeSummary();
+    // scroll to top
+    checkoutEle.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+
     // change data-content of form
     this.parentEle.dataset.content = 'payment';
     // empty form
@@ -297,19 +486,8 @@ class CheckoutView extends GeneralView {
     // render form
     this.parentEle.innerHTML = `
     <div class="form__group">
-      <h2 class="form__heading">Discount code</h2>
-      <div class="form__item-wrap">
-        <div class="form__item">
-          <input type="text" id="discount"    placeholder="Discount code"/>
-          <label  for="discount"class="form__label">Discount   code</label>
-          <button type="button">→</button>
-        </div>
-        <p class="form__error"></p>
-      </div>  
-    </div>
-    <div class="form__group">
       <h2 class="form__heading">Payment</h2>
-      <p>No transactions will take place, this is just a fake eshop :)</p>
+      <p>No transactions will take place, this is just a fake e-shop :)</p>
       <div class="form__item-wrap">
         <div class="form__item">
           <input type="number" id="card-number"   placeholder="Card number" />
@@ -395,13 +573,19 @@ class CheckoutView extends GeneralView {
   addHandlerCheckoutNav(handler, checkout) {
     checkoutNav.addEventListener('click', e => {
       e.preventDefault();
+      // set target btn
       const btn = e.target.closest('.checkout__link');
+      // only proceed if btn is clicked
       if (!btn) return;
+      // cart btn
       if (btn.dataset.content === 'cart') handler();
+      // info btn
       if (btn.dataset.content === 'information')
         this.renderInformationSection(checkout);
+      // shipping btn
       if (btn.dataset.content === 'shipping')
         this.renderShippingSection(checkout);
+      // payment btn
       if (btn.dataset.content === 'payment') this.renderPaymentSection();
     });
   }
@@ -575,7 +759,7 @@ class CheckoutView extends GeneralView {
   }
 
   // set events on submitting form
-  addHandlerSubmitForm(handler, checkout) {
+  addHandlerSubmitForm(formHandler, checkout, cart, discountHandler) {
     checkoutForm.addEventListener('submit', e => {
       // prevent default submitting
       e.preventDefault();
@@ -596,8 +780,8 @@ class CheckoutView extends GeneralView {
           zip: `${this.parentEle.querySelector('#zip').value}`,
           phone: `${this.parentEle.querySelector('#phone').value}`,
         };
-        // run handler with section name and new object
-        handler('information', information);
+        // run formHandler with section name and new object
+        formHandler('information', information);
         // render next form
         this.renderShippingSection(checkout);
         // if the current form is shipping section
@@ -612,10 +796,12 @@ class CheckoutView extends GeneralView {
               .price
           }`,
         };
-        // run handler with section name and new object
-        handler('shipping', shipping);
+        // run formHandler with section name and new object
+        formHandler('shipping', shipping);
         // render next form
         this.renderPaymentSection();
+        // update prices in case shipping price changes
+        this.updatePrices(checkout);
         // if the current form is payment section
       } else if (this.parentEle.dataset.content === 'payment') {
         // validate form input fields, if there are any errors, return
@@ -623,48 +809,15 @@ class CheckoutView extends GeneralView {
 
         // create object from form data
         const payment = {
-          cardNumber: '12345678',
-          cardExpiry: '12/22',
-          cvv: '123',
-          name: 'Frantisek Balambamba',
+          cardNumber: `${this.parentEle.querySelector('#card-number').value}`,
+          cardExpiry: `${this.parentEle.querySelector('#card-exp').value}`,
+          cvv: `${this.parentEle.querySelector('#card-code').value}`,
+          name: `${this.parentEle.querySelector('#card-holder').value}`,
         };
-        // run handler with section name and new object
-        handler('payment', payment);
+        // run formHandler with section name and new object
+        formHandler('payment', payment);
         // run complete order function - not created yet
         console.log('end session');
-      }
-    });
-  }
-
-  // expand.collapse cart summary
-  addListenerCartSummary() {
-    openSumBtn.addEventListener('click', e => {
-      e.preventDefault();
-      // if summary is closed
-      if (cartContent.classList.contains('closed')) {
-        // get all cart items elements
-        const cartItems = [
-          ...cartContent.querySelectorAll('.checkout__cart-item'),
-        ];
-        // get their total height
-        const height = cartItems[0].offsetHeight * cartItems.length;
-        // set css variable to that height
-        cartContent.style.setProperty('--cart-height', `${height}px`);
-        // get number of cart items minus 1 - that gives us number of gaps between cart items;
-        const cartGaps = cartItems.length - 1;
-        // set css variable to that number
-        cartContent.style.setProperty('--cart-gaps', `${cartGaps}`);
-        // remove class name
-        cartContent.classList.remove('closed');
-        // change btn text content
-        openSumBtnText.textContent = '🛒 Hide order summary ↑';
-      } else {
-        // add class content
-        cartContent.classList.add('closed');
-        // set css variable
-        cartContent.style.setProperty('--cart-height', '0px');
-        // change btn text content
-        openSumBtnText.textContent = '🛒 Show order summary ↓';
       }
     });
   }
