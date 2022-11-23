@@ -100,17 +100,13 @@
     @include respond(md/lg) {
       border-top: 1px solid $black;
     }
-
-    @include respond(lg) {
-      gap: 2rem;
-    }
   }
 
   &__item {
     display: grid;
     gap: 2rem;
     grid-template-columns: repeat(12, 1fr);
-    grid-template-rows: repeat(4, 1fr);
+    grid-template-rows: repeat(4, max-content);
 
     &__img {
       cursor: pointer;
@@ -205,6 +201,7 @@
     &__input-wrap {
       display: flex;
       flex: 1;
+      gap: 1rem;
 
       & input {
         text-align: center;
@@ -213,7 +210,6 @@
 
       & button {
         font-size: 2rem;
-        padding: 1rem;
       }
     }
 
@@ -258,12 +254,13 @@
     gap: 6rem;
 
     // & > * {
-    //   max-width: 400px;
+    //   /// max-width: 400px;
     // }
 
     @include respond(md/lg) {
       flex-direction: row;
       gap: 10rem;
+      justify-content: space-between;
     }
   }
 
@@ -272,6 +269,7 @@
     flex-direction: column;
     gap: 1rem;
     width: 100%;
+    flex: 1;
 
     @include respond(md/lg) {
       flex: 0.5;
@@ -293,7 +291,7 @@
     gap: 3rem;
 
     @include respond(md/lg) {
-      flex: 0.5;
+      // flex: 0.5;
       text-align: end;
     }
 
@@ -337,7 +335,8 @@
     // }
 
     @include respond(lg) {
-      width: 250px;
+      // width: 250px;
+      width: 25rem;
       margin-left: auto;
     }
   }
