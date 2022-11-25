@@ -93,75 +93,78 @@
     </aside>
 
     <aside class="checkout">
-      <button class="checkout__close-checkout close-btn">
-        <i class="las la-times"></i>
-      </button>
-      <nav class="checkout__nav">
-        <div class="checkout__logo-box">
-          <a href="./index.html" class="nav__logo">
-            <img src="../img/logo.png" alt="logo" />
-          </a>
-        </div>
-        <ul class="checkout__links">
-          <li class="checkout__link-wrap">
-            <button
-              class="checkout__link checkout__link--cart"
-              data-content="cart"
-            >
-              Cart
-            </button>
-          </li>
-          <li class="checkout__link-spacer">></li>
-          <li class="checkout__link-wrap">
-            <button
-              class="checkout__link checkout__link--information"
-              data-content="information"
-            >
-              Information
-            </button>
-          </li>
-          <li class="checkout__link-spacer">></li>
-          <li class="checkout__link-wrap">
-            <button
-              class="checkout__link checkout__link--shipping"
-              data-content="shipping"
-            >
-              Shipping
-            </button>
-          </li>
-          <li class="checkout__link-spacer">></li>
-          <li class="checkout__link-wrap">
-            <button
-              class="checkout__link checkout__link--payment"
-              data-content="payment"
-            >
-              Payment
-            </button>
-          </li>
-        </ul>
-      </nav>
-
-      <div class="checkout__summary">
-        <button class="checkout__summary-btn">
-          <span class="checkout__summary-btn--text">
-            🛒 Show order summary ↓
-          </span>
-          <strong class="checkout__summary-btn--price">$<span></span></strong>
+      <div class="checkout__relative">
+        <button class="checkout__close-checkout close-btn">
+          <i class="las la-times"></i>
         </button>
-        <section class="checkout__cart-content closed">summary</section>
-      </div>
+        <nav class="checkout__nav">
+          <div class="checkout__logo-box">
+            <a href="./index.html" class="nav__logo">
+              <img src="../img/logo.png" alt="logo" />
+            </a>
+          </div>
+          <ul class="checkout__links">
+            <li class="checkout__link-wrap">
+              <button
+                class="checkout__link checkout__link--cart"
+                data-content="cart"
+              >
+                Cart
+              </button>
+            </li>
+            <li class="checkout__link-spacer">></li>
+            <li class="checkout__link-wrap">
+              <button
+                class="checkout__link checkout__link--information"
+                data-content="information"
+              >
+                Information
+              </button>
+            </li>
+            <li class="checkout__link-spacer">></li>
+            <li class="checkout__link-wrap">
+              <button
+                class="checkout__link checkout__link--shipping"
+                data-content="shipping"
+              >
+                Shipping
+              </button>
+            </li>
+            <li class="checkout__link-spacer">></li>
+            <li class="checkout__link-wrap">
+              <button
+                class="checkout__link checkout__link--payment"
+                data-content="payment"
+              >
+                Payment
+              </button>
+            </li>
+          </ul>
+        </nav>
 
-      <form action="#" class="checkout__content form">
-        <div class="form__content"></div>
-
-        <div class="form__group form__group--btns">
-          <button class="form__submit" type="submit">
-            Continue to shipping
+        <div class="checkout__summary">
+          <button class="checkout__summary-btn">
+            <span class="checkout__summary-btn--text">
+              🛒 Show order summary ↓
+            </span>
+            <strong class="checkout__summary-btn--price">$<span></span></strong>
           </button>
-          <button class="form__return"><span><</span> Return to cart</button>
+          <section class="checkout__cart-content closed">summary</section>
         </div>
-      </form>
+
+        <form action="#" class="checkout__content form">
+          <div class="form__content"></div>
+
+          <div class="form__group form__group--btns">
+            <button class="form__submit" type="submit">
+              Continue to shipping
+            </button>
+            <button class="form__return"><span><</span> Return to cart</button>
+          </div>
+        </form>
+      </div>
     </aside>
+
     <aside class="product-modal">
       <button class="product__close-product close-btn">
         <i class="las la-times"></i>

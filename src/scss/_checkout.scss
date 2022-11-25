@@ -13,9 +13,10 @@
   overflow: auto;
   font-size: 1.6rem;
 
-  // @include respond(lg) {
-  //   padding: 10rem 9rem;
-  // }
+  // make checkout fixed but still act as relative parent element
+  &__relative {
+    position: relative;
+  }
 
   // OPENED CART
   &.open {
@@ -258,7 +259,7 @@
     @include respond(lg) {
       max-width: 52.5vw;
       padding: 2.5rem 2rem 5rem 7rem;
-      // margin-left: 7rem;
+      border-top: none;
     }
 
     &__content {
