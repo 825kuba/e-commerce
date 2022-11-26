@@ -13,6 +13,10 @@
   overflow: auto;
   font-size: 1.6rem;
 
+  &__close-checkout {
+    border: 1px solid red !important;
+  }
+
   // make checkout fixed but still act as relative parent element
   &__relative {
     position: relative;
@@ -46,6 +50,10 @@
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
+
+    &.hidden {
+      display: none;
+    }
 
     & li {
       list-style: none;
@@ -184,13 +192,14 @@
       @include changeImgColor;
     }
 
-    &--name {
-      font-weight: 500;
-    }
+    // &--name {
+    //   font-weight: bold;
+    // }
 
     &--size {
       font-size: 1.4rem;
       margin-top: 0.2rem;
+      opacity: 0.8;
     }
 
     &--price {
@@ -212,6 +221,10 @@
     display: flex;
     flex-direction: column;
     gap: 1rem;
+
+    &.hidden {
+      display: none;
+    }
 
     &--line {
       display: flex;
@@ -272,6 +285,10 @@
       font-size: 2rem;
       font-family: Roboto;
       font-weight: 300;
+
+      &--sm {
+        font-size: 1.8rem;
+      }
     }
 
     &__group {
@@ -279,11 +296,23 @@
       flex-direction: column;
       gap: 1.5rem;
 
+      &.success {
+        border-radius: 0.5rem;
+        background-color: $green;
+        color: $white;
+        padding: 1rem 1.5rem;
+      }
+
       &--btns {
         @include respond(md/lg) {
           flex-direction: row-reverse;
           justify-content: space-between;
         }
+      }
+
+      & address {
+        font-weight: bold;
+        font-style: normal;
       }
     }
 
@@ -302,6 +331,18 @@
         border: none;
         border-radius: 0.5rem;
         cursor: pointer;
+      }
+
+      &--checkbox {
+        gap: 0.7rem;
+        align-items: center;
+      }
+
+      &--border {
+        border-radius: 0.5rem;
+        border: none;
+        outline: 1px solid $gray-light;
+        padding: 1.75rem 1rem;
       }
 
       input:not([type='radio']) {
@@ -454,6 +495,10 @@
     &__return {
       color: $orange;
       background-color: transparent;
+
+      &.hidden {
+        display: none;
+      }
 
       @include respond(md/lg) {
         flex-basis: max-content;

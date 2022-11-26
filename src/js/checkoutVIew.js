@@ -5,6 +5,7 @@ import GeneralView from './generalView.js';
 const checkoutEle = document.querySelector('.checkout');
 const closeCheckoutBtn = document.querySelector('.checkout__close-checkout');
 const checkoutNav = document.querySelector('.checkout__nav');
+const checkoutNavLinksEle = document.querySelector('.checkout__links');
 const checkoutNavLinks = [...checkoutNav.querySelectorAll('.checkout__link')];
 const checkoutForm = document.querySelector('.checkout__content');
 const returnBtn = document.querySelector('.form__return');
@@ -62,8 +63,8 @@ class CheckoutView extends GeneralView {
           />
         </figure>
         <div class="checkout__cart-item--text">
-          <a href="#" class="checkout__cart-item--name"
-            >${item.title}</a
+          <h5class="checkout__cart-item--name"
+            >${item.title}</h5
           >
           <p class="checkout__cart-item--size">${item.specs.size} / ${
           item.specs.color === 'Natural' ? '' : 'Color'
@@ -197,9 +198,9 @@ class CheckoutView extends GeneralView {
     } (${checkout.discount.perc ? checkout.discount.perc : 0} OFF)`;
 
     // total price
-    cartContent.querySelector('#total-line').querySelector('span').innerHTML = `
-    ${pricing.total.toFixed(2)}
-    `;
+    cartContent
+      .querySelector('#total-line')
+      .querySelector('span').innerHTML = `${pricing.total.toFixed(2)}`;
 
     // btn price text
     openSumBtnPrice.innerText = pricing.total.toFixed(2);
@@ -277,14 +278,14 @@ class CheckoutView extends GeneralView {
       <span><</span>Return to cart
     `;
 
-    // close summary
-    this.closeSummary();
     // scroll to top
     checkoutEle.scrollTo({
       top: 0,
       left: 0,
       behavior: 'smooth',
     });
+    // close summary
+    this.closeSummary();
 
     // change data-content of form
     this.parentEle.dataset.content = 'information';
@@ -302,7 +303,7 @@ class CheckoutView extends GeneralView {
         </div>
         <p class="form__error"></p>
       </div>
-      <div class="form__item">
+      <div class="form__item form__item--checkbox">
         <input type="checkbox" id="spam"/>
         <label for="spam" class="static"
           >Email me with news and offers</label
@@ -415,14 +416,14 @@ class CheckoutView extends GeneralView {
       <span><</span>Return to information
     `;
 
-    // close summary
-    this.closeSummary();
     // scroll to top
     checkoutEle.scrollTo({
       top: 0,
       left: 0,
       behavior: 'smooth',
     });
+    // close summary
+    this.closeSummary();
 
     // change data-content of form
     this.parentEle.dataset.content = 'shipping';
@@ -458,7 +459,7 @@ class CheckoutView extends GeneralView {
     ).checked = true;
   }
 
-  renderPaymentSection() {
+  renderPaymentSection(checkout) {
     // enable all nav links
     checkoutNavLinks.forEach(link => (link.disabled = false));
     // disable link to current form
@@ -470,14 +471,14 @@ class CheckoutView extends GeneralView {
       <span><</span>Return to shipping
     `;
 
-    // close summary
-    this.closeSummary();
     // scroll to top
     checkoutEle.scrollTo({
       top: 0,
       left: 0,
       behavior: 'smooth',
     });
+    // close summary
+    this.closeSummary();
 
     // change data-content of form
     this.parentEle.dataset.content = 'payment';
@@ -490,21 +491,27 @@ class CheckoutView extends GeneralView {
       <p>No transactions will take place, this is just a fake e-shop :)</p>
       <div class="form__item-wrap">
         <div class="form__item">
-          <input type="number" id="card-number"   placeholder="Card number" />
+          <input type="number" id="card-number"   placeholder="Card number" value="${
+            checkout.payment?.cardNumber || ''
+          }"/>
           <label for="card-number" class="form__label">Card number</label>
         </div>
         <p class="form__error"></p>
       </div>   
       <div class="form__item-wrap"> 
         <div class="form__item">
-          <input type="text" id="card-holder"   placeholder="Card holder" />
+          <input type="text" id="card-holder"   placeholder="Card holder" value="${
+            checkout.payment?.cardHolder || ''
+          }"/>
           <label  for="card-holder"class="form__label">Card holder</label>
         </div>
         <p class="form__error"></p>
       </div> 
       <div class="form__item-wrap">     
         <div class="form__item">
-          <input type="text" id="card-exp"  name="card-exp-month" placeholder="Expiration date (MM / YY)" />
+          <input type="text" id="card-exp"  name="card-exp-month" placeholder="Expiration date (MM / YY)" 
+          value="${checkout.payment?.cardExpiry || ''}"
+          />
           <label  for="card-exp"class="form__label">Expiration   date (MM / YY)
           </label>
         </div>
@@ -512,14 +519,30 @@ class CheckoutView extends GeneralView {
       </div>   
       <div class="form__item-wrap">     
         <div class="form__item">
-          <input type="number" id="card-code"   placeholder="Security code" />
+          <input type="number" id="card-code"   placeholder="Security code" value="${
+            checkout.payment?.cardCode || ''
+          }"/>
           <label  for="card-code"class="form__label">Security code
           </label>
         </div>
         <p class="form__error"></p>
       </div>     
     </div>
+    <div class="form__group">
+      <h2 class="form__heading">Remember me</h2>
+      <div class="form__item form__item--checkbox form__item--border">
+        <input type="checkbox" id="save"/>
+        <label for="save" class="static"
+          >Save my information for a faster checkout</ label
+        >
+      </div>
+    </div>
     `;
+
+    // check correct option based on previous visits (if applicable)
+    if (checkout.payment?.save) {
+      this.parentEle.querySelector(`#save`).checked = checkout.payment.save;
+    }
 
     // create regular expressions
     const regDigit = /^[0-9]$/; // digits only
@@ -586,7 +609,8 @@ class CheckoutView extends GeneralView {
       if (btn.dataset.content === 'shipping')
         this.renderShippingSection(checkout);
       // payment btn
-      if (btn.dataset.content === 'payment') this.renderPaymentSection();
+      if (btn.dataset.content === 'payment')
+        this.renderPaymentSection(checkout);
     });
   }
 
@@ -759,10 +783,11 @@ class CheckoutView extends GeneralView {
   }
 
   // set events on submitting form
-  addHandlerSubmitForm(formHandler, checkout, cart, discountHandler) {
+  addHandlerSubmitForm(formHandler, checkout) {
     checkoutForm.addEventListener('submit', e => {
       // prevent default submitting
       e.preventDefault();
+
       // if the current form is information section
       if (this.parentEle.dataset.content === 'information') {
         // validate form input fields, if there are any errors, return
@@ -784,6 +809,7 @@ class CheckoutView extends GeneralView {
         formHandler('information', information);
         // render next form
         this.renderShippingSection(checkout);
+
         // if the current form is shipping section
       } else if (this.parentEle.dataset.content === 'shipping') {
         // create object from form data
@@ -799,9 +825,10 @@ class CheckoutView extends GeneralView {
         // run formHandler with section name and new object
         formHandler('shipping', shipping);
         // render next form
-        this.renderPaymentSection();
+        this.renderPaymentSection(checkout);
         // update prices in case shipping price changes
         this.updatePrices(checkout);
+
         // if the current form is payment section
       } else if (this.parentEle.dataset.content === 'payment') {
         // validate form input fields, if there are any errors, return
@@ -811,15 +838,98 @@ class CheckoutView extends GeneralView {
         const payment = {
           cardNumber: `${this.parentEle.querySelector('#card-number').value}`,
           cardExpiry: `${this.parentEle.querySelector('#card-exp').value}`,
-          cvv: `${this.parentEle.querySelector('#card-code').value}`,
-          name: `${this.parentEle.querySelector('#card-holder').value}`,
+          cardCode: `${this.parentEle.querySelector('#card-code').value}`,
+          cardHolder: `${this.parentEle.querySelector('#card-holder').value}`,
+          save: this.parentEle.querySelector('#save').checked,
         };
-        // run formHandler with section name and new object
+        // show "order completed" message
+        this.renderFinishCheckout(checkout);
+        // run formHandler with section name and new object - this will empty cart and if chosen also customer info
         formHandler('payment', payment);
-        // run complete order function - not created yet
-        console.log('end session');
+
+        // if the current content is checkout completed message
+      } else if (this.parentEle.dataset.content === 'checkout-completed') {
+        // reload window
+        window.location.reload();
       }
     });
+  }
+
+  renderFinishCheckout(checkout) {
+    // change dataset attribute
+    this.parentEle.dataset.content = 'checkout-completed';
+
+    // hide elements
+    // close btn
+    closeCheckoutBtn.classList.add('hidden');
+    // nav
+    checkoutNavLinksEle.classList.add('hidden');
+    // return btn
+    returnBtn.classList.add('hidden');
+    // discount code input field
+    cartContent
+      .querySelector('.checkout__detail--form')
+      .classList.add('hidden');
+
+    // change text of submit btn
+    submitBtn.innerText = 'Continue shopping';
+
+    // scroll to top
+    checkoutEle.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth',
+    });
+    // close summary
+    this.closeSummary();
+
+    // render final message
+    this.parentEle.innerHTML = `
+      <div class="form__group success">
+        <h2 class="form__heading">Thank you!</h2>
+        <h2 class="form__heading form__heading--sm">
+          We have recieved your payment of <strong>${
+            document.querySelector('#total-line').querySelector('.total')
+              .innerHTML
+          }</strong>
+        </h2>
+      </div>
+      <div class="form__group">
+        <h2 class="form__heading form__heading--sm">
+        It will be delivered to:
+        </h2>
+        <address>
+          ${checkout.information.firstName}
+          ${checkout.information.lastName}<br>
+          ${checkout.information.address}<br>
+          ${checkout.information.suite}<br>
+          ${checkout.information.city}<br>
+          ${checkout.information.state}<br>
+          ${checkout.information.zip}<br>
+        </address>
+      </div>
+      <div class="form__group">
+        <h2 class="form__heading form__heading--sm">
+        Your contact information:
+        </h2>
+        <strong>
+          ${checkout.information.phone}<br>
+          ${checkout.information.email}<br>
+        </strong>
+      </div>
+      <div class="form__group">
+        <h2 class="form__heading form__heading--sm">
+        Estimated delivery time:
+        </h2>
+        <strong>
+          ${
+            checkout.shipping.type === 'Economy'
+              ? '5 - 8 business days'
+              : '1 - 3 business days'
+          }
+        </strong>
+      </div>
+    `;
   }
 }
 

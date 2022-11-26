@@ -148,9 +148,34 @@ function controlCloseCheckoutOpenCart() {
 }
 
 function controlSubmitForm(objName, obj) {
+  // save information form
   if (objName === 'information') model.state.session.checkout.information = obj;
+  // save shipping form
   else if (objName === 'shipping') model.state.session.checkout.shipping = obj;
-  else if (objName === 'payment') model.state.session.checkout.payment = obj;
+  // handle payment form
+  else if (objName === 'payment') {
+    // if save details checkbox not selected, reset customer information
+    if (!obj.save) {
+      model.state.session.checkout.information = {};
+      model.state.session.checkout.shipping = {};
+      model.state.session.checkout.payment = {};
+    }
+    // else save payment details to state
+    else model.state.session.checkout.payment = obj;
+
+    // reset the following in state:
+    // product modal
+    model.state.session.productModal = {};
+    // cart
+    model.state.session.cart = [];
+    // discount
+    model.state.session.checkout.discount = {};
+    // price details
+    model.state.session.checkout.details = {
+      subtotal: 0,
+    };
+  }
+  // save to local storage
   model.saveToStorage();
 }
 
