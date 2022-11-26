@@ -222,6 +222,7 @@ function controlAddingDiscount(newCode, inputEle) {
 function init() {
   model.loadFromStorage();
   navView.addEventMobileNav();
+  navView.addListenerSubscribeForm();
   cartView.addEventOpenCloseCart();
   cartView.addHandlerCheckoutBtn(controlCloseCartOpenCheckout);
   checkoutView.addListenerCloseCheckout();

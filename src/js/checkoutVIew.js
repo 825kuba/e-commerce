@@ -96,7 +96,7 @@ class CheckoutView extends GeneralView {
                   checkout.discount.code || ''
                 }" />
                 <label for="discount"   class="form__label">Discount code</label>
-                <button type="submit">→</button>
+                <button type="submit">Apply</button>
               </div>
               <p class="form__error"></p>
             </div>
