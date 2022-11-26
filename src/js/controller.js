@@ -135,10 +135,18 @@ function controlUpdateSubtotal(price) {
   model.saveToStorage();
 }
 
-function controlCloseCartOpenCheckout() {
+function controlCloseCartOpenCheckout(instructions) {
+  // inly continue if there are items in cart
   if (!model.state.session.cart.length) return;
+  // close cart
   cartView.closeCart();
+  // save instructions for seller
+  model.state.session.checkout.instructions = instructions;
+  // save to local storage
+  model.saveToStorage();
+  // render first section of checkout
   checkoutView.renderInformationSection(model.state.session.checkout);
+  // open checkout
   checkoutView.openCheckout();
 }
 
@@ -170,6 +178,8 @@ function controlSubmitForm(objName, obj) {
     model.state.session.cart = [];
     // discount
     model.state.session.checkout.discount = {};
+    // instructions for seller
+    model.state.session.checkout.instructions = '';
     // price details
     model.state.session.checkout.details = {
       subtotal: 0,

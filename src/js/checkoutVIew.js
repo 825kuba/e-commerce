@@ -930,6 +930,21 @@ class CheckoutView extends GeneralView {
         </strong>
       </div>
     `;
+
+    // render instructions for seller - if there are any
+    if (checkout.instructions === '') return;
+    this.parentEle.insertAdjacentHTML(
+      'beforeend',
+      `
+      <div class="form__group">
+        <h2 class="form__heading form__heading--sm">
+        Instructions for seller:
+        </h2>
+        <strong>
+          ${checkout.instructions}
+        </strong>
+      </div>    `
+    );
   }
 }
 

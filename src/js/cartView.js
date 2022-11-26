@@ -10,6 +10,7 @@ const productModal = document.querySelector('.product-modal');
 const productModalCloseBtn = document.querySelector('.product__close-product');
 const cartMsg = document.querySelector('.cart__message');
 const checkoutBtn = document.querySelector('.cart__checkout-btn');
+const cartInstructions = document.querySelector('#instructions');
 
 // const cartMsgBtn = document.querySelector('.cart__message button');
 
@@ -54,7 +55,7 @@ class CartView extends GeneralView {
     document.body.classList.remove('no-scroll');
   }
 
-  renderCart(cart) {
+  renderCart(cart, checkout) {
     // update cart container - render cart items
     cartContent.innerHTML = `
       <div class="cart__container"></div>
@@ -104,7 +105,11 @@ class CartView extends GeneralView {
         </div>
         `
       );
+
+      // fill in instructions for seller in case there are any from last visit
+      cartInstructions.value = `${checkout.instructions}`;
     });
+
     // update cart subtotal
     let totalPrice = 0;
     cart.forEach(item => {
@@ -244,7 +249,7 @@ class CartView extends GeneralView {
     subtotalHandler
   ) {
     this.renderSpinner();
-    this.renderCart(cart);
+    this.renderCart(cart, checkout);
     this.updateCartBtn(cart);
     this.updateSubtotal(cart, subtotalHandler);
     this.addListenerCartItems(cart, removeHandler, qtyHandler, productHandler);
@@ -257,7 +262,8 @@ class CartView extends GeneralView {
   addHandlerCheckoutBtn(handler) {
     checkoutBtn.addEventListener('click', e => {
       e.preventDefault();
-      handler();
+      const instructions = cartInstructions.value;
+      handler(instructions);
     });
   }
 }

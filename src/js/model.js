@@ -14,6 +14,7 @@ export const state = {
       information: {},
       shipping: {},
       payment: {},
+      instructions: '',
       discount: {},
       details: {
         subtotal: 0,
