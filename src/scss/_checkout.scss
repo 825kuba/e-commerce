@@ -333,16 +333,16 @@
         cursor: pointer;
       }
 
-      &--checkbox {
-        gap: 0.7rem;
-        align-items: center;
-      }
-
       &--border {
         border-radius: 0.5rem;
         border: none;
         outline: 1px solid $gray-light;
         padding: 1.75rem 1rem;
+      }
+
+      &--checkbox {
+        gap: 0.7rem;
+        align-items: center;
       }
 
       input:not([type='radio']) {
@@ -361,19 +361,63 @@
           padding: 1.25rem 1rem 1.25rem 1rem;
         }
 
-        &[type='checkbox'],
+        &[type='checkbox'] {
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
+
+          padding: 0;
+          position: relative;
+          display: block;
+          width: 2rem;
+          height: 2rem;
+          background-color: $orange;
+          border-radius: 0.5rem;
+          border: 1.5px solid $orange;
+          outline: none;
+          cursor: pointer;
+
+          &:after {
+            display: block;
+            position: absolute;
+            left: 50%;
+            top: 45%;
+            transform: translate(-50%, -50%) rotate(45deg);
+            content: '';
+            width: 6px;
+            height: 10px;
+            border: solid $white;
+            border-width: 0 2px 2px 0;
+          }
+
+          &:before {
+            display: block;
+            position: absolute;
+            content: '';
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            height: 100%;
+            border-radius: 0.5rem;
+            background-color: $bg-color;
+            transition: width 0.1s ease-in, height 0.1s ease-in;
+          }
+
+          &:checked:before {
+            width: 0;
+            height: 0;
+            transition: width 0.1s ease-in, height 0.1s ease-in;
+          }
+        }
+
         &[type='checkbox'] + label {
           cursor: pointer;
-          outline: none;
         }
 
         &:focus-visible {
           outline: 2px solid $orange;
         }
-
-        // &.required:invalid {
-        //   outline: 2px solid $red;
-        // }
       }
 
       label {
