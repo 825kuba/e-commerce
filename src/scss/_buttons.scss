@@ -39,3 +39,15 @@ a.big-btn {
     display: none;
   }
 }
+
+.btn-sm {
+  color: $orange;
+  opacity: 1;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  &:not(:disabled):hover {
+    opacity: 0.7;
+  }
+}

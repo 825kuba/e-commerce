@@ -431,6 +431,28 @@ class CheckoutView extends GeneralView {
     this.parentEle.innerHTML = '';
     // render form
     this.parentEle.innerHTML = `
+    <div class="form__group form__group--border" id="change-form">
+      <div class="form__item form__item--change">
+        <p>
+          <span>Contact</span>
+          <button type="button" class="btn-sm" id="change-btn" data-content="information">Change</button>
+        </p>
+        <span>${checkout.information.email}</span>
+        <span>${checkout.information.phone}</span>
+      </div>
+      <div class="form__item form__item--change">
+        <p>
+          <span>Ship to</span>
+          <button type="button" class="btn-sm" id="change-btn" data-content="information">Change</button>
+        </p>
+        <span>${checkout.information.address}, ${checkout.information.suite}${
+      checkout.information.suite ? ',' : ''
+    } ${checkout.information.city}, ${checkout.information.state}${
+      checkout.information.state ? ',' : ''
+    } ${checkout.information.zip}
+        </span>
+      </div>
+    </div>
     <div class="form__group">
       <h2 class="form__heading">Shipping method</h2>
       <div class="form__item form__item--radio">
@@ -451,6 +473,9 @@ class CheckoutView extends GeneralView {
       </div>
     </div>
     `;
+
+    // add listener to change btns
+    this.addListenerChangeBtns(checkout);
 
     // check correct option based on previous visits (if applicable)
     if (!checkout.shipping.type) return;
@@ -486,6 +511,38 @@ class CheckoutView extends GeneralView {
     this.parentEle.innerHTML = '';
     // render form
     this.parentEle.innerHTML = `
+    <div class="form__group form__group--border" id="change-form">
+      <div class="form__item form__item--change">
+        <p>
+          <span>Contact</span>
+          <button type="button" class="btn-sm" id="change-btn" data-content="information">Change</button>
+        </p>
+        <span>${checkout.information.email}</span>
+        <span>${checkout.information.phone}</span>
+      </div>
+      <div class="form__item form__item--change">
+        <p>
+          <span>Ship to</span>
+          <button type="button" class="btn-sm" id="change-btn" data-content="information">Change</button>
+        </p>
+        <span>${checkout.information.address}, ${checkout.information.suite}${
+      checkout.information.suite ? ',' : ''
+    } ${checkout.information.city}, ${checkout.information.state}${
+      checkout.information.state ? ',' : ''
+    } ${checkout.information.zip}
+        </span>
+      </div>
+      <div class="form__item form__item--change">
+        <p>
+          <span>Method</span>
+          <button type="button" class="btn-sm" id="change-btn" data-content="shipping">Change</button>
+        </p>
+        <span>${checkout.shipping.type} - <strong>$${
+      checkout.shipping.price
+    }</strong>
+        </span>
+      </div>
+    </div>
     <div class="form__group">
       <h2 class="form__heading">Payment</h2>
       <p>No transactions will take place, this is just a fake e-shop :)</p>
@@ -543,6 +600,9 @@ class CheckoutView extends GeneralView {
     if (checkout.payment?.save) {
       this.parentEle.querySelector(`#save`).checked = checkout.payment.save;
     }
+
+    // add listener to change btns
+    this.addListenerChangeBtns(checkout);
 
     // create regular expressions
     const regDigit = /^[0-9]$/; // digits only
@@ -622,6 +682,20 @@ class CheckoutView extends GeneralView {
       else if (this.parentEle.dataset.content === 'shipping')
         this.renderInformationSection(checkout);
       else if (this.parentEle.dataset.content === 'payment')
+        this.renderShippingSection(checkout);
+    });
+  }
+
+  addListenerChangeBtns(checkout) {
+    document.querySelector('#change-form').addEventListener('click', e => {
+      console.log('clicked on form group');
+      const btn = e.target.closest('#change-btn');
+      if (!btn) return;
+      // render information section
+      if (btn.dataset.content === 'information')
+        this.renderInformationSection(checkout);
+      // render shipping section
+      if (btn.dataset.content === 'shipping')
         this.renderShippingSection(checkout);
     });
   }
@@ -821,6 +895,12 @@ class CheckoutView extends GeneralView {
             this.parentEle.querySelector('[name="shipping"]:checked').dataset
               .price
           }`,
+          text: `${
+            this.parentEle
+              .querySelector('[name="shipping"]:checked')
+              .parentElement.querySelector('label')
+              .querySelector('span').innerText
+          }`,
         };
         // run formHandler with section name and new object
         formHandler('shipping', shipping);
@@ -922,11 +1002,7 @@ class CheckoutView extends GeneralView {
         Estimated delivery time:
         </h2>
         <strong>
-          ${
-            checkout.shipping.type === 'Economy'
-              ? '5 - 8 business days'
-              : '1 - 3 business days'
-          }
+          ${checkout.shipping.text}
         </strong>
       </div>
     `;
