@@ -51,6 +51,10 @@
     // IMG GALLERY BTNS
     &__slider__btn {
       @include galleryBtn;
+
+      @include respond(md/lg) {
+        display: none;
+      }
     }
 
     // IMG GALLERY LAYOUT

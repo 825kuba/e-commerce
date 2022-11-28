@@ -68,13 +68,6 @@
     align-items: flex-start;
   }
 
-  // HEADING AND PARA SECTION
-  &__head {
-    @include respond(lg) {
-      flex: 0 0 1;
-    }
-  }
-
   // HEADING
   &__heading {
     font-size: 4rem;
@@ -153,5 +146,9 @@
 
   &__btn {
     @include galleryBtn;
+
+    @include respond(lg) {
+      display: none;
+    }
   }
 }

@@ -73,10 +73,6 @@
     opacity: 0;
     visibility: hidden;
   }
-
-  @include respond(md/lg) {
-    display: none;
-  }
 }
 
 // IMG REVEALING ANIMATION
