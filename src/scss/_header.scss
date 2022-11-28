@@ -1,3 +1,4 @@
+// HEADER
 .header {
   z-index: $z-1000;
 
@@ -7,14 +8,10 @@
   }
 }
 
-// DISCOUNT CODE BAR AT TOP OF PAGE
+// DISCOUNT CODE BAR AT TOP OF PAGE - DOESNT ACTUALLY BELONG TO HEADER
 .discount {
   background-color: $orange;
   font-size: 1.5rem;
-  // min-height: 30px;
-  // display: flex;
-  // align-items: center;
-  // justify-content: center;
   text-align: center;
   padding: 0.5rem;
 }
@@ -108,22 +105,6 @@
       padding: 0;
     }
   }
-
-  // // CLOSE BTN FOR MOBILE MENU, CART, PRODUCT MODAL
-  // &__close-btn {
-  //   font-size: 4rem;
-  //   // width: min-content;
-  //   border: none;
-  //   background-color: transparent;
-  //   cursor: pointer;
-  //   position: absolute;
-  //   top: 1.6rem;
-  //   right: 1.6rem;
-
-  //   &:hover {
-  //     color: $orange;
-  //   }
-  // }
 
   // CLOSE MOBILE MENU BTN
   &__close-nav {

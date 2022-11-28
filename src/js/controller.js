@@ -20,6 +20,7 @@ async function controlLoadProductsByCategory() {
     await model.fetchProductsByCategory(id);
     //render products
     categoryView.renderCategoryProducts(model.state.categories[`${id}`]);
+    // observe imgs
     categoryView.observeImgs('.products__img');
   } catch (err) {
     categoryView.renderError(err.message);
@@ -113,8 +114,11 @@ function controlRemoveFromCart(index) {
   );
 }
 
+// change item qty
 function controlCartItemQty(updatedCart) {
+  // update cart obj
   model.state.session.cart = updatedCart;
+  // save to storage
   model.saveToStorage();
   // update cart
   cartView.updateCart(
@@ -128,6 +132,7 @@ function controlCartItemQty(updatedCart) {
   );
 }
 
+// update prices
 function controlUpdateSubtotal(price) {
   // update state object
   model.state.session.checkout.details.subtotal = price;
@@ -135,6 +140,7 @@ function controlUpdateSubtotal(price) {
   model.saveToStorage();
 }
 
+// close cart and open checkout
 function controlCloseCartOpenCheckout(instructions) {
   // inly continue if there are items in cart
   if (!model.state.session.cart.length) return;
@@ -150,11 +156,13 @@ function controlCloseCartOpenCheckout(instructions) {
   checkoutView.openCheckout();
 }
 
+// close checkout open cart
 function controlCloseCheckoutOpenCart() {
   checkoutView.closeCheckout();
   cartView.openCart();
 }
 
+// control checkout form submit
 function controlSubmitForm(objName, obj) {
   // save information form
   if (objName === 'information') model.state.session.checkout.information = obj;
@@ -189,9 +197,11 @@ function controlSubmitForm(objName, obj) {
   model.saveToStorage();
 }
 
+// control entering discount code
 function controlAddingDiscount(newCode, inputEle) {
   // find inputed code in array of codes
   const code = model.state.discountCodes.find(obj => obj.code === newCode);
+  // get discount code input element
   const ele = inputEle;
   // save code - if code doesnt exist save empty obj
   model.state.session.checkout.discount = code ? code : {};
@@ -211,7 +221,7 @@ function controlAddingDiscount(newCode, inputEle) {
   else {
     // hide discount line in summary
     checkoutView.hideDiscount();
-    // show success
+    // show error
     checkoutView.setInputError(ele, 'Please enter valid code');
   }
 
@@ -219,12 +229,13 @@ function controlAddingDiscount(newCode, inputEle) {
   checkoutView.calcSummaryHeight();
 }
 
+// main function that runs on every page load
 function init() {
   model.loadFromStorage();
   navView.addEventMobileNav();
-  navView.addListenerSubscribeForm();
+  mainPageView.addListenerSubscribeForm();
   cartView.addEventOpenCloseCart();
-  cartView.addHandlerCheckoutBtn(controlCloseCartOpenCheckout);
+  cartView.addListenerCheckoutBtn(controlCloseCartOpenCheckout);
   checkoutView.addListenerCloseCheckout();
   checkoutView.addHandlerCheckoutNav(
     controlCloseCheckoutOpenCart,

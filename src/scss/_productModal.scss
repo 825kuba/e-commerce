@@ -1,3 +1,4 @@
+// PRODUCT MODAL WINDOW
 .product-modal {
   visibility: hidden;
   opacity: 0;
@@ -26,6 +27,7 @@
     padding: 8rem 8rem;
   }
 
+  // MAIN CONTENT OF MODAL
   & .product {
     overflow-y: auto;
     display: flex;
@@ -38,6 +40,7 @@
       justify-content: center;
     }
 
+    // IMG GALLERY BTNS WRAPPER
     &__slider__btns-wrap {
       margin-top: 2rem;
       padding: 0 1rem;
@@ -45,10 +48,12 @@
       justify-content: space-between;
     }
 
+    // IMG GALLERY BTNS
     &__slider__btn {
       @include galleryBtn;
     }
 
+    // IMG GALLERY LAYOUT
     &__slider {
       @include respond(md/lg) {
         display: grid;
@@ -58,6 +63,7 @@
       }
     }
 
+    // IMG GALLERY IGMS
     &__images {
       display: flex;
       gap: 4rem;
@@ -70,17 +76,17 @@
       }
     }
 
+    // IMG GALLERY IMG
     &__img {
       max-width: 72.5%;
       scroll-snap-align: start;
       background-color: grey;
-      // height: 90vh;
-      // filter: invert(100%);
 
       @include respond(md/lg) {
         max-width: 100%;
       }
 
+      // ONLY ONE IMG IN GALLERY
       &.solo {
         max-width: 100%;
         margin: 0 auto;
@@ -96,6 +102,7 @@
         }
       }
 
+      // SELECTED IMG - BIGGER SCREENS ONLY
       &--big {
         display: none;
         @include respond(md/lg) {
@@ -118,8 +125,8 @@
       }
     }
 
+    // PRODUCT INFORMATION CONTAINER
     &__main {
-      // margin-top: 4rem;
       margin: 0 2rem;
       display: flex;
       flex-direction: column;
@@ -133,11 +140,13 @@
       }
     }
 
+    // PRODUCT NAME
     &__name {
       font-size: 3.5rem;
       font-weight: 500;
     }
 
+    // PRODUCT PRICE
     &__price {
       font-size: 3.5rem;
       font-weight: light;
@@ -154,6 +163,7 @@
       }
     }
 
+    // PRODCUT REVIEW STARS
     &__review {
       display: flex;
       gap: 0.5rem;
@@ -168,6 +178,7 @@
       }
     }
 
+    // INSTALLMENT MESSAGE
     &__installment {
       font-size: 1.6rem;
 
@@ -187,9 +198,8 @@
       }
     }
 
+    // PRODUCT OPTIONS FORM
     &__form {
-      // margin-bottom: 4rem;
-
       display: flex;
       flex-direction: column;
       gap: 1rem;
@@ -199,6 +209,7 @@
         font-size: 1.6rem;
       }
 
+      // SELECT
       & .select-wrap {
         position: relative;
 
@@ -222,6 +233,7 @@
         border: 1px solid $black;
       }
 
+      // QTY
       & .qty-wrap {
         display: flex;
         gap: 2rem;
@@ -251,6 +263,7 @@
       }
     }
 
+    // ITEM DECRIPTION
     &__descr {
       font-size: 1.6rem;
       line-height: 125%;

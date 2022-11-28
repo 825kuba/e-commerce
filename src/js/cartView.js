@@ -2,7 +2,6 @@
 
 const cartBtn = document.querySelector('.nav__cart-btn');
 const cartEle = document.querySelector('.cart');
-
 const closeCartBtn = document.querySelector('.cart__close-cart');
 const cartContent = document.querySelector('.cart__content');
 const cartSubtotal = document.querySelector('.cart__subtotal span');
@@ -11,8 +10,6 @@ const productModalCloseBtn = document.querySelector('.product__close-product');
 const cartMsg = document.querySelector('.cart__message');
 const checkoutBtn = document.querySelector('.cart__checkout-btn');
 const cartInstructions = document.querySelector('#instructions');
-
-// const cartMsgBtn = document.querySelector('.cart__message button');
 
 import GeneralView from './generalView.js';
 import checkoutVIew from './checkoutVIew.js';
@@ -43,8 +40,11 @@ class CartView extends GeneralView {
   }
 
   openCart() {
+    // open cart
     cartEle.classList.add('open');
+    // focus close btn - that way if user keep TAB switching it goes throught the flow of the modal
     closeCartBtn.focus();
+    // switch of scrolling of body
     document.body.classList.add('no-scroll');
   }
 
@@ -56,11 +56,12 @@ class CartView extends GeneralView {
   }
 
   renderCart(cart, checkout) {
-    // update cart container - render cart items
+    // create parent element for cart items
     cartContent.innerHTML = `
       <div class="cart__container"></div>
     `;
     this.parentEle = document.querySelector('.cart__container');
+    // render all cart items in it
     cart.forEach(item => {
       this.parentEle.insertAdjacentHTML(
         'beforeend',
@@ -120,16 +121,16 @@ class CartView extends GeneralView {
   }
 
   updateCartBtn(cart) {
-    // update cart btn number
+    // update cart btn - number of cart items
     cartBtn.querySelector('span').innerText = `${cart.length}`;
   }
 
-  // handler event lsiteners on cart items
+  // handler event listeners on cart items
   addListenerCartItems(cart, removeHandler, qtyHandler, productHandler) {
     // add one listener to cart container - a new one is created each time the cart is re-rendered, so there is always just one event listener
     this.parentEle.addEventListener('click', e => {
       e.preventDefault();
-      // declare or the possible event targets
+      // declare all the possible event targets
       const remove = e.target.closest('.cart__item__remove');
       const plus = e.target.closest('.cart__item__plus');
       const minus = e.target.closest('.cart__item__minus');
@@ -149,6 +150,7 @@ class CartView extends GeneralView {
       if (e.target === plus) {
         // increase qty of cart item
         const updatedCart = cart;
+        // max qty 10
         if (updatedCart[index].specs.qty >= 10) return;
         updatedCart[index].specs.qty++;
         qtyHandler(updatedCart);
@@ -156,6 +158,7 @@ class CartView extends GeneralView {
       if (e.target === minus) {
         // decrease qty of cart item
         const updatedCart = cart;
+        // min qty 1
         if (updatedCart[index].specs.qty <= 1) return;
         updatedCart[index].specs.qty--;
         qtyHandler(updatedCart);
@@ -230,6 +233,7 @@ class CartView extends GeneralView {
     }, 2000);
   }
 
+  // update subtotal price
   updateSubtotal(cart, handler) {
     let subtotalPrice = 0;
     cart.forEach(item => {
@@ -256,12 +260,14 @@ class CartView extends GeneralView {
     this.observeImgs('.cart__item__img');
     this.cartMsgShow();
     checkoutVIew.renderSummary(cart, checkout, discountHandler);
-    // this.observeImgs('.checkout__cart-item--img');
   }
 
-  addHandlerCheckoutBtn(handler) {
+  // checkout btn in cart
+  addListenerCheckoutBtn(handler) {
+    // on click
     checkoutBtn.addEventListener('click', e => {
       e.preventDefault();
+      // run handler with instructions from textarea
       const instructions = cartInstructions.value;
       handler(instructions);
     });

@@ -2,6 +2,8 @@
 
 import GeneralView from './generalView.js';
 
+const subscribeForm = document.querySelector('.footer__form');
+
 class MainPageView extends GeneralView {
   parentEle = document.querySelector('.shop');
 
@@ -43,6 +45,19 @@ class MainPageView extends GeneralView {
     items.forEach(item => {
       item.classList.add('unrevealed');
       itemObserver.observe(item);
+    });
+  }
+
+  // add listener to footer subscribe form
+  addListenerSubscribeForm() {
+    subscribeForm.addEventListener('submit', e => {
+      e.preventDefault();
+      if (subscribeForm.querySelector('input').value === '') return;
+      subscribeForm.classList.add('success');
+      subscribeForm.innerHTML = `
+        <p>Thank you for subscribing!</p>
+        <i class="las la-check"></i>
+        `;
     });
   }
 }

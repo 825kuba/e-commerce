@@ -30,7 +30,9 @@ class CheckoutView extends GeneralView {
     document.body.classList.remove('no-scroll');
   }
 
+  // close checkout listeners
   addListenerCloseCheckout() {
+    // close btn
     closeCheckoutBtn.addEventListener('click', e => {
       e.preventDefault();
       this.closeCheckout();
@@ -44,8 +46,11 @@ class CheckoutView extends GeneralView {
     });
   }
 
+  // render section with cart items and price summary
   renderSummary(cart, checkout, discountHandler) {
+    // empty element
     cartContent.innerHTML = '';
+    // render each cart item
     cart.forEach(item => {
       cartContent.insertAdjacentHTML(
         'beforeend',
@@ -148,6 +153,7 @@ class CheckoutView extends GeneralView {
     this.observeImgs('.checkout__cart-item--img');
   }
 
+  // calculate prices
   updateSummaryPrice(checkout) {
     // update shipping price
     const shippingPrice = Number(checkout.shipping.price) || 0;
@@ -206,6 +212,7 @@ class CheckoutView extends GeneralView {
     openSumBtnPrice.innerText = pricing.total.toFixed(2);
   }
 
+  // calculation neccessary ind order to animate the opening and closing of summary - browser can't put transition on height: auto
   calcSummaryHeight() {
     // get all cart items elements
     const cartItems = [...cartContent.querySelectorAll('.checkout__cart-item')];
@@ -261,6 +268,7 @@ class CheckoutView extends GeneralView {
     cartContent.querySelector('#discount-line').classList.add('hidden');
   }
 
+  // render first step of checkout
   renderInformationSection(checkout) {
     // enable all nav links
     checkoutNavLinks.forEach(link => (link.disabled = false));
@@ -401,6 +409,7 @@ class CheckoutView extends GeneralView {
     this.parentEle.querySelector('#spam').checked = checkout.information?.spam;
   }
 
+  // render second step of checkout
   renderShippingSection(checkout) {
     // disable all nav links
     checkoutNavLinks.forEach(link => (link.disabled = false));
@@ -484,6 +493,7 @@ class CheckoutView extends GeneralView {
     ).checked = true;
   }
 
+  // render third step of checkout
   renderPaymentSection(checkout) {
     // enable all nav links
     checkoutNavLinks.forEach(link => (link.disabled = false));
@@ -686,9 +696,9 @@ class CheckoutView extends GeneralView {
     });
   }
 
+  // change btns in 2nd and 3rd step of checkout
   addListenerChangeBtns(checkout) {
     document.querySelector('#change-form').addEventListener('click', e => {
-      console.log('clicked on form group');
       const btn = e.target.closest('#change-btn');
       if (!btn) return;
       // render information section
@@ -935,11 +945,12 @@ class CheckoutView extends GeneralView {
     });
   }
 
+  // render confirmation message
   renderFinishCheckout(checkout) {
     // change dataset attribute
     this.parentEle.dataset.content = 'checkout-completed';
 
-    // hide elements
+    // hide unneccessary elements
     // close btn
     closeCheckoutBtn.classList.add('hidden');
     // nav

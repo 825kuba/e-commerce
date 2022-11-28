@@ -15,27 +15,36 @@ export default class GeneralView {
         `;
   }
 
+  // observe imgs
   observeImgs(imgClass) {
     const loadImg = function (entries, observer) {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
+        // change src to data-src
         entry.target.src = entry.target.dataset.src;
+        // when img is loaded
         entry.target.addEventListener('load', () => {
+          // remove lazy class
           entry.target.classList.remove('lazy');
+          // unobserve
           observer.unobserve(entry.target);
         });
       });
     };
 
+    // set imgs observer when img is 100px away from viewport
     const imgObserver = new IntersectionObserver(loadImg, {
       root: null,
       threshold: 0,
       rootMargin: '100px',
     });
 
+    // observe all imgs
     const productImgs = [...document.querySelectorAll(imgClass)];
     productImgs.forEach(img => {
+      // add lazy class
       img.classList.add('lazy');
+      // observe
       imgObserver.observe(img);
     });
   }

@@ -86,6 +86,7 @@ class productView extends GeneralView {
     // clean modal inner HTML
     this.parentEle.innerHTML = '';
 
+    // render product's markup
     this.parentEle.insertAdjacentHTML(
       'beforeend',
       `

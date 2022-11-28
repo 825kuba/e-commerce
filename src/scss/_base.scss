@@ -1,5 +1,7 @@
+// FONTS
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
 
+// COLORS
 $black: rgb(0, 0, 0);
 $orange: rgb(255, 123, 78);
 $white: rgb(255, 255, 255);
@@ -12,11 +14,11 @@ $gray-blue: rgb(127, 144, 155);
 $red: rgb(228, 44, 46);
 $green: #4bb543;
 
-// Z-INDEX
-$z-100: 100; // sale badge on product
-$z-1000: 1000; // sticky nav bar, cart
-$z-2000: 2000; // mobile menu
+// Z-INDEX VARIABLES
+$z-100: 100; // sale badge on product, item qty in cart summary in checkout
+$z-1000: 1000; // header, sticky nav bar, cart, close btns, checkout
 
+// RESETS
 *,
 *:before,
 *:after {
@@ -25,6 +27,7 @@ $z-2000: 2000; // mobile menu
   box-sizing: border-box;
 }
 
+// FONT SIZE
 html {
   font-size: 62.5%;
 
@@ -37,6 +40,7 @@ html {
   }
 }
 
+// BODY BG COLOR AND NO SCROLL CLASS
 body {
   background-color: $bg-color;
 
@@ -45,6 +49,7 @@ body {
   }
 }
 
+// SECTIONS WITH MAX WIDTH
 header,
 section,
 footer {
@@ -52,11 +57,7 @@ footer {
   margin: 0 auto;
 }
 
+// UNLIMITED WIDTH SECTIONS
 .fs {
   max-width: unset;
-}
-
-.pic {
-  display: flex;
-  overflow: auto;
 }

@@ -1,5 +1,5 @@
+// CHECKOUT MODAL
 .checkout {
-  // position: relative;
   position: fixed;
   z-index: $z-1000;
   left: 0;
@@ -13,11 +13,7 @@
   overflow: auto;
   font-size: 1.6rem;
 
-  &__close-checkout {
-    border: 1px solid red !important;
-  }
-
-  // make checkout fixed but still act as relative parent element
+  // CHECKOUT WRAPPER - makes checkout fixed but still act as relative parent element
   &__relative {
     position: relative;
   }
@@ -28,6 +24,7 @@
     opacity: 1;
   }
 
+  // CHECKOUT NAV
   &__nav {
     padding: 5rem 1rem 2rem 1rem;
 
@@ -42,10 +39,12 @@
     font-size: 1.4rem;
   }
 
+  // CHECKOUT NAV LOGO
   &__logo-box {
     margin-bottom: 1rem;
   }
 
+  // CHECKOUT NAV LINKS
   &__links {
     display: flex;
     flex-wrap: wrap;
@@ -67,6 +66,7 @@
     }
   }
 
+  // BTN TO TOOGLE CART ITEMS SUMMARY SECTIONS
   &__summary-btn {
     cursor: pointer;
     width: 100%;
@@ -78,11 +78,13 @@
     padding: 0 1rem;
     height: 5rem;
 
+    // BTN TEXT
     &--text {
       font-size: 1.4rem;
       color: $orange;
     }
 
+    // BTN PRICE
     &--price {
       font-size: 1.9rem;
       color: $black;
@@ -98,6 +100,7 @@
     }
   }
 
+  // CONTAINER FOR CART ITEMS
   &__cart-content {
     padding: 2rem 1rem 0 1rem;
     overflow: hidden;
@@ -144,6 +147,7 @@
     }
   }
 
+  // CART ITEM
   &__cart-item {
     display: flex;
     justify-content: space-between;
@@ -151,11 +155,7 @@
     gap: 2rem;
     font-size: 1.5rem;
 
-    &--img-wrap {
-      width: max-content;
-      position: relative;
-    }
-
+    // CART ITEMS QTY BADGE
     &--qty {
       position: absolute;
       top: 0;
@@ -173,6 +173,13 @@
       justify-content: center;
     }
 
+    // CART ITEM IMG WRAPPER
+    &--img-wrap {
+      width: max-content;
+      position: relative;
+    }
+
+    // CART ITEM IMG
     &--img {
       width: 64px;
       height: 64px;
@@ -182,16 +189,14 @@
       @include changeImgColor;
     }
 
-    // &--name {
-    //   font-weight: bold;
-    // }
-
+    // CART ITEM
     &--size {
       font-size: 1.4rem;
       margin-top: 0.2rem;
       opacity: 0.8;
     }
 
+    // CART ITEM PRICE
     &--price {
       margin-left: auto;
       text-align: right;
@@ -200,11 +205,13 @@
     }
   }
 
+  // CHECKOUT SUMMARY DETAILS SECTION - PRICES SECTION
   &__details {
     display: flex;
     flex-direction: column;
   }
 
+  // ONE ITEM IN PRICES SECTION
   &__detail {
     border-top: 1px solid $gray-light-3;
     padding: 2rem 0;
@@ -216,6 +223,7 @@
       display: none;
     }
 
+    // ONE LINE IN ITEM
     &--line {
       display: flex;
       justify-content: space-between;
@@ -245,6 +253,7 @@
       font-weight: 500;
     }
 
+    // DISCOUNT INPUT
     &--form {
       & button {
         flex-basis: 15%;
@@ -258,6 +267,7 @@
     }
   }
 
+  // MAIN SECTION OF CHECKOUT - FORM
   .form {
     padding: 2.5rem 1rem;
     display: flex;
@@ -277,12 +287,14 @@
       border-top: none;
     }
 
+    // ACTUAL FORM CONTAINER
     &__content {
       display: flex;
       flex-direction: column;
       gap: 4rem;
     }
 
+    // HEADING OF FORM GROUP
     &__heading {
       font-size: 2rem;
       font-family: Roboto;
@@ -293,6 +305,7 @@
       }
     }
 
+    // FORM GROUP
     &__group {
       display: flex;
       flex-direction: column;
@@ -326,12 +339,12 @@
       }
     }
 
+    // FORM ITEM
     &__item {
       display: flex;
       gap: 1.5rem;
       position: relative;
       flex: 1;
-      // border-radius: 0.5rem;
 
       &--border {
         border-radius: 0.5rem;
@@ -345,6 +358,7 @@
         align-items: center;
       }
 
+      // FOR ITEM INPUT FIELD EXCEPT RADIO
       input:not([type='radio']) {
         padding: 1.75rem 1rem 0.75rem 1rem;
         display: block;
@@ -361,6 +375,7 @@
           padding: 1.25rem 1rem 1.25rem 1rem;
         }
 
+        // CUSTOM CHECKBOX
         &[type='checkbox'] {
           -webkit-appearance: none;
           -moz-appearance: none;
@@ -377,6 +392,7 @@
           outline: none;
           cursor: pointer;
 
+          // AFTER ELEMENT - TICK SYMBOL
           &:after {
             display: block;
             position: absolute;
@@ -390,6 +406,7 @@
             border-width: 0 2px 2px 0;
           }
 
+          // BEFORE ELEMENT - "GROWING/SHRIKING" WHITE COLOR
           &:before {
             display: block;
             position: absolute;
@@ -420,6 +437,7 @@
         }
       }
 
+      // FORM ITEM LABEL
       label {
         &:not(.static) {
           position: absolute;
@@ -430,12 +448,14 @@
         }
       }
 
+      // LABEL WHEN PLACEHOLDER SHOWN (LABEL APPEARS AFTER USER START TYPING - LOOK LIKE PLACEHOLDER MOVES)
       input:placeholder-shown + label {
         opacity: 0;
         visibility: hidden;
         transform: translateY(1rem);
       }
 
+      // RADIO
       &--radio {
         align-items: flex-start;
         border: none;
@@ -466,11 +486,11 @@
 
         & strong {
           margin-left: auto;
-          // font-size: 1.4rem;
           font-weight: 500;
         }
       }
 
+      // CHANGE OPTION FORM ITEM
       &--change {
         flex-direction: column;
         gap: 0;
@@ -506,7 +526,7 @@
       }
     }
 
-    // wrapper of form item and error message
+    // WRAPPER OF FORM ITEM AND ERROR MESSAGE
     &__item-wrap {
       display: flex;
       flex-direction: column;
@@ -528,13 +548,14 @@
       }
     }
 
-    // error message
+    // ERROR MESSAGE
     &__error {
       color: $red;
       font-size: 1.4rem;
       display: none;
     }
 
+    // FORM LINE
     &__line {
       display: flex;
       gap: 2rem;
@@ -546,6 +567,7 @@
       }
     }
 
+    // FORM BTN
     & button {
       border: none;
       border-radius: 0.5rem;
@@ -553,6 +575,7 @@
       cursor: pointer;
     }
 
+    // BIG BTNS UNDER FORM
     &__submit,
     &__return {
       height: 6rem;
@@ -561,6 +584,7 @@
       }
     }
 
+    // SUBMIT BTN UNDER FORM
     &__submit {
       background-color: $orange;
       color: $white;
@@ -570,6 +594,7 @@
       }
     }
 
+    // RETURN BTN UNDER FORM
     &__return {
       color: $orange;
       background-color: transparent;

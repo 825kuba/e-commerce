@@ -1,3 +1,4 @@
+// MAIN MIXIN USED TO ADD MEDIA QUERIES
 @mixin respond($bp) {
   @if $bp == md {
     // 600px
@@ -31,6 +32,7 @@
   }
 }
 
+// USED FOR PRODUCT IMG TO SIMULATE DIFFERENT COLORS
 @mixin changeImgColor {
   &[data-color='color-2'] {
     filter: hue-rotate(90deg);
@@ -45,6 +47,7 @@
   }
 }
 
+// IMAGE GALLERY
 @mixin imageContainer {
   overflow: auto;
   scroll-behavior: smooth;
@@ -56,6 +59,7 @@
   }
 }
 
+// IMG GALLERY BTNS
 @mixin galleryBtn {
   border: none;
   background-color: transparent;
@@ -75,6 +79,7 @@
   }
 }
 
+// IMG REVEALING ANIMATION
 @mixin slide-in {
   transition: all 0.35s ease-out 0.1s;
   transform: translateY(0);

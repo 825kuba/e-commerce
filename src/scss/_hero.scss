@@ -1,9 +1,11 @@
+// HERO IMG SECTION ON MAIN PAGE
 .hero {
   padding: 0 2rem;
   @include respond(lg) {
     padding: 0 3.5rem;
   }
 
+  // HERO IMG WRAPPER
   &__img-wrapper {
     min-height: 100vh;
     background-size: cover;
@@ -27,12 +29,14 @@
     }
   }
 
+  // HEADING ON HERO IMG
   &__heading {
     font-size: 5rem;
     font-weight: 500;
     color: $white;
   }
 
+  // BTN ON HERO IMG
   &__cta {
     font-size: 1.4rem;
     text-transform: uppercase;

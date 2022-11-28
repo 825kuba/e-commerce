@@ -1,5 +1,6 @@
 'use strict';
 
+// main object used for keeping data
 export const state = {
   categories: {
     ["men's clothing"]: [],
@@ -28,6 +29,7 @@ export const state = {
   ],
 };
 
+// fetch products from API in given category
 export const fetchProductsByCategory = async category => {
   try {
     // fetch data
@@ -52,6 +54,7 @@ export const fetchProductsByCategory = async category => {
   }
 };
 
+// fetch product from API with given ID
 export const fetchSingleProduct = async id => {
   try {
     // fetch data
@@ -67,10 +70,12 @@ export const fetchSingleProduct = async id => {
   } catch (err) {}
 };
 
+// save session obj
 export const saveToStorage = () => {
   window.localStorage.setItem('session', JSON.stringify(state.session));
 };
 
+// load session obj
 export const loadFromStorage = () => {
   const storage = JSON.parse(window.localStorage.getItem('session'));
   state.session = storage ? storage : state.session;

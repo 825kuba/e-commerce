@@ -54,26 +54,16 @@ class CategoryView extends GeneralView {
       const target = e.target.closest('.products__product');
       // if no target return
       if (!target) return;
+      // open product
       productModal.classList.add('open');
+      // focus close btn - that way if user TABs through page it goes through the flow of product modal window
       productModalCloseBtn.focus();
+      // switch of scroll of body
       document.body.classList.add('no-scroll');
+      // run handler
       handler(target);
     });
   }
-
-  // // render spinner
-  // renderSpinner() {
-  //   this.parentEle.innerHTML = `
-  //       <p class="products__loading">Loading...</p>
-  //     `;
-  // }
-
-  // // render error
-  // renderError(err) {
-  //   this.parentEle.innerHTML = `
-  //       <p class="products__error">${err}</p>
-  //     `;
-  // }
 }
 
 export default new CategoryView();

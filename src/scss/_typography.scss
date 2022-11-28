@@ -1,7 +1,9 @@
+// MAIN FONT
 body {
   font-family: Roboto;
 }
 
+// HEADINGS
 h2,
 h3,
 h4 {
@@ -9,10 +11,12 @@ h4 {
   letter-spacing: -0.075rem;
 }
 
+// FORM FON EXCEPT CHECKOUT
 form:not(.checkout__content) {
   font-family: 'Playfair Display';
 }
 
+// LINKS
 a {
   &:link,
   &:visited {
@@ -26,7 +30,7 @@ a {
   }
 }
 
-// hide arrows in number input fields
+// HIDE ARROWS IN NUMBER INPUT FIELDS
 input[type='number'] {
   appearance: none;
   -moz-appearance: textfield;
@@ -37,7 +41,7 @@ input[type='number'] {
     margin: 0;
   }
 
-  // transparent number input fields in cart na product modal
+  // TRANSPARENT NUMBER INPUT FIELDS IN CART AND PRODUCT MODAL
   .cart &,
   .product & {
     background-color: transparent;
@@ -45,6 +49,7 @@ input[type='number'] {
   }
 }
 
+// FOCUS OUTLINE
 *:focus-visible {
   outline: 2.5px solid $orange;
 }
