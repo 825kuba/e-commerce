@@ -76,7 +76,9 @@ class CartView extends GeneralView {
             data-color="color-${item.specs.color}"
           />
           <div class="cart__item__text">
-            <a href="#" class="cart__item__name"
+            <a href="#" class="cart__item__name" aria-label="Go to "${
+              item.title
+            }"
               >${item.title}</a
             >
             <p class="cart__item__size">${item.specs.size} / ${
@@ -89,7 +91,7 @@ class CartView extends GeneralView {
 
           <form class="cart__item__qty" action="">
             <div class="cart__item__input-wrap">
-              <button type="button"         class="cart__item__minus">-</button>
+              <button type="button"         class="cart__item__minus" aria-label="Decrease product quantity">-</button>
               <input class="product__qty"
                 type="number"
                 min="1"
@@ -97,12 +99,15 @@ class CartView extends GeneralView {
                 step="1"
                 value="${item.specs.qty}"
                 id="number"
+                aria-label="Enter product quantity"
               />
-              <button type="button" class="cart__item__plus">+</button>
+              <button type="button" class="cart__item__plus" aria-label="Increase product quantity">+</button>
             </div>
           </form>
 
-          <button class="cart__item__remove">Remove</button>
+          <button class="cart__item__remove" aria-label="Remove ${
+            item.title
+          } from cart">Remove</button>
         </div>
         `
       );

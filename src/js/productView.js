@@ -102,10 +102,10 @@ class productView extends GeneralView {
       data-color="color-1"
       />
       <div class="product__slider__btns-wrap">
-        <button class="product__slider__btn  product__slider__btn--left" data-dir="-1">
+        <button class="product__slider__btn  product__slider__btn--left" data-dir="-1" aria-label="Scroll gallery to left">
           <i class="las la-arrow-left"></i>
         </ button>
-        <button class="product__slider__btn  product__slider__btn--right" data-dir="1">
+        <button class="product__slider__btn  product__slider__btn--right" data-dir="1" aria-label="Scroll gallery to right">
           <i class="las la-arrow-right"></i>
         </ button>
       </div>
@@ -124,7 +124,7 @@ class productView extends GeneralView {
           }
         </div>
       </div>
-      <a href="#" class="product__review">
+      <a href="#" class="product__review" aria-label="Product reviews">
         <div class="product__review--stars">
         </div>
         ${product.rating.count} ${
@@ -144,19 +144,19 @@ class productView extends GeneralView {
 
         <form action="" class="product__form">
           <div class="select-wrap">
-            <select name="size" id="size"     class="product__size">
+            <select name="size" id="size"     class="product__size" aria-label="Product size">
               ${sizeOptionsMarkup}
             </select>
           </div>
           <div class="select-wrap">
-            <select name="color" id="color"       class="product__color">
+            <select name="color" id="color"       class="product__color" aria-label="Product color">
               ${colorOptionsMarkup}
             </select>
           </div>
           <div class="qty-wrap">
-            <label for="number">Qty</label>
+            <label for="number" aria-label="Product quantity">Qty</label>
             <div class="input-wrap">
-              <button type="button"       class="product__change-qty product__minus">-</button>
+              <button type="button"       class="product__change-qty product__minus" aria-label="Decrease product quantity">-</button>
               <input class="product__qty"
                 type="number"
                 min="1"
@@ -165,12 +165,15 @@ class productView extends GeneralView {
                 step="1"
                 class="product__number"
                 id="number"
+                aria-label="Enter product quantity"
               />
-              <button type="button"   class="product__change-qty product__plus">+</button>
+              <button type="button"   class="product__change-qty product__plus" aria-label="Increase product quantity">+</button>
             </div>
           </div>
         </form>
-        <button class="product__add big-btn">Add to   cart</button>
+        <button class="product__add big-btn" aria-label="Add to cart, ${
+          product.title
+        }">Add to   cart</button>
       </div>
       <p class="product__descr">
         ${product.description}

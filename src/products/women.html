@@ -14,17 +14,17 @@
     <script defer type="module" src="../js/controller.js"></script>
   </head>
   <body id="women's clothing">
-    <div class="discount">
+    <aside class="discount">
       <p>Use code FRONTEND10 at checkout for 10% OFF!</p>
-    </div>
+    </aside>
     <header class="header">
       <nav class="nav">
         <div class="nav__btn-wrap">
-          <a href="#" class="nav__nav-btn hidden">Menu</a>
+          <button class="nav__nav-btn hidden">Menu</button>
         </div>
 
         <ul class="nav__links">
-          <button class="nav__close-nav close-btn">
+          <button class="nav__close-nav close-btn" aria-label="Close menu">
             <i class="las la-times"></i>
           </button>
           <li class="nav__list-item">
@@ -42,19 +42,86 @@
         </ul>
 
         <div class="nav__logo-box">
-          <a href="../index.html" class="nav__logo">
+          <a href="../index.html" class="nav__logo" aria-label="Go to homepage">
             <img src="../img/logo.png" alt="logo" />
           </a>
         </div>
         <div class="nav__btn-wrap">
-          <a href="#" class="nav__cart-btn">Cart (<span>0</span>)</a>
+          <button class="nav__cart-btn">Cart (<span>0</span>)</button>
         </div>
       </nav>
     </header>
 
-    <aside class="cart">
+    <main>
+      <section class="products">
+        <h2 class="products__heading">Women</h2>
+
+        <div class="products__container"></div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <nav class="footer__container">
+        <a href="../index.html" aria-label="Go to homepage">
+          <img src="../img/logo.png" alt="logo" class="footer__logo" />
+        </a>
+        <ul class="footer__links">
+          <li class="footer__list-item">
+            <a href="#" class="footer-link">Contact</a>
+          </li>
+          <li class="footer__list-item">
+            <a href="#" class="footer-link">Trade</a>
+          </li>
+          <li class="footer__list-item">
+            <a href="#" class="footer-link">Privacy Policy</a>
+          </li>
+          <li class="footer__list-item">
+            <a href="$" class="footer-link">Warranty</a>
+          </li>
+        </ul>
+        <ul class="footer__socials">
+          <li class="footer__list-item">
+            <a href="#" class="footer__link">Instagram</a>
+          </li>
+          <li class="footer__list-item">
+            <a href="#" class="footer__link">Pinterest</a>
+          </li>
+        </ul>
+        <div class="footer__subscribe">
+          <h3 class="footer__heading">Keep in touch</h3>
+          <p class="footer__text">Sign up to receive news and updates.</p>
+          <form action="" class="footer__form">
+            <input
+              type="email"
+              class="footer__input"
+              placeholder="Enter email"
+            />
+            <button class="footer__cta" type="submit">Subsribe</button>
+          </form>
+        </div>
+      </nav>
+      <p class="footer__legal">
+        Made by
+        <a
+          href="https://github.com/825kuba"
+          target="_blank"
+          class="footer__link"
+          >Jakub Horuta</a
+        >
+        | Inspired by
+        <a
+          href="https://builtforkeeps.com/"
+          target="_blank"
+          class="footer__link"
+          >builtforkeeps.com</a
+        >
+      </p>
+    </footer>
+
+    <!-- CART MODAL WINDOW -->
+    <div class="cart">
       <div class="cart__wrapper">
-        <button class="cart__close-cart close-btn">
+        <button class="cart__close-cart close-btn" aria-label="Close cart">
           <i class="las la-times"></i>
         </button>
         <div class="cart__head">
@@ -81,18 +148,27 @@
               <h5>$<span>0</span></h5>
             </div>
             <p>Taxes and shipping calculated at checkout</p>
-            <button class="cart__checkout-btn big-btn">Check out</button>
+            <button
+              class="cart__checkout-btn big-btn"
+              aria-label="Continue to checkout"
+            >
+              Check out
+            </button>
           </div>
         </div>
       </div>
       <div class="cart__message hidden">
         <p>Cart updated!</p>
       </div>
-    </aside>
+    </div>
 
-    <aside class="checkout">
+    <!-- CHECKOUT MODAL WINDOW -->
+    <div class="checkout">
       <div class="checkout__relative">
-        <button class="checkout__close-checkout close-btn">
+        <button
+          class="checkout__close-checkout close-btn"
+          aria-label="Close checkout"
+        >
           <i class="las la-times"></i>
         </button>
         <nav class="checkout__nav">
@@ -138,17 +214,17 @@
           </ul>
         </nav>
 
-        <div class="checkout__summary">
+        <section class="checkout__summary">
           <button class="checkout__summary-btn">
             <span class="checkout__summary-btn--text">
               🛒 Show order summary ↓
             </span>
             <strong class="checkout__summary-btn--price">$<span></span></strong>
           </button>
-          <section class="checkout__cart-content closed">summary</section>
-        </div>
+          <div class="checkout__cart-content closed">summary</div>
+        </section>
 
-        <form action="#" class="checkout__content form">
+        <form action="/" class="checkout__content form">
           <div class="form__content"></div>
 
           <div class="form__group form__group--btns">
@@ -159,79 +235,17 @@
           </div>
         </form>
       </div>
-    </aside>
+    </div>
 
-    <aside class="product-modal">
-      <button class="product__close-product close-btn">
+    <!-- PRODUCT MODAL WINDOW -->
+    <div class="product-modal">
+      <button
+        class="product__close-product close-btn"
+        aria-label="Close product"
+      >
         <i class="las la-times"></i>
       </button>
       <div class="product"></div>
-    </aside>
-
-    <main>
-      <section class="products">
-        <h2 class="products__heading">Women</h2>
-
-        <div class="products__container"></div>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <div class="footer__container">
-        <a href="#">
-          <img src="../img/logo.png" alt="logo" class="footer__logo" />
-        </a>
-        <ul class="footer__links">
-          <li class="footer__list-item">
-            <a href="#" class="footer-link">Contact</a>
-          </li>
-          <li class="footer__list-item">
-            <a href="#" class="footer-link">Trade</a>
-          </li>
-          <li class="footer__list-item">
-            <a href="#" class="footer-link">Privacy Policy</a>
-          </li>
-          <li class="footer__list-item">
-            <a href="$" class="footer-link">Warranty</a>
-          </li>
-        </ul>
-        <ul class="footer__socials">
-          <li class="footer__list-item">
-            <a href="#" class="footer__link">Instagram</a>
-          </li>
-          <li class="footer__list-item">
-            <a href="#" class="footer__link">Pinterest</a>
-          </li>
-        </ul>
-        <div class="footer__subscribe">
-          <h3 class="footer__heading">Keep in touch</h3>
-          <p class="footer__text">Sign up to receive news and updates.</p>
-          <form action="" class="footer__form">
-            <input
-              type="email"
-              class="footer__input"
-              placeholder="Enter email"
-            />
-            <button class="footer__cta" type="submit">Subsribe</button>
-          </form>
-        </div>
-      </div>
-      <p class="footer__legal">
-        Made by
-        <a
-          href="https://github.com/825kuba"
-          target="_blank"
-          class="footer__link"
-          >Jakub Horuta</a
-        >
-        | Inspired by
-        <a
-          href="https://builtforkeeps.com/"
-          target="_blank"
-          class="footer__link"
-          >builtforkeeps.com</a
-        >
-      </p>
-    </footer>
+    </div>
   </body>
 </html>

@@ -18,7 +18,9 @@ class CategoryView extends GeneralView {
       productsContainer.insertAdjacentHTML(
         'beforeend',
         `
-          <div class="products__product" id="${product.id}">
+          <div class="products__product" id="${
+            product.id
+          }" role="button" tabindex="0" aria-label="${product.title}">
             ${i > 1 ? '' : '<span class="products__badge">on sale</span>'}
             <img
               src="../img/placeholder.jpg"
@@ -55,14 +57,27 @@ class CategoryView extends GeneralView {
       // if no target return
       if (!target) return;
       // open product
-      productModal.classList.add('open');
-      // focus close btn - that way if user TABs through page it goes through the flow of product modal window
-      productModalCloseBtn.focus();
-      // switch of scroll of body
-      document.body.classList.add('no-scroll');
-      // run handler
-      handler(target);
+      this.openProduct(handler, target);
     });
+
+    // on press enter
+    this.parentEle.addEventListener('keypress', e => {
+      const focused = document.activeElement;
+      if (e.key === 'Enter' && focused.classList.contains('products__product'))
+        // open product
+        this.openProduct(handler, focused);
+    });
+  }
+
+  openProduct(handler, ele) {
+    // open product
+    productModal.classList.add('open');
+    // focus close btn - that way if user TABs through page it goes through the flow of product modal window
+    productModalCloseBtn.focus();
+    // switch of scroll of body
+    document.body.classList.add('no-scroll');
+    // run handler
+    handler(ele);
   }
 }
 

@@ -14,17 +14,17 @@
     <script defer type="module" src="./js/controller.js"></script>
   </head>
   <body id="index">
-    <div class="discount">
+    <aside class="discount">
       <p>Use code FRONTEND10 at checkout for 10% OFF!</p>
-    </div>
+    </aside>
     <header class="header">
       <nav class="nav">
         <div class="nav__btn-wrap">
-          <a href="#" class="nav__nav-btn hidden">Menu</a>
+          <button class="nav__nav-btn hidden">Menu</button>
         </div>
 
         <ul class="nav__links">
-          <button class="nav__close-nav close-btn">
+          <button class="nav__close-nav close-btn" aria-label="Close menu">
             <i class="las la-times"></i>
           </button>
           <li class="nav__list-item">
@@ -44,143 +44,27 @@
         </ul>
 
         <div class="nav__logo-box">
-          <a href="./index.html" class="nav__logo">
+          <a href="./index.html" class="nav__logo" aria-label="Go to homepage">
             <img src="./img/logo.png" alt="logo" />
           </a>
         </div>
         <div class="nav__btn-wrap">
-          <a href="#" class="nav__cart-btn">Cart (<span>0</span>)</a>
+          <button class="nav__cart-btn">Cart (<span>0</span>)</button>
         </div>
       </nav>
     </header>
 
-    <aside class="cart">
-      <div class="cart__wrapper">
-        <button class="cart__close-cart close-btn">
-          <i class="las la-times"></i>
-        </button>
-        <div class="cart__head">
-          <h2 class="cart__heading">Shopping Cart</h2>
-          <p class="cart__quantity">Quantity</p>
-          <p class="cart__total">Total</p>
-        </div>
-        <div class="cart__content">
-          <div class="cart__container"></div>
-        </div>
-        <div class="cart__summary">
-          <form class="cart__form" action="">
-            <label for="instructions">Special instructions for seller</label>
-            <textarea
-              name="instructions"
-              id="instructions"
-              cols="30"
-              rows="4"
-            ></textarea>
-          </form>
-          <div class="cart__checkout">
-            <div class="cart__subtotal">
-              <h6>Subtotal</h6>
-              <h5>$<span>0</span></h5>
-            </div>
-            <p>Taxes and shipping calculated at checkout</p>
-            <button class="cart__checkout-btn big-btn">Check out</button>
-          </div>
-        </div>
-      </div>
-      <div class="cart__message hidden">
-        <p>Cart updated!</p>
-      </div>
-    </aside>
-
-    <aside class="checkout">
-      <div class="checkout__relative">
-        <button class="checkout__close-checkout close-btn">
-          <i class="las la-times"></i>
-        </button>
-        <nav class="checkout__nav">
-          <figure class="checkout__logo-box">
-            <img src="./img/logo.png" alt="logo" />
-          </figure>
-          <ul class="checkout__links">
-            <li class="checkout__link-wrap">
-              <button
-                class="checkout__link checkout__link--cart btn-sm"
-                data-content="cart"
-              >
-                Cart
-              </button>
-            </li>
-            <li class="checkout__link-spacer">></li>
-            <li class="checkout__link-wrap">
-              <button
-                class="checkout__link checkout__link--information btn-sm"
-                data-content="information"
-              >
-                Information
-              </button>
-            </li>
-            <li class="checkout__link-spacer">></li>
-            <li class="checkout__link-wrap">
-              <button
-                class="checkout__link checkout__link--shipping btn-sm"
-                data-content="shipping"
-              >
-                Shipping
-              </button>
-            </li>
-            <li class="checkout__link-spacer">></li>
-            <li class="checkout__link-wrap">
-              <button
-                class="checkout__link checkout__link--payment btn-sm"
-                data-content="payment"
-              >
-                Payment
-              </button>
-            </li>
-          </ul>
-        </nav>
-
-        <section class="checkout__summary">
-          <button class="checkout__summary-btn">
-            <span class="checkout__summary-btn--text">
-              🛒 Show order summary ↓
-            </span>
-            <strong class="checkout__summary-btn--price">$<span></span></strong>
-          </button>
-          <div class="checkout__cart-content closed">summary</div>
-        </section>
-
-        <form action="/" class="checkout__content form">
-          <div class="form__content"></div>
-
-          <div class="form__group form__group--btns">
-            <button class="form__submit" type="submit">
-              Continue to shipping
-            </button>
-            <button class="form__return"><span><</span> Return to cart</button>
-          </div>
-        </form>
-      </div>
-    </aside>
-
-    <aside class="product-modal">
-      <button class="product__close-product close-btn">
-        <i class="las la-times"></i>
-      </button>
-      <div class="product"></div>
-    </aside>
-
     <main>
-      <section class="hero">
+      <article class="hero">
         <div class="hero__img-wrapper">
           <h2 class="hero__heading">Introducing the Fjallraven bag.</h2>
           <a href="./products/men.html">
             <button class="hero__cta">shop now</button>
           </a>
         </div>
-      </section>
+      </article>
 
-      <section class="story">
+      <article class="story">
         <h2 class="story__big-heading">
           Quality stylegoods. Designed to last, built for Goods.
         </h2>
@@ -255,10 +139,10 @@
             </p>
           </div>
         </article>
-      </section>
+      </article>
 
-      <section class="reviews fs">
-        <article class="review">
+      <article class="reviews fs">
+        <section class="review">
           <div class="review__stars">
             <i class="las la-star"></i>
             <i class="las la-star"></i>
@@ -272,8 +156,8 @@
             exercitationem ullam! At totam reprehenderit facere hic?"
           </para>
           <h4 class="review__name">Nick W.</h4>
-        </article>
-        <article class="review">
+        </section>
+        <section class="review">
           <div class="review__stars">
             <i class="las la-star"></i>
             <i class="las la-star"></i>
@@ -286,8 +170,8 @@
             Perspiciatis eos architecto velit enim sit nam."
           </para>
           <h4 class="review__name">Larry K.</h4>
-        </article>
-        <article class="review">
+        </section>
+        <section class="review">
           <div class="review__stars">
             <i class="las la-star"></i>
             <i class="las la-star"></i>
@@ -302,15 +186,16 @@
             laudantium!"
           </para>
           <h4 class="review__name">Seung-Yun S.</h4>
-        </article>
-      </section>
-      <section class="quote fs">
+        </section>
+      </article>
+
+      <article class="quote fs">
         <h2 class="slide-in quote__heading">
           Fast things come and go. Good stuff is from Goods.
         </h2>
-      </section>
+      </article>
 
-      <section class="shop fs">
+      <article class="shop fs">
         <div class="shop__head">
           <h2 class="shop__heading">Shop Products</h2>
           <p class="shop__para">
@@ -322,7 +207,11 @@
           </p>
         </div>
         <div class="shop__items">
-          <a class="shop__item" href="./products/men.html">
+          <a
+            class="shop__item"
+            href="./products/men.html"
+            aria-label="Go to men's clothing section"
+          >
             <div class="shop__item__filling"></div>
             <img
               src="https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg"
@@ -331,7 +220,11 @@
             />
             <p class="shop__item__name">Men</p>
           </a>
-          <a class="shop__item" href="./products/women.html">
+          <a
+            class="shop__item"
+            href="./products/women.html"
+            aria-label="Go to women's clothing section"
+          >
             <div class="shop__item__filling"></div>
             <img
               src="https://fakestoreapi.com/img/71HblAHs5xL._AC_UY879_-2.jpg"
@@ -340,7 +233,11 @@
             />
             <p class="shop__item__name">Women</p>
           </a>
-          <a class="shop__item" href="./products/jewellery.html">
+          <a
+            class="shop__item"
+            href="./products/jewellery.html"
+            aria-label="Go to jewellery section"
+          >
             <div class="shop__item__filling"></div>
             <img
               src="https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg"
@@ -349,7 +246,11 @@
             />
             <p class="shop__item__name">Jewellery</p>
           </a>
-          <a class="shop__item" href="./products/electronics.html">
+          <a
+            class="shop__item"
+            href="./products/electronics.html"
+            aria-label="Go to electronics section"
+          >
             <div class="shop__item__filling"></div>
             <img
               src="https://fakestoreapi.com/img/61IBBVJvSDL._AC_SY879_.jpg"
@@ -360,21 +261,27 @@
           </a>
         </div>
         <div class="shop__btns-wrap">
-          <button class="shop__btn shop__btn--left" data-dir="-1">
+          <button
+            class="shop__btn shop__btn--left"
+            data-dir="-1"
+            aria-label="Scroll gallery to left"
+          >
             <i class="las la-arrow-left"></i>
           </button>
-          <button class="shop__btn shop__btn--right" data-dir="1">
+          <button
+            class="shop__btn shop__btn--right"
+            data-dir="1"
+            aria-label="Scroll gallery to right"
+          >
             <i class="las la-arrow-right"></i>
           </button>
         </div>
-      </section>
-
-      <section class="brands fs"></section>
+      </article>
     </main>
 
     <footer class="footer">
-      <div class="footer__container">
-        <a href="./index.html">
+      <nav class="footer__container">
+        <a href="./index.html" aria-label="Go to homepage">
           <img src="./img/logo.png" alt="logo" class="footer__logo" />
         </a>
         <ul class="footer__links">
@@ -411,7 +318,7 @@
             <button class="footer__cta" type="submit">Subsribe</button>
           </form>
         </div>
-      </div>
+      </nav>
       <p class="footer__legal">
         Made by
         <a
@@ -429,5 +336,135 @@
         >
       </p>
     </footer>
+
+    <!-- CART MODAL WINDOW -->
+    <div class="cart">
+      <div class="cart__wrapper">
+        <button class="cart__close-cart close-btn" aria-label="Close cart">
+          <i class="las la-times"></i>
+        </button>
+        <div class="cart__head">
+          <h2 class="cart__heading">Shopping Cart</h2>
+          <p class="cart__quantity">Quantity</p>
+          <p class="cart__total">Total</p>
+        </div>
+        <div class="cart__content">
+          <div class="cart__container"></div>
+        </div>
+        <div class="cart__summary">
+          <form class="cart__form" action="">
+            <label for="instructions">Special instructions for seller</label>
+            <textarea
+              name="instructions"
+              id="instructions"
+              cols="30"
+              rows="4"
+            ></textarea>
+          </form>
+          <div class="cart__checkout">
+            <div class="cart__subtotal">
+              <h6>Subtotal</h6>
+              <h5>$<span>0</span></h5>
+            </div>
+            <p>Taxes and shipping calculated at checkout</p>
+            <button
+              class="cart__checkout-btn big-btn"
+              aria-label="Continue to checkout"
+            >
+              Check out
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="cart__message hidden">
+        <p>Cart updated!</p>
+      </div>
+    </div>
+
+    <!-- CHECKOUT MODAL WINDOW -->
+    <div class="checkout">
+      <div class="checkout__relative">
+        <button
+          class="checkout__close-checkout close-btn"
+          aria-label="Close checkout"
+        >
+          <i class="las la-times"></i>
+        </button>
+        <nav class="checkout__nav">
+          <figure class="checkout__logo-box">
+            <img src="./img/logo.png" alt="logo" />
+          </figure>
+          <ul class="checkout__links">
+            <li class="checkout__link-wrap">
+              <button
+                class="checkout__link checkout__link--cart btn-sm"
+                data-content="cart"
+              >
+                Cart
+              </button>
+            </li>
+            <li class="checkout__link-spacer">></li>
+            <li class="checkout__link-wrap">
+              <button
+                class="checkout__link checkout__link--information btn-sm"
+                data-content="information"
+              >
+                Information
+              </button>
+            </li>
+            <li class="checkout__link-spacer">></li>
+            <li class="checkout__link-wrap">
+              <button
+                class="checkout__link checkout__link--shipping btn-sm"
+                data-content="shipping"
+              >
+                Shipping
+              </button>
+            </li>
+            <li class="checkout__link-spacer">></li>
+            <li class="checkout__link-wrap">
+              <button
+                class="checkout__link checkout__link--payment btn-sm"
+                data-content="payment"
+              >
+                Payment
+              </button>
+            </li>
+          </ul>
+        </nav>
+
+        <section class="checkout__summary">
+          <button class="checkout__summary-btn">
+            <span class="checkout__summary-btn--text">
+              🛒 Show order summary ↓
+            </span>
+            <strong class="checkout__summary-btn--price">$<span></span></strong>
+          </button>
+          <div class="checkout__cart-content closed">summary</div>
+        </section>
+
+        <form action="/" class="checkout__content form">
+          <div class="form__content"></div>
+
+          <div class="form__group form__group--btns">
+            <button class="form__submit" type="submit">
+              Continue to shipping
+            </button>
+            <button class="form__return"><span><</span> Return to cart</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- PRODUCT MODAL WINDOW -->
+    <div class="product-modal">
+      <button
+        class="product__close-product close-btn"
+        aria-label="Close product"
+      >
+        <i class="las la-times"></i>
+      </button>
+      <div class="product"></div>
+    </div>
   </body>
 </html>

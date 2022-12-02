@@ -126,6 +126,14 @@
     }
   }
 
+  &__nav-btn,
+  &__cart-btn {
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 1.6rem;
+  }
+
   // MOBILE MENU BTN
   &__nav-btn {
     margin-right: auto;
